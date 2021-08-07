@@ -4,17 +4,21 @@ __all__ = ['ImageLabeler', 'SingleClassImageLabeler', 'MultiClassImageLabeler']
 
 # Cell
 import json
+import pandas as pd
+import logging
+
 from pathlib import Path
 from forgebox.files import file_detail
 from forgebox.html import DOM
-import pandas as pd
 from typing import List, Dict
-from ipywidgets import interact, interact_manual, Button, SelectMultiple, \
-    Output, HBox, VBox
+from tqdm.notebook import tqdm
+
+# to avoid confusions for 2 Image class
 from PIL import Image as PILImage
 from ipywidgets import Image as ImageWidget
-import logging
-from tqdm.notebook import tqdm
+
+from ipywidgets import interact, interact_manual, Button, SelectMultiple, \
+    Output, HBox, VBox
 
 # Cell
 class ImageLabeler:
@@ -81,6 +85,14 @@ class ImageLabeler:
         return obj
 
     def new_progress(self, labels: List[str], identifier: str = "path"):
+        """
+        create a new progress
+        keys:
+        - meta: meta data
+        - data: a dictionary
+            - key: image path
+            - value: labeled result
+        """
         self.progress = dict(
             meta=dict(
                 image_folder=self.image_folder,
@@ -91,25 +103,34 @@ class ImageLabeler:
         )
 
     def __call__(self, labels: List[str] = ["pos", "neg"]):
+        """
+        Start the labeling
+        labels: a list of labels, more then one string,
+            but not in hundreds or more, please
+        """
         self.labels = labels
         if hasattr(self, "progress") == False:
             self.new_progress(labels)
 
+        # iteration with progress bar
         for k, v in tqdm(self.progress['data'].items(), leave=False):
             if v is None:
                 yield k
 
-    def __getitem__(self, key):
+    def __getitem__(self, key: str):
         """
         render a page according to key
         """
         row = self.get_row_data(key)
         self.output.clear_output()
         with self.output:
+            # display subject image
             with PILImage.open(
                     row[self.identifier]).resize((512, 512)) as img:
                 display(img)
             label_btns = self.create_label_btns(row)
+
+            # the key, usually the image path
             key = row[self.identifier]
 
             # current labeled label
@@ -122,12 +143,12 @@ class ImageLabeler:
                                             self.create_show_next_btn(key),
                                             self.create_save_btn(),
                                             self.create_save_to_csv(),
-                                           ] if btn is not None)
+                                            ] if btn is not None)
             display(VBox([label_btns,
                           HBox(nav_btns)
                           ]))
 
-    def get_row_data(self, key):
+    def get_row_data(self, key: str):
         identifier = self.identifier
         row = dict(self.image_df.query(
             f"{identifier}=='{key}'").to_dict(orient='records')[0])
@@ -145,7 +166,11 @@ class ImageLabeler:
             return
         self[key]
 
-    def create_show_last_btn(self, key):
+    def create_show_last_btn(self, key: str) -> Button:
+        """
+        create a show last button
+            with current key
+        """
         keys = list(self.progress["data"].keys())
         idx = keys.index(str(key))
         if idx == 0:
@@ -158,7 +183,11 @@ class ImageLabeler:
         btn.click = show_last_click
         return btn
 
-    def create_show_next_btn(self, key):
+    def create_show_next_btn(self, key: str) -> Button:
+        """
+        create a show next button
+            with current key
+        """
         keys = list(self.progress["data"].keys())
         idx = keys.index(str(key))
         if idx >= len(self.progress["data"])-1:
@@ -171,27 +200,38 @@ class ImageLabeler:
         btn.click = show_next_click
         return btn
 
-    def create_save_btn(self):
+    def create_save_btn(self) -> Button:
+        """
+        create a save JSON button
+        """
         btn = Button(description="Save JSON", icon='save')
         btn.click = self.save_progress
         return btn
 
     def save_to_csv(self):
-        DOM("Please name a filepath for csv file like ./progress.csv","div")()
+        DOM("Please name a filepath for csv file like ./progress.csv", "div")()
 
+        # ask interactively for the csv saving path
         @interact_manual
-        def save_csv(path = "./progress.csv"):
-            if len(self.progress['data'])==0:
-                DOM("Nothing to save","div")()
+        def save_csv(path="./progress.csv"):
+            if len(self.progress['data']) == 0:
+                DOM("Nothing to save", "div")()
+
+            # the labeled results, filter out the empety progress
             keys, vals = zip(*list(
                 (k, v) for k, v in self.progress["data"].items() if v is not None))
-            pd.DataFrame({"path":keys, "label":vals}).to_csv(path, index=False)
-            DOM(f"Progress saved to: '{path}'","div")()
+            pd.DataFrame({"path": keys, "label": vals}
+                         ).to_csv(path, index=False)
+            DOM(f"Progress saved to: '{path}'", "div")()
 
-    def create_save_to_csv(self):
+    def create_save_to_csv(self) -> Button:
+        """
+        create a save to csv button
+        """
         btn = Button(description="CSV", icon='save')
         btn.click = self.save_to_csv
         return btn
+
 
 class SingleClassImageLabeler(ImageLabeler):
     def __init__(self, image_folder: Path):
@@ -207,7 +247,10 @@ class SingleClassImageLabeler(ImageLabeler):
 
         display(self.output)
 
-    def create_label_btns(self, row):
+    def create_label_btns(self, row: Dict[str, str]) -> HBox:
+        """
+        Create labels control
+        """
         btns = []
         for label in self.labels:
             btn = Button(description=label, icon="check-circle")
@@ -225,6 +268,10 @@ class SingleClassImageLabeler(ImageLabeler):
         self.output.clear_output()
         with self.output:
             DOM("That's the end of the iteration", "h3")()
+            display(HBox([
+                self.create_save_btn(),
+                self.create_save_to_csv(),
+            ]))
 
 
 class MultiClassImageLabeler(ImageLabeler):
@@ -236,11 +283,14 @@ class MultiClassImageLabeler(ImageLabeler):
 
     def __call__(self, labels: List[str] = ["pos", "neg"]):
         self.gen = super().__call__(labels)
-        DOM("press Command(mac) or Ctrl(win/linux) to select multiple","h4")()
+        DOM("press Command(mac) or Ctrl(win/linux) to select multiple", "h4")()
         self.render_page()
         display(self.output)
 
     def create_label_btns(self, row):
+        """
+        Create labels control for multicategorcial image dataset
+        """
         btns = []
         select = SelectMultiple(options=self.labels)
         btn = Button(description="Okay!", icon="check-circle")
@@ -258,3 +308,7 @@ class MultiClassImageLabeler(ImageLabeler):
         self.output.clear_output()
         with self.output:
             DOM("That's the end of the iteration", "h3")()
+            display(HBox([
+                self.create_save_btn(),
+                self.create_save_to_csv(),
+            ]))
