@@ -121,6 +121,7 @@ class ImageLabeler:
             nav_btns = list(btn for btn in [self.create_show_last_btn(key),
                                             self.create_show_next_btn(key),
                                             self.create_save_btn(),
+                                            self.create_save_to_csv(),
                                            ] if btn is not None)
             display(VBox([label_btns,
                           HBox(nav_btns)
@@ -171,10 +172,26 @@ class ImageLabeler:
         return btn
 
     def create_save_btn(self):
-        btn = Button(description="Save", icon='save')
+        btn = Button(description="Save JSON", icon='save')
         btn.click = self.save_progress
         return btn
 
+    def save_to_csv(self):
+        DOM("Please name a filepath for csv file like ./progress.csv","div")()
+
+        @interact_manual
+        def save_csv(path = "./progress.csv"):
+            if len(self.progress['data'])==0:
+                DOM("Nothing to save","div")()
+            keys, vals = zip(*list(
+                (k, v) for k, v in self.progress["data"].items() if v is not None))
+            pd.DataFrame({"path":keys, "label":vals}).to_csv(path, index=False)
+            DOM(f"Progress saved to: '{path}'","div")()
+
+    def create_save_to_csv(self):
+        btn = Button(description="CSV", icon='save')
+        btn.click = self.save_to_csv
+        return btn
 
 class SingleClassImageLabeler(ImageLabeler):
     def __init__(self, image_folder: Path):
