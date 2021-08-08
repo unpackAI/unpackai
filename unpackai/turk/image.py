@@ -22,6 +22,7 @@ from ipywidgets import interact, interact_manual, Button, SelectMultiple, \
 
 # Cell
 class ImageLabeler:
+    default_file = "unpackai_labeler.json"
     def __init__(self,
                  image_folder: Path,
                  formats: List[str] = ["jpg", "jpeg", "png", "bmp"],
@@ -30,9 +31,20 @@ class ImageLabeler:
         path: Path, a folder full of images
         formats: a list of allowed formats
         """
-        self.image_folder = image_folder
+        self.image_folder = str(image_folder)
+
         self.file_df = file_detail(image_folder)
+        self.file_df["path"] = self.file_df["path"]\
+            .apply(lambda x:str(Path(x).resolve()))
         self.filter_image(formats)
+        progress_path = Path(self.image_folder)/self.default_file
+        if (progress_path).exists():
+            try:
+                print(f"load from progress {progress_path}")
+                with open(progress_path,"r") as f:
+                    self.progress = json.loads(f.read())
+            except:
+                print("loading progress error")
         self.output = Output()
 
     def __repr__(self):
@@ -61,13 +73,15 @@ class ImageLabeler:
 
     def save_progress(
         self,
-        location: Path = Path("."),
-        filename="unpackai_imglbl.json"
+        location: Path = None,
+        filename= None,
     ):
         """
         Save the progress to location/filename
         default save to current directory ./unpackai_imglbl.json
         """
+        filename = self.default_file if filename is None else filename
+        location = Path(self.image_folder) if location is None else Path(location)
         with open(location/filename, "w") as f:
             f.write(json.dumps(self.progress))
         logging.info(f"Progess Saved to {location/filename}")
@@ -232,8 +246,19 @@ class ImageLabeler:
         btn.click = self.save_to_csv
         return btn
 
+    @property
+    def get_y(self):
+        mapping = dict(
+            (str(k), v) for k, v in self.progress["data"].items()
+            if v is not None)
+        print(f"Creating dataset with {len(mapping)} labels")
+        def get_y_func(x):
+            return str(mapping.get(str(x)))
+        return get_y_func
+
 
 class SingleClassImageLabeler(ImageLabeler):
+    default_file = "unpackai_single.json"
     def __init__(self, image_folder: Path):
         """
         path: Path, a folder full of images
@@ -252,14 +277,15 @@ class SingleClassImageLabeler(ImageLabeler):
         Create labels control
         """
         btns = []
-        for label in self.labels:
-            btn = Button(description=label, icon="check-circle")
-
+        def create_callback(label):
             def callback():
                 k = row[self.identifier]
                 self.progress["data"][str(k)] = label
                 self.render_page()
-            btn.click = callback
+            return callback
+        for label in self.labels:
+            btn = Button(description=label, icon="check-circle")
+            btn.click = create_callback(label)
             btns.append(btn)
 
         return HBox(btns)
@@ -275,6 +301,7 @@ class SingleClassImageLabeler(ImageLabeler):
 
 
 class MultiClassImageLabeler(ImageLabeler):
+    default_file = "unpackai_multi.json"
     def __init__(self, image_folder: Path):
         """
         path: Path, a folder full of images
@@ -312,3 +339,15 @@ class MultiClassImageLabeler(ImageLabeler):
                 self.create_save_btn(),
                 self.create_save_to_csv(),
             ]))
+
+    @property
+    def get_y(self):
+        mapping = dict(
+            (str(k), v) for k, v in self.progress["data"].items()
+            if v is not None)
+        print(f"Creating dataset with {len(mapping)} labels")
+        def get_y_func(x):
+            target = mapping.get(str(x))
+            target = list() if target is None else target
+            return target
+        return get_y_func
