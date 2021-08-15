@@ -23,6 +23,7 @@ from ipywidgets import interact, interact_manual, Button, SelectMultiple, \
 # Cell
 class ImageLabeler:
     default_file = "unpackai_labeler.json"
+
     def __init__(self,
                  image_folder: Path,
                  formats: List[str] = ["jpg", "jpeg", "png", "bmp"],
@@ -35,13 +36,13 @@ class ImageLabeler:
 
         self.file_df = file_detail(image_folder)
         self.file_df["path"] = self.file_df["path"]\
-            .apply(lambda x:str(Path(x).resolve()))
+            .apply(lambda x: str(Path(x).resolve()))
         self.filter_image(formats)
         progress_path = Path(self.image_folder)/self.default_file
         if (progress_path).exists():
             try:
                 print(f"load from progress {progress_path}")
-                with open(progress_path,"r") as f:
+                with open(progress_path, "r") as f:
                     self.progress = json.loads(f.read())
             except:
                 print("loading progress error")
@@ -74,14 +75,15 @@ class ImageLabeler:
     def save_progress(
         self,
         location: Path = None,
-        filename= None,
+        filename=None,
     ):
         """
         Save the progress to location/filename
         default save to current directory ./unpackai_imglbl.json
         """
         filename = self.default_file if filename is None else filename
-        location = Path(self.image_folder) if location is None else Path(location)
+        location = Path(
+            self.image_folder) if location is None else Path(location)
         with open(location/filename, "w") as f:
             f.write(json.dumps(self.progress))
         logging.info(f"Progess Saved to {location/filename}")
@@ -222,6 +224,10 @@ class ImageLabeler:
         btn.click = self.save_progress
         return btn
 
+    @staticmethod
+    def csv_val_processing(v):
+        return v
+
     def save_to_csv(self):
         DOM("Please name a filepath for csv file like ./progress.csv", "div")()
 
@@ -233,7 +239,8 @@ class ImageLabeler:
 
             # the labeled results, filter out the empety progress
             keys, vals = zip(*list(
-                (k, v) for k, v in self.progress["data"].items() if v is not None))
+                (k, self.csv_val_processing(v))
+                for k, v in self.progress["data"].items() if v is not None))
             pd.DataFrame({"path": keys, "label": vals}
                          ).to_csv(path, index=False)
             DOM(f"Progress saved to: '{path}'", "div")()
@@ -252,6 +259,7 @@ class ImageLabeler:
             (str(k), v) for k, v in self.progress["data"].items()
             if v is not None)
         print(f"Creating dataset with {len(mapping)} labels")
+
         def get_y_func(x):
             return str(mapping.get(str(x)))
         return get_y_func
@@ -259,6 +267,7 @@ class ImageLabeler:
 
 class SingleClassImageLabeler(ImageLabeler):
     default_file = "unpackai_single.json"
+
     def __init__(self, image_folder: Path):
         """
         path: Path, a folder full of images
@@ -277,6 +286,7 @@ class SingleClassImageLabeler(ImageLabeler):
         Create labels control
         """
         btns = []
+
         def create_callback(label):
             def callback():
                 k = row[self.identifier]
@@ -302,6 +312,7 @@ class SingleClassImageLabeler(ImageLabeler):
 
 class MultiClassImageLabeler(ImageLabeler):
     default_file = "unpackai_multi.json"
+
     def __init__(self, image_folder: Path):
         """
         path: Path, a folder full of images
@@ -313,6 +324,13 @@ class MultiClassImageLabeler(ImageLabeler):
         DOM("press Command(mac) or Ctrl(win/linux) to select multiple", "h4")()
         self.render_page()
         display(self.output)
+
+    @staticmethod
+    def csv_val_processing(v):
+        """
+        processing on value before save to csv
+        """
+        return ",".join(v)
 
     def create_label_btns(self, row):
         """
@@ -346,8 +364,33 @@ class MultiClassImageLabeler(ImageLabeler):
             (str(k), v) for k, v in self.progress["data"].items()
             if v is not None)
         print(f"Creating dataset with {len(mapping)} labels")
+
         def get_y_func(x):
             target = mapping.get(str(x))
             target = list() if target is None else target
             return target
         return get_y_func
+
+    @staticmethod
+    def gety_from_csv(csv_path: Path, path:str='path', label:str='label', sep=','):
+        """
+        csv_path: path for csv file
+        sep: separator, default:',', could be '\t' for tab
+        path: name of column contains image path info
+        label: name of the column contains label info
+        """
+        df = pd.read_csv(csv_path, sep = sep)
+        df[label] = df[label].fillna("")
+        df[label] = df[label].apply(
+            lambda x:list(map(
+                lambda i:i.strip(),str(x).replace('，',',').split(',')))
+            if x !='' else []
+        )
+        df[path] = df[path].apply(lambda x:str(Path(x).resolve()))
+        mapping = dict(df[[path, label]].values)
+        def get_y(x):
+            y = mapping.get(str(Path(x).resolve()))
+            if y is None:
+                return []
+            return y
+        return get_y
