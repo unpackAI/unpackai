@@ -386,6 +386,11 @@ class MultiClassImageLabeler(ImageLabeler):
                 lambda i:i.strip(),str(x).replace('，',',').split(',')))
             if x !='' else []
         )
+        all_labels = []
+        for lbls in list(df[label]):
+            all_labels += lbls
+        all_labels = list(set(all_labels))
+        print(f"All possible labels:\t{all_labels}")
         df[path] = df[path].apply(lambda x:str(Path(x).resolve()))
         mapping = dict(df[[path, label]].values)
         def get_y(x):
