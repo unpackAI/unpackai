@@ -10,8 +10,14 @@ entries:
       title: Overview
       url: /
     - output: web,pdf
+      title: Untilities
+      url: /utils
+    - output: web,pdf
       title: Image Data Labeler
       url: /Image_Labeler
+    - output: web,pdf
+      title: NLP
+      url: /nlp
     output: web
     title: unpackai
   output: web

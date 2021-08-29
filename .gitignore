@@ -131,3 +131,6 @@ dmypy.json
 test/*.json
 nbs/*.csv
 nbs/*.json
+
+.DS_Store
+Makefile

@@ -2,14 +2,19 @@
 
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
-index = {"ImageLabeler": "20_Image_Labeler.ipynb",
+index = {"check_img": "10_utils.ipynb",
+         "clean_error_img": "10_utils.ipynb",
+         "ImageLabeler": "20_Image_Labeler.ipynb",
          "SingleClassImageLabeler": "20_Image_Labeler.ipynb",
-         "MultiClassImageLabeler": "20_Image_Labeler.ipynb"}
+         "MultiClassImageLabeler": "20_Image_Labeler.ipynb",
+         "Textual": "40_nlp.ipynb"}
 
-modules = ["turk/image.py"]
+modules = ["utils.py",
+           "turk/image.py",
+           "nlp.py"]
 
-doc_url = "https://raynardj.github.io/unpackai/"
+doc_url = "https://unpackai.github.io/unpackai/"
 
-git_url = "https://github.com/raynardj/unpackai/tree/master/"
+git_url = "https://github.com/unpackai/unpackai/tree/master/"
 
 def custom_doc_links(name): return None

@@ -12,5 +12,5 @@ pip install unpackai
 
 or with github link
 ```shell
-pip install git+https://github.com/raynardj/unpackai/
+pip install git+https://github.com/unpackai/unpackai/
 ```
