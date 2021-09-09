@@ -11,13 +11,16 @@ entries:
       url: /
     - output: web,pdf
       title: Untilities
-      url: /utils
+      url: utils.html
+    - output: web,pdf
+      title: Cosine Similarirty
+      url: consine.html
     - output: web,pdf
       title: Image Data Labeler
-      url: /Image_Labeler
+      url: Image_Labeler.html
     - output: web,pdf
       title: NLP
-      url: /nlp
+      url: nlp.html
     output: web
     title: unpackai
   output: web

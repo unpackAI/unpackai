@@ -2,10 +2,13 @@
 
 title: NLP
 
+
 keywords: fastai
 sidebar: home_sidebar
 
 summary: "Things about NLP"
+description: "Things about NLP"
+nb_path: "nbs/40_nlp.ipynb"
 ---
 <!--
 
@@ -18,20 +21,27 @@ summary: "Things about NLP"
 -->
 
 <div class="container" id="notebook-container">
-    {% raw %}
         
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Textual--Data-Obtainer">Textual  Data Obtainer<a class="anchor-link" href="#Textual--Data-Obtainer">&#182;</a></h2>
+<h2 id="Textual--Data-Obtainer">Textual  Data Obtainer<a class="anchor-link" href="#Textual--Data-Obtainer"> </a></h2>
 </div>
 </div>
 </div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>This is a text data management class</p>
@@ -39,9 +49,8 @@ summary: "Things about NLP"
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -51,7 +60,7 @@ summary: "Things about NLP"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="Textual" class="doc_header"><code>class</code> <code>Textual</code><a href="https://github.com/raynardj/unpackai/tree/master/unpackai/nlp.py#L14" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Textual</code>(<strong><code>text</code></strong>:<code>str</code>)</p>
+<h2 id="Textual" class="doc_header"><code>class</code> <code>Textual</code><a href="https://github.com/unpackai/unpackai/tree/master/unpackai/nlp.py#L19" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Textual</code>(<strong><code>text</code></strong>:<code>str</code>)</p>
 </blockquote>
 <p>Obtain and manage textual data</p>
 
@@ -63,6 +72,17 @@ summary: "Things about NLP"
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -91,6 +111,10 @@ summary: "Things about NLP"
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -122,6 +146,10 @@ summary: "Things about NLP"
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -136,6 +164,781 @@ summary: "Things about NLP"
 
 </div>
     {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Interpret-Embedding">Interpret Embedding<a class="anchor-link" href="#Interpret-Embedding"> </a></h2>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">AutoTokenizer</span><span class="p">,</span> <span class="n">AutoModel</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">PRETRAINED</span> <span class="o">=</span> <span class="s2">&quot;albert-base-v2&quot;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">AutoModel</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">PRETRAINED</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>Some weights of the model checkpoint at albert-base-v2 were not used when initializing AlbertModel: [&#39;predictions.decoder.bias&#39;, &#39;predictions.dense.bias&#39;, &#39;predictions.LayerNorm.weight&#39;, &#39;predictions.decoder.weight&#39;, &#39;predictions.LayerNorm.bias&#39;, &#39;predictions.bias&#39;, &#39;predictions.dense.weight&#39;]
+- This IS expected if you are initializing AlbertModel from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing AlbertModel from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">PRETRAINED</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h2 id="InterpEmbeddings" class="doc_header"><code>class</code> <code>InterpEmbeddings</code><a href="https://github.com/unpackai/unpackai/tree/master/unpackai/nlp.py#L115" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>InterpEmbeddings</code>(<strong><code>embedding_matrix</code></strong>:<code>ndarray</code>, <strong><code>vocab</code></strong>:<code>Dict</code>[<code>int</code>, <code>str</code>])</p>
+</blockquote>
+<p>interp = InterpEmbeddings(embedding_matrix, vocab_dict)</p>
+<p>interp.search("computer")</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h2 id="InterpEmbeddingsTokenizer" class="doc_header"><code>class</code> <code>InterpEmbeddingsTokenizer</code><a href="https://github.com/unpackai/unpackai/tree/master/unpackai/nlp.py#L181" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>InterpEmbeddingsTokenizer</code>(<strong><code>embedding_matrix</code></strong>, <strong><code>tokenizer</code></strong>) :: <a href="/unpackai/nlp.html#InterpEmbeddings"><code>InterpEmbeddings</code></a></p>
+</blockquote>
+<p>interp = InterpEmbeddings(embedding_matrix, vocab_dict)</p>
+<p>interp.search("computer")</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tokenizer</span><span class="o">.</span><span class="n">special_tokens_map</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>{&#39;bos_token&#39;: &#39;[CLS]&#39;,
+ &#39;eos_token&#39;: &#39;[SEP]&#39;,
+ &#39;unk_token&#39;: &#39;&lt;unk&gt;&#39;,
+ &#39;sep_token&#39;: &#39;[SEP]&#39;,
+ &#39;pad_token&#39;: &#39;&lt;pad&gt;&#39;,
+ &#39;cls_token&#39;: &#39;[CLS]&#39;,
+ &#39;mask_token&#39;: &#39;[MASK]&#39;}</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">embeddings</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>AlbertEmbeddings(
+  (word_embeddings): Embedding(30000, 128, padding_idx=0)
+  (position_embeddings): Embedding(512, 128)
+  (token_type_embeddings): Embedding(2, 128)
+  (LayerNorm): LayerNorm((128,), eps=1e-12, elementwise_affine=True)
+  (dropout): Dropout(p=0, inplace=False)
+)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">embedding_matrix</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">embeddings</span><span class="o">.</span><span class="n">word_embeddings</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+<span class="n">embedding_matrix</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(30000, 128)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tokenizer</span><span class="o">.</span><span class="n">special_tokens_map</span><span class="o">.</span><span class="n">values</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;function dict.values&gt;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Embedding-with-tokenizer-search">Embedding with tokenizer search<a class="anchor-link" href="#Embedding-with-tokenizer-search"> </a></h3>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">interp</span> <span class="o">=</span> <span class="n">InterpEmbeddingsTokenizer</span><span class="p">(</span>
+    <span class="n">embedding_matrix</span><span class="p">,</span><span class="n">tokenizer</span><span class="o">=</span><span class="n">tokenizer</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">interp</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;wife&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>tokens</th>
+      <th>idx</th>
+      <th>similarity</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>▁wife</td>
+      <td>663</td>
+      <td>2.796573</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>▁girlfriend</td>
+      <td>5606</td>
+      <td>1.874535</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>▁spouse</td>
+      <td>16663</td>
+      <td>1.867864</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>▁wives</td>
+      <td>11333</td>
+      <td>1.867352</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>▁husband</td>
+      <td>1253</td>
+      <td>1.826611</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>▁daughter</td>
+      <td>783</td>
+      <td>1.810506</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>wife</td>
+      <td>13611</td>
+      <td>1.751927</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>▁widow</td>
+      <td>5151</td>
+      <td>1.605985</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>▁fiancee</td>
+      <td>22947</td>
+      <td>1.557384</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>▁sister</td>
+      <td>1035</td>
+      <td>1.515947</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>▁daughters</td>
+      <td>4909</td>
+      <td>1.495724</td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td>▁woman</td>
+      <td>524</td>
+      <td>1.459538</td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>▁son</td>
+      <td>433</td>
+      <td>1.451740</td>
+    </tr>
+    <tr>
+      <td>13</td>
+      <td>▁married</td>
+      <td>567</td>
+      <td>1.424582</td>
+    </tr>
+    <tr>
+      <td>14</td>
+      <td>▁fiance</td>
+      <td>22324</td>
+      <td>1.421876</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>▁granddaughter</td>
+      <td>15176</td>
+      <td>1.416612</td>
+    </tr>
+    <tr>
+      <td>16</td>
+      <td>▁bride</td>
+      <td>8034</td>
+      <td>1.412241</td>
+    </tr>
+    <tr>
+      <td>17</td>
+      <td>▁mother</td>
+      <td>449</td>
+      <td>1.410529</td>
+    </tr>
+    <tr>
+      <td>18</td>
+      <td>▁mistress</td>
+      <td>10427</td>
+      <td>1.394689</td>
+    </tr>
+    <tr>
+      <td>19</td>
+      <td>▁partner</td>
+      <td>2417</td>
+      <td>1.379885</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Embedding-with-just-an-token-id">Embedding with just an token id<a class="anchor-link" href="#Embedding-with-just-an-token-id"> </a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Create example</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">NUM_ITEMS</span> <span class="o">=</span> <span class="mi">500</span>
+
+<span class="c1"># an embedding maxtrix, in shape of</span>
+<span class="n">movie_embedding</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">NUM_ITEMS</span><span class="p">,</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># a dictionary mapping index to string</span>
+<span class="n">vocab</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;movie #</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">NUM_ITEMS</span><span class="p">,))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Interpret the example embedding and vocabulary</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">interp</span> <span class="o">=</span> <span class="n">InterpEmbeddings</span><span class="p">(</span><span class="n">movie_embedding</span><span class="p">,</span> <span class="n">vocab</span><span class="o">=</span><span class="n">vocab</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">interp</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;movie #22&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<h3>Search with token id 22</h3>
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>tokens</th>
+      <th>idx</th>
+      <th>similarity</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>movie #22</td>
+      <td>22</td>
+      <td>0.287944</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>movie #74</td>
+      <td>74</td>
+      <td>0.240893</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>movie #346</td>
+      <td>346</td>
+      <td>0.238294</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>movie #239</td>
+      <td>239</td>
+      <td>0.238032</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>movie #126</td>
+      <td>126</td>
+      <td>0.236948</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>movie #414</td>
+      <td>414</td>
+      <td>0.236702</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>movie #457</td>
+      <td>457</td>
+      <td>0.235410</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>movie #458</td>
+      <td>458</td>
+      <td>0.234861</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>movie #256</td>
+      <td>256</td>
+      <td>0.233834</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>movie #138</td>
+      <td>138</td>
+      <td>0.233646</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>movie #376</td>
+      <td>376</td>
+      <td>0.233056</td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td>movie #311</td>
+      <td>311</td>
+      <td>0.231898</td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>movie #321</td>
+      <td>321</td>
+      <td>0.231871</td>
+    </tr>
+    <tr>
+      <td>13</td>
+      <td>movie #103</td>
+      <td>103</td>
+      <td>0.231282</td>
+    </tr>
+    <tr>
+      <td>14</td>
+      <td>movie #323</td>
+      <td>323</td>
+      <td>0.231186</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>movie #198</td>
+      <td>198</td>
+      <td>0.231019</td>
+    </tr>
+    <tr>
+      <td>16</td>
+      <td>movie #258</td>
+      <td>258</td>
+      <td>0.230791</td>
+    </tr>
+    <tr>
+      <td>17</td>
+      <td>movie #408</td>
+      <td>408</td>
+      <td>0.230484</td>
+    </tr>
+    <tr>
+      <td>18</td>
+      <td>movie #464</td>
+      <td>464</td>
+      <td>0.230410</td>
+    </tr>
+    <tr>
+      <td>19</td>
+      <td>movie #159</td>
+      <td>159</td>
+      <td>0.230120</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
 </div>
  
 

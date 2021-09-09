@@ -1,8 +1,9 @@
 {
   "unpackai": {
     "Overview": "/",
-    "Untilities": "/utils",
-    "Image Data Labeler": "/Image_Labeler",
-    "NLP": "/nlp"
+    "Untilities": "utils.html",
+    "Cosine Similarirty": "consine.html",
+    "Image Data Labeler": "Image_Labeler.html",
+    "NLP": "nlp.html"
   }
 }
