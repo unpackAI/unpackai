@@ -27,7 +27,7 @@ def check_img(
 
     try:
         # try to open that image
-        _ = Image.open(img)
+        _ = Image.open(img).load()
     except Exception as e:
         if img.exists():
             img.unlink()
