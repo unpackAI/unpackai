@@ -211,8 +211,9 @@ class InterpEmbeddings:
             vecs = self.base[:first_k]
             tokens = tokens[:first_k]
         else:
+            selection = np.array(selection).astype(dtype=int64)
             # select a pool of tokens for visualizaiton
-            tokens = tokens[selection][:first_k]
+            tokens = list(np.array(tokens)[selection][:first_k])
             vecs = self.base[selection][:first_k]
         writer.add_embedding(vecs, metadata=tokens,)
         # prompts for next step
