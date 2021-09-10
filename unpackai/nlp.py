@@ -117,6 +117,9 @@ class InterpEmbeddings:
     interp = InterpEmbeddings(embedding_matrix, vocab_dict)
 
     interp.search("computer")
+
+    # visualize the embedding with tensorboard
+    interp.visualize_in_tb()
     """
 
     def __init__(
@@ -176,6 +179,46 @@ class InterpEmbeddings:
             "tokens": tokens,
             "idx": closest,
             "similarity": similarity})
+
+    def visualize_in_tb(
+        self,
+        log_dir:str="./logs",
+        selection: np.ndarray=None,
+        first_k:int=500,
+    ) -> None:
+        """
+        Visualize the embedding in tensorboard
+        For now this function is only supported on colab
+        """
+        # since this won't be excute too many times within a notebook
+        # in large chances... so to avoid missing library when import
+        # other function under this module: we import related stuff here
+        from torch.utils.tensorboard import SummaryWriter
+        # this version's pd has vc for quick value counts
+        from forgebox.imports import pd
+        import tensorflow as tf
+        import tensorboard as tb
+        import os
+
+        # possible tensorflow version error
+        tf.io.gfile = tb.compat.tensorflow_stub.io.gfile
+        os.system(f"rm -rf {log_dir}")
+        writer = SummaryWriter(log_dir=log_dir,)
+        self.i2c = dict((v,k) for k,v in self.c2i.items())
+        tokens = list(self.i2c.get(i) for i in range(len(self.i2c)))
+
+        if selection is None:
+            vecs = self.base[:first_k]
+            tokens = tokens[:first_k]
+        else:
+            # select a pool of tokens for visualizaiton
+            tokens = tokens[selection][:first_k]
+            vecs = self.base[selection][:first_k]
+        writer.add_embedding(vecs, metadata=tokens,)
+        # prompts for next step
+        print(f"Please run the the following command in a cell")
+        print("%load_ext tensorboard")
+        print(f"%tensorboard  --logdir {log_dir}")
 
 
 class InterpEmbeddingsTokenizer(InterpEmbeddings):
