@@ -13,7 +13,7 @@ from forgebox.html import DOM
 import numpy as np
 import pandas as pd
 from .cosine import CosineSearch
-from typing import Dict, List
+from typing import Dict, List, Any
 
 # Cell
 class Textual:
@@ -79,12 +79,14 @@ class Textual:
         """
         DOM("🗃 Please upload a text file ended in .txt", "h4")()
         my_manual = interact_manual.options(manual_name="Upload")
+
         @my_manual
-        def create_upload(btn_upload = FileUpload(description="Choose File")):
+        def create_upload(btn_upload=FileUpload(description="Choose File")):
             text = list(btn_upload.values())[-1]['content'].decode()
             with open(path, "w") as f:
                 f.write(text)
             return path
+
         def uploaded():
             result = create_upload.widget.result
             if result is None:
@@ -92,7 +94,6 @@ class Textual:
                     "You have to upload the txt file first")
             return cls.from_path(result)
         return uploaded
-
 
     def create_train_val(
             self,
@@ -110,6 +111,93 @@ class Textual:
         with open(val_path, "w") as f:
             f.write(self.text[:split])
         return train_path, val_path
+
+    def show_batch(self, tokenizer, bs:int = 4):
+        from torch.utils.data.dataloader import DataLoader
+        bunch = self.create_datasets(tokenizer)
+        return next(iter(DataLoader(
+            bunch['train_dataset'],
+            batch_size=bs,
+            collate_fn = bunch["data_collator"],
+            )))
+
+    def create_datasets(
+        self,
+        tokenizer,
+        valid_ratio: float = .2,
+        train_path: str = "./train_text.txt",
+        val_path: str = "./val_text.txt",
+        block_size: int = 128,
+        mlm: bool = False,
+    ) -> Dict[str, Any]:
+        """
+        Create pytorch datasets and collating fucntion
+        - tokenizer: a huggingface tokenizer
+        - valid ratio: portion of the valid data,
+            compare to the entire dataset
+        - train_path: a path saving train text file
+        - val_path: a path saving valid text file
+        - block_size: max possible length of the sequence
+        - mlm, return a masked language modeling collating
+            default False
+        """
+        # split dataset
+        train_path, val_path = self.create_train_val(
+            valid_ratio=valid_ratio,
+            train_path=train_path,
+            val_path=val_path,
+        )
+
+        from transformers import TextDataset, DataCollatorForLanguageModeling
+        train_dataset = TextDataset(
+            tokenizer=tokenizer,
+            file_path=train_path,
+            block_size=block_size)
+
+        test_dataset = TextDataset(
+            tokenizer=tokenizer,
+            file_path=val_path,
+            block_size=block_size)
+
+        data_collator = DataCollatorForLanguageModeling(
+            tokenizer=tokenizer, mlm=mlm,
+        )
+        return dict(
+            train_dataset=train_dataset,
+            eval_dataset=test_dataset,
+            data_collator=data_collator,
+        )
+
+    def get_hf_trainer(
+        self,
+        model,
+        tokenizer,
+        arguments = None,
+        valid_ratio: float = .2,
+        train_path: str = "./train_text.txt",
+        val_path: str = "./val_text.txt",
+        block_size: int = 128,
+        mlm: bool = False,
+    ):
+        from transformers import TrainingArguments, Trainer
+        if arguments is None:
+            arguments = TrainingArguments(
+                output_dir="./write_style",
+                overwrite_output_dir=True,  num_train_epochs=3,
+                eval_steps = 400, save_steps=800, warmup_steps=600,
+                per_device_train_batch_size=24,
+                per_device_eval_batch_size=64,
+            )
+        trainer = Trainer(
+            model=model, args=arguments,
+            **self.create_datasets(tokenizer,
+                valid_ratio=valid_ratio,
+                train_path=train_path,
+                val_path=val_path,
+                block_size=block_size,
+                mlm=mlm)
+        )
+        return trainer
 
 # Cell
 class InterpEmbeddings:

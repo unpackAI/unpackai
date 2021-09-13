@@ -2,13 +2,10 @@
 
 title: NLP
 
-
 keywords: fastai
 sidebar: home_sidebar
 
 summary: "Things about NLP"
-description: "Things about NLP"
-nb_path: "nbs/40_nlp.ipynb"
 ---
 <!--
 
@@ -21,27 +18,20 @@ nb_path: "nbs/40_nlp.ipynb"
 -->
 
 <div class="container" id="notebook-container">
-        
     {% raw %}
-    
+        
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
-    {% endraw %}
-
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Textual--Data-Obtainer">Textual  Data Obtainer<a class="anchor-link" href="#Textual--Data-Obtainer"> </a></h2>
+<h2 id="Textual--Data-Obtainer">Textual  Data Obtainer<a class="anchor-link" href="#Textual--Data-Obtainer">&#182;</a></h2>
 </div>
 </div>
 </div>
-    {% raw %}
-    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
-    {% endraw %}
-
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>This is a text data management class</p>
@@ -49,8 +39,9 @@ nb_path: "nbs/40_nlp.ipynb"
 </div>
 </div>
 </div>
-    {% raw %}
-    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -72,17 +63,6 @@ nb_path: "nbs/40_nlp.ipynb"
 </div>
 
 </div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -111,10 +91,6 @@ nb_path: "nbs/40_nlp.ipynb"
 </div>
 
 </div>
-    {% endraw %}
-
-    {% raw %}
-    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -146,10 +122,6 @@ nb_path: "nbs/40_nlp.ipynb"
 </div>
 
 </div>
-    {% endraw %}
-
-    {% raw %}
-    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -163,16 +135,12 @@ nb_path: "nbs/40_nlp.ipynb"
 </div>
 
 </div>
-    {% endraw %}
-
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Interpret-Embedding">Interpret Embedding<a class="anchor-link" href="#Interpret-Embedding"> </a></h2>
+<h2 id="Interpret-Embedding">Interpret Embedding<a class="anchor-link" href="#Interpret-Embedding">&#182;</a></h2>
 </div>
 </div>
 </div>
-    {% raw %}
-    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -186,10 +154,6 @@ nb_path: "nbs/40_nlp.ipynb"
 </div>
 
 </div>
-    {% endraw %}
-
-    {% raw %}
-    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -203,10 +167,6 @@ nb_path: "nbs/40_nlp.ipynb"
 </div>
 
 </div>
-    {% endraw %}
-
-    {% raw %}
-    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -252,10 +212,6 @@ nb_path: "nbs/40_nlp.ipynb"
 </div>
 
 </div>
-    {% endraw %}
-
-    {% raw %}
-    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -284,10 +240,9 @@ nb_path: "nbs/40_nlp.ipynb"
 </div>
 
 </div>
-    {% endraw %}
+<div class="cell border-box-sizing code_cell rendered">
 
-    {% raw %}
-    
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -297,11 +252,11 @@ nb_path: "nbs/40_nlp.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="InterpEmbeddings" class="doc_header"><code>class</code> <code>InterpEmbeddings</code><a href="https://github.com/unpackai/unpackai/tree/master/unpackai/nlp.py#L115" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>InterpEmbeddings</code>(<strong><code>embedding_matrix</code></strong>:<code>ndarray</code>, <strong><code>vocab</code></strong>:<code>Dict</code>[<code>int</code>, <code>str</code>])</p>
+<h2 id="InterpEmbeddings" class="doc_header"><code>class</code> <code>InterpEmbeddings</code><a href="https://github.com/unpackai/unpackai/tree/master/unpackai/nlp.py#L203" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>InterpEmbeddings</code>(<strong><code>embedding_matrix</code></strong>:<code>ndarray</code>, <strong><code>vocab</code></strong>:<code>Dict</code>[<code>int</code>, <code>str</code>])</p>
 </blockquote>
 <p>interp = InterpEmbeddings(embedding_matrix, vocab_dict)</p>
 <p>interp.search("computer")</p>
-<h1 id="visualize-the-embedding-with-tensorboard">visualize the embedding with tensorboard<a class="anchor-link" href="#visualize-the-embedding-with-tensorboard"> </a></h1><p>interp.visualize_in_tb()</p>
+<h1 id="visualize-the-embedding-with-tensorboard">visualize the embedding with tensorboard<a class="anchor-link" href="#visualize-the-embedding-with-tensorboard">&#182;</a></h1><p>interp.visualize_in_tb()</p>
 
 </div>
 
@@ -311,10 +266,6 @@ nb_path: "nbs/40_nlp.ipynb"
 </div>
 
 </div>
-    {% endraw %}
-
-    {% raw %}
-    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -324,11 +275,11 @@ nb_path: "nbs/40_nlp.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="InterpEmbeddingsTokenizer" class="doc_header"><code>class</code> <code>InterpEmbeddingsTokenizer</code><a href="https://github.com/unpackai/unpackai/tree/master/unpackai/nlp.py#L225" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>InterpEmbeddingsTokenizer</code>(<strong><code>embedding_matrix</code></strong>, <strong><code>tokenizer</code></strong>) :: <a href="/unpackai/nlp.html#InterpEmbeddings"><code>InterpEmbeddings</code></a></p>
+<h2 id="InterpEmbeddingsTokenizer" class="doc_header"><code>class</code> <code>InterpEmbeddingsTokenizer</code><a href="https://github.com/unpackai/unpackai/tree/master/unpackai/nlp.py#L313" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>InterpEmbeddingsTokenizer</code>(<strong><code>embedding_matrix</code></strong>, <strong><code>tokenizer</code></strong>) :: <a href="/unpackai/nlp#InterpEmbeddings"><code>InterpEmbeddings</code></a></p>
 </blockquote>
 <p>interp = InterpEmbeddings(embedding_matrix, vocab_dict)</p>
 <p>interp.search("computer")</p>
-<h1 id="visualize-the-embedding-with-tensorboard">visualize the embedding with tensorboard<a class="anchor-link" href="#visualize-the-embedding-with-tensorboard"> </a></h1><p>interp.visualize_in_tb()</p>
+<h1 id="visualize-the-embedding-with-tensorboard">visualize the embedding with tensorboard<a class="anchor-link" href="#visualize-the-embedding-with-tensorboard">&#182;</a></h1><p>interp.visualize_in_tb()</p>
 
 </div>
 
@@ -338,17 +289,6 @@ nb_path: "nbs/40_nlp.ipynb"
 </div>
 
 </div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -384,10 +324,6 @@ nb_path: "nbs/40_nlp.ipynb"
 </div>
 
 </div>
-    {% endraw %}
-
-    {% raw %}
-    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -423,10 +359,6 @@ nb_path: "nbs/40_nlp.ipynb"
 </div>
 
 </div>
-    {% endraw %}
-
-    {% raw %}
-    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -457,10 +389,6 @@ nb_path: "nbs/40_nlp.ipynb"
 </div>
 
 </div>
-    {% endraw %}
-
-    {% raw %}
-    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -490,16 +418,12 @@ nb_path: "nbs/40_nlp.ipynb"
 </div>
 
 </div>
-    {% endraw %}
-
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Embedding-with-tokenizer-search">Embedding with tokenizer search<a class="anchor-link" href="#Embedding-with-tokenizer-search"> </a></h3>
+<h3 id="Embedding-with-tokenizer-search">Embedding with tokenizer search<a class="anchor-link" href="#Embedding-with-tokenizer-search">&#182;</a></h3>
 </div>
 </div>
 </div>
-    {% raw %}
-    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -514,10 +438,6 @@ nb_path: "nbs/40_nlp.ipynb"
 </div>
 
 </div>
-    {% endraw %}
-
-    {% raw %}
-    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -692,11 +612,9 @@ nb_path: "nbs/40_nlp.ipynb"
 </div>
 
 </div>
-    {% endraw %}
-
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Embedding-with-just-an-token-id">Embedding with just an token id<a class="anchor-link" href="#Embedding-with-just-an-token-id"> </a></h3>
+<h3 id="Embedding-with-just-an-token-id">Embedding with just an token id<a class="anchor-link" href="#Embedding-with-just-an-token-id">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -707,8 +625,6 @@ nb_path: "nbs/40_nlp.ipynb"
 </div>
 </div>
 </div>
-    {% raw %}
-    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -720,7 +636,7 @@ nb_path: "nbs/40_nlp.ipynb"
 <span class="n">movie_embedding</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">NUM_ITEMS</span><span class="p">,</span><span class="mi">42</span><span class="p">)</span>
 
 <span class="c1"># a dictionary mapping index to string</span>
-<span class="n">vocab</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;movie #</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">NUM_ITEMS</span><span class="p">,))</span>
+<span class="n">vocab</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;movie #</span><span class="si">{i}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">NUM_ITEMS</span><span class="p">,))</span>
 </pre></div>
 
     </div>
@@ -728,8 +644,6 @@ nb_path: "nbs/40_nlp.ipynb"
 </div>
 
 </div>
-    {% endraw %}
-
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Interpret the example embedding and vocabulary</p>
@@ -737,8 +651,6 @@ nb_path: "nbs/40_nlp.ipynb"
 </div>
 </div>
 </div>
-    {% raw %}
-    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -752,10 +664,6 @@ nb_path: "nbs/40_nlp.ipynb"
 </div>
 
 </div>
-    {% endraw %}
-
-    {% raw %}
-    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -940,7 +848,6 @@ nb_path: "nbs/40_nlp.ipynb"
 
 </div>
     {% endraw %}
-
 </div>
  
 
