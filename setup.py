@@ -43,7 +43,6 @@ setuptools.setup(
     long_description_content_type = 'text/markdown',
     project_urls={
         'Documentation': doc_url,
-        'Source': 'https://github.com/unpackAI/unpackai',
         'Tracker': 'https://github.com/unpackAI/unpackai/issues',
     },
     zip_safe = False,
