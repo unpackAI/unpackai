@@ -1,7 +1,7 @@
 {
   "unpackai": {
     "Overview": "/",
-    "Untilities": "/utils",
+    "Utilities": "/utils",
     "Cosine Similarirty": "/consine",
     "Image Data Labeler": "/Image_Labeler",
     "NLP": "/nlp"

@@ -10,7 +10,7 @@ entries:
       title: Overview
       url: /
     - output: web,pdf
-      title: Untilities
+      title: Utilities
       url: /utils
     - output: web,pdf
       title: Cosine Similarirty
