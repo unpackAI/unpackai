@@ -2,10 +2,9 @@
 # unpackAI
 
 [![PyPI version](https://img.shields.io/pypi/v/unpackai)](https://pypi.org/project/unpackai/)
-[![Python version](https://img.shields.io/pypi/pyversions/unpackai)](https://github.com/unpackAI/unpackai)
+![Python version](https://img.shields.io/pypi/pyversions/unpackai)
 ![License](https://img.shields.io/github/license/unpackai/unpackai)
 ![PyPI Downloads](https://img.shields.io/pypi/dm/unpackai)
-
 [![Bugs](https://img.shields.io/github/issues/unpackai/unpackai/bug)](https://github.com/unpackai/unpackai/issues?q=is%3Aissue+is%3Aopen+-label%3A"enhancement")
 [![Enhancements](https://img.shields.io/github/issues/unpackai/unpackai/enhancement)](https://github.com/unpackai/unpackai/issues?q=is%3Aissue+is%3Aopen+label%3A"enhancement")
 [![Coverage Status](https://coveralls.io/repos/github/unpackAI/unpackai/badge.svg?branch=main)](https://coveralls.io/github/unpackAI/unpackai?branch=main)
