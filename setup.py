@@ -14,24 +14,25 @@ for o in expected: assert o in cfg, "missing expected setting: {}".format(o)
 setup_cfg = {o:cfg[o] for o in cfg_keys}
 
 licenses = {
-    'apache2': ('Apache Software License 2.0','OSI Approved :: Apache Software License'),
+    'apache2': ('Apache Software License 2.0', 'OSI Approved :: Apache Software License'),
+    'MIT': ('MIT', 'OSI Approved :: MIT License'),
 }
 statuses = [ '1 - Planning', '2 - Pre-Alpha', '3 - Alpha',
     '4 - Beta', '5 - Production/Stable', '6 - Mature', '7 - Inactive' ]
 py_versions = '2.0 2.1 2.2 2.3 2.4 2.5 2.6 2.7 3.0 3.1 3.2 3.3 3.4 3.5 3.6 3.7 3.8'.split()
 
 requirements = cfg.get('requirements','').split()
-lic = licenses[cfg['license']]
+license_info = licenses[cfg['license']]
 min_python = cfg['min_python']
 doc_url = cfg["doc_host"] + cfg["doc_baseurl"]
 
 setuptools.setup(
     name = cfg['lib_name'],
-    license = lic[0],
+    license = license_info[0],
     classifiers = [
         'Development Status :: ' + statuses[int(cfg['status'])],
         'Intended Audience :: ' + cfg['audience'].title(),
-        'License :: ' + lic[1],
+        'License :: ' + license_info[1],
         'Natural Language :: ' + cfg['language'].title(),
     ] + ['Programming Language :: Python :: '+o for o in py_versions[py_versions.index(min_python):]],
     url = 'https://github.com/{}/{}'.format(cfg['user'],cfg['lib_name']),
