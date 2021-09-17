@@ -1,11 +1,11 @@
-<img src="images/unpackAI_logo_wbg.svg" alt="unpackAI Logo" width="100%"/>
+<img src="https://unpackai.github.io/unpackai_logo.svg" alt="unpackAI Logo" width="100%"/>
 
-# unpack.AI
+# unpackAI
 
 > AI & Machine Learning Education as accessible as possible.
 > -- <cite>unpackAI</cite>
 
-The [unpack.AI](https://unpackai.com/) library ease your learning of state-of-the-art deep learning to empower your business and career.
+The [unpackAI](https://unpackai.com/) library ease your learning of state-of-the-art deep learning to empower your business and career.
 
 ## Installation
 
