@@ -1,12 +1,11 @@
 
-<img src="https://unpackai.github.io/unpackai_logo.svg" alt="unpackAI Logo" width="100%"/>
-
 # unpackAI
 
 [![PyPI version](https://img.shields.io/pypi/v/unpackai)](https://pypi.org/project/unpackai/)
 [![Python version](https://img.shields.io/pypi/pyversions/unpackai)](https://github.com/unpackAI/unpackai)
 [![GitHub issues](https://img.shields.io/github/issues/unpackai/unpackai.svg)](https://github.com/unpackai/unpackai/issues)
 
+<img src="https://unpackai.github.io/unpackai_logo.svg" alt="unpackAI Logo" width="100%"/>
 
 > AI & Machine Learning Education as accessible as possible.
 > -- <cite>unpackAI</cite>
