@@ -4,18 +4,21 @@ __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
 index = {"check_img": "10_utils.ipynb",
          "clean_error_img": "10_utils.ipynb",
-         "CosineSearch": "12_consine.ipynb",
+         "CosineSearch": "15_interp_latent.ipynb",
+         "InterpEmbeddings": "15_interp_latent.ipynb",
          "ImageLabeler": "20_Image_Labeler.ipynb",
          "SingleClassImageLabeler": "20_Image_Labeler.ipynb",
          "MultiClassImageLabeler": "20_Image_Labeler.ipynb",
-         "Textual": "40_nlp.ipynb",
-         "InterpEmbeddings": "40_nlp.ipynb",
-         "InterpEmbeddingsTokenizer": "40_nlp.ipynb"}
+         "Textual": "41_nlp_data.ipynb",
+         "InterpEmbeddingsTokenizer": "45_nlp_interp.ipynb"}
 
 modules = ["utils.py",
-           "cosine.py",
+           "interp/latent.py",
+           "interp/__init__.py",
            "turk/image.py",
-           "nlp.py"]
+           "nlp/data.py",
+           "nlp/interp.py",
+           "nlp/__init__.py"]
 
 doc_url = "https://unpackai.github.io/unpackai/"
 
