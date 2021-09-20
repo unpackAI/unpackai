@@ -1,9 +1,9 @@
-repository: raynardj/unpackai
+repository: unpackai/unpackai
 output: web
 topnav_title: unpackai
-site_title: UnpackAI
+site_title: unpackAI
 company_name: xiaochenzhang
-description: A description of your project
+description: unpackAI library, to make learning of Machine Learning easier
 # Set to false to disable KaTeX math
 use_math: true
 # Add Google analytics id if you have one and want to use it here
@@ -19,17 +19,17 @@ port: 4000
 exclude:
   - .idea/
   - .gitignore
-  - vendor
- 
-exclude: [vendor]
+  - .vscode/
+  - build/
+  - dist/
 
 highlighter: rouge
 markdown: kramdown
 kramdown:
- input: GFM
- auto_ids: true
- hard_wrap: false
- syntax_highlighter: rouge
+  input: GFM
+  auto_ids: true
+  hard_wrap: false
+  syntax_highlighter: rouge
 
 collections:
   tooltips:
