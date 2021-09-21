@@ -108,6 +108,378 @@ If it's quality is troublesome
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Magic-function-[`hush`](/unpackai/utils#hush)">Magic function <code>[`hush`](/unpackai/utils#hush)</code><a class="anchor-link" href="#Magic-function-[`hush`](/unpackai/utils#hush)">&#182;</a></h2><blockquote><p>Run things quietly...</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This is a magical cell function, so remember to use the <code>%%</code></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now we have 2 versions of hush, the 1st on is the backup one, that using ipywidget as event trigger</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nd">@register_cell_magic</span>
+<span class="k">def</span> <span class="nf">hush</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">cell</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A magic cell function to collapse the print out</span>
+<span class="sd">    %%hush</span>
+<span class="sd">    how_loud = 100</span>
+<span class="sd">    how_verbose = &quot;very&quot;</span>
+<span class="sd">    do_some_python_thing(how_loud, how_verbose)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># the current output widget</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">Output</span><span class="p">()</span>
+    <span class="n">output_box</span> <span class="o">=</span> <span class="n">VBox</span><span class="p">([</span><span class="n">out</span><span class="p">])</span>
+    <span class="c1"># default setting is to hide the print out</span>
+    <span class="n">output_box</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">display</span> <span class="o">=</span> <span class="s2">&quot;none&quot;</span>
+    <span class="c1"># the toggling button</span>
+    <span class="n">show_btn</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Show output&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">toggle_output</span><span class="p">(</span><span class="n">o</span><span class="p">):</span>
+        <span class="c1"># show output, change the button to hide</span>
+        <span class="k">if</span> <span class="n">output_box</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">display</span> <span class="o">==</span> <span class="s2">&quot;none&quot;</span><span class="p">:</span>
+            <span class="n">output_box</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">display</span> <span class="o">=</span> <span class="s2">&quot;block&quot;</span>
+            <span class="n">show_btn</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="s2">&quot;Hide output&quot;</span>
+        <span class="c1"># hide output, change the button to show</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">output_box</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">display</span> <span class="o">=</span> <span class="s2">&quot;none&quot;</span>
+            <span class="n">show_btn</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="s2">&quot;Show output&quot;</span>
+
+    <span class="c1"># assign toggle to event</span>
+    <span class="n">show_btn</span><span class="o">.</span><span class="n">on_click</span><span class="p">(</span><span class="n">toggle_output</span><span class="p">)</span>
+
+    <span class="c1"># A control panel containing a button</span>
+    <span class="c1"># and the output box</span>
+    <span class="n">total_control</span> <span class="o">=</span> <span class="n">VBox</span><span class="p">([</span><span class="n">show_btn</span><span class="p">,</span> <span class="n">output_box</span><span class="p">])</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">total_control</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="n">out</span><span class="p">:</span>
+        <span class="n">ishell</span> <span class="o">=</span> <span class="n">get_ipython</span><span class="p">()</span>
+        <span class="c1"># excute the code in cell</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">ishell</span><span class="o">.</span><span class="n">run_cell</span><span class="p">(</span>
+            <span class="n">cell</span><span class="p">,</span> <span class="n">silent</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="c1"># we still want the error to be proclaimed loudly</span>
+    <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">error_in_exec</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{result.error_in_exec}</span><span class="s2">&#39; happened, breaking silence now&quot;</span><span class="p">)</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">raise_error</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>But this version of <code>toggle action</code> will be stuck by the ongoing interactive</p>
+<p>If the process is working on some thing, you can't toggle until the end of the execution.</p>
+<p>The further improvement will be move the toggle entirely to JavaScript, hence the second version</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Hush-event-in-JS">Hush event in JS<a class="anchor-link" href="#Hush-event-in-JS">&#182;</a></h3><blockquote><p>As not going through any amount of python backend after run</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="hush" class="doc_header"><code>hush</code><a href="https://github.com/unpackai/unpackai/tree/master/unpackai/utils.py#L76" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>hush</code>(<strong><code>line</code></strong>, <strong><code>cell</code></strong>)</p>
+</blockquote>
+<p>A magic cell function to collapse the print out
+%%hush
+how_loud = 100
+how_verbose = "very"
+do_some_python_thing(how_loud, how_verbose)</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Try-hushing-various-kinds-of-info">Try hushing various kinds of info<a class="anchor-link" href="#Try-hushing-various-kinds-of-info">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>html display</li>
+<li>print</li>
+<li>logging</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">hush</span>
+import pandas as pd
+import logging
+logging.getLogger().setLevel(&#39;DEBUG&#39;)
+a = 1
+for i in range(1000):
+    print(i, end=&quot;\t&quot;)
+    
+logging.info(&quot;a lots of text, VERBOSITY!!&quot;*100)
+
+# a big dataframe
+display(pd.DataFrame({&quot;a&quot;:[1,2]*50}))
+
+# a big output
+pd.DataFrame({&quot;b&quot;:range(100)})
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+
+<div id="46f3c463-d26c-4081-b33e-ee9a63ab5cdb"></div>
+<div class="output_subarea output_javascript ">
+<script type="text/javascript">
+var element = $('#46f3c463-d26c-4081-b33e-ee9a63ab5cdb');
+
+    console.info("loading toggle event: 35b1be4f-c813-4a21-a2b6-b71a48914483")
+    const toggle_hush = (e) =>{
+        var op = $(".hush_output_35b1be4f-c813-4a21-a2b6-b71a48914483");
+        if($(op).css("display")=="none"){
+             $(op).css("display","block")
+
+        } else {
+            $(op).css("display","none")
+        }
+
+    }
+    document.querySelector('.hush_toggle_35b1be4f-c813-4a21-a2b6-b71a48914483').onclick=toggle_hush
+    
+</script>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Capable-of-open/close-verbosity-during-the-main-process">Capable of open/close verbosity during the main process<a class="anchor-link" href="#Capable-of-open/close-verbosity-during-the-main-process">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">hush</span>
+from tqdm.notebook import tqdm
+from time import sleep
+for i in tqdm(range(10)):
+    sleep(1)
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+
+<div id="74572134-0192-46d2-b1e6-1800e6b18691"></div>
+<div class="output_subarea output_javascript ">
+<script type="text/javascript">
+var element = $('#74572134-0192-46d2-b1e6-1800e6b18691');
+
+    console.info("loading toggle event: fa8c13fb-3dfe-4e0e-abea-405cab5570ce")
+    const toggle_hush = (e) =>{
+        var op = $(".hush_output_fa8c13fb-3dfe-4e0e-abea-405cab5570ce");
+        if($(op).css("display")=="none"){
+             $(op).css("display","block")
+
+        } else {
+            $(op).css("display","none")
+        }
+
+    }
+    document.querySelector('.hush_toggle_fa8c13fb-3dfe-4e0e-abea-405cab5570ce').onclick=toggle_hush
+    
+</script>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="But-we-still-want-the-error-to-be-loud">But we still want the error to be loud<a class="anchor-link" href="#But-we-still-want-the-error-to-be-loud">&#182;</a></h3><blockquote><p>As such information should interrupt the user</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">hush</span>
+for i in range(20):
+    print(f&quot;some logging:\t{i}!&quot;)
+raise ValueError(&quot;but some error, because life!&quot;)
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+
+<div id="6b333355-b11b-489c-b645-7ddfb9dbac95"></div>
+<div class="output_subarea output_javascript ">
+<script type="text/javascript">
+var element = $('#6b333355-b11b-489c-b645-7ddfb9dbac95');
+
+    console.info("loading toggle event: f3bf3c70-c3e0-4baf-9dd7-f50e2ec49fe3")
+    const toggle_hush = (e) =>{
+        var op = $(".hush_output_f3bf3c70-c3e0-4baf-9dd7-f50e2ec49fe3");
+        if($(op).css("display")=="none"){
+             $(op).css("display","block")
+
+        } else {
+            $(op).css("display","none")
+        }
+
+    }
+    document.querySelector('.hush_toggle_f3bf3c70-c3e0-4baf-9dd7-f50e2ec49fe3').onclick=toggle_hush
+    
+</script>
+</div>
+
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>ERROR:root:&#39;but some error, because life!&#39; happened, breaking silence now
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">ValueError</span>                                Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-157-b422c2c00906&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>get_ipython<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">.</span>run_cell_magic<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#39;hush&#39;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;&#39;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;for i in range(20):\n    print(f&#34;some logging:\\t{i}!&#34;)\nraise ValueError(&#34;but some error, because life!&#34;)\n&#39;</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">~/anaconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py</span> in <span class="ansi-cyan-fg">run_cell_magic</span><span class="ansi-blue-fg">(self, magic_name, line, cell)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2357</span>             <span class="ansi-green-fg">with</span> self<span class="ansi-blue-fg">.</span>builtin_trap<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">   2358</span>                 args <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">(</span>magic_arg_s<span class="ansi-blue-fg">,</span> cell<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">-&gt; 2359</span><span class="ansi-red-fg">                 </span>result <span class="ansi-blue-fg">=</span> fn<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">*</span>args<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kwargs<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2360</span>             <span class="ansi-green-fg">return</span> result
+<span class="ansi-green-intense-fg ansi-bold">   2361</span> 
+
+<span class="ansi-green-fg">&lt;ipython-input-154-7270a6707e1a&gt;</span> in <span class="ansi-cyan-fg">hush</span><span class="ansi-blue-fg">(line, cell)</span>
+<span class="ansi-green-intense-fg ansi-bold">     52</span>     <span class="ansi-green-fg">if</span> result<span class="ansi-blue-fg">.</span>error_in_exec<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">     53</span>         logging<span class="ansi-blue-fg">.</span>error<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">f&#34;&#39;{result.error_in_exec}&#39; happened, breaking silence now&#34;</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">---&gt; 54</span><span class="ansi-red-fg">         </span>result<span class="ansi-blue-fg">.</span>raise_error<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">~/anaconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py</span> in <span class="ansi-cyan-fg">raise_error</span><span class="ansi-blue-fg">(self)</span>
+<span class="ansi-green-intense-fg ansi-bold">    335</span>             <span class="ansi-green-fg">raise</span> self<span class="ansi-blue-fg">.</span>error_before_exec
+<span class="ansi-green-intense-fg ansi-bold">    336</span>         <span class="ansi-green-fg">if</span> self<span class="ansi-blue-fg">.</span>error_in_exec <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">not</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">--&gt; 337</span><span class="ansi-red-fg">             </span><span class="ansi-green-fg">raise</span> self<span class="ansi-blue-fg">.</span>error_in_exec
+<span class="ansi-green-intense-fg ansi-bold">    338</span> 
+<span class="ansi-green-intense-fg ansi-bold">    339</span>     <span class="ansi-green-fg">def</span> __repr__<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">~/anaconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py</span> in <span class="ansi-cyan-fg">run_code</span><span class="ansi-blue-fg">(self, code_obj, result, async_)</span>
+<span class="ansi-green-intense-fg ansi-bold">   3324</span>                     <span class="ansi-green-fg">await</span> eval<span class="ansi-blue-fg">(</span>code_obj<span class="ansi-blue-fg">,</span> self<span class="ansi-blue-fg">.</span>user_global_ns<span class="ansi-blue-fg">,</span> self<span class="ansi-blue-fg">.</span>user_ns<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   3325</span>                 <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">-&gt; 3326</span><span class="ansi-red-fg">                     </span>exec<span class="ansi-blue-fg">(</span>code_obj<span class="ansi-blue-fg">,</span> self<span class="ansi-blue-fg">.</span>user_global_ns<span class="ansi-blue-fg">,</span> self<span class="ansi-blue-fg">.</span>user_ns<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   3327</span>             <span class="ansi-green-fg">finally</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">   3328</span>                 <span class="ansi-red-fg"># Reset our crash handler in place</span>
+
+<span class="ansi-green-fg">&lt;ipython-input-157-51b5f109b9c9&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-intense-fg ansi-bold">      1</span> <span class="ansi-green-fg">for</span> i <span class="ansi-green-fg">in</span> range<span class="ansi-blue-fg">(</span><span class="ansi-cyan-fg">20</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">      2</span>     print<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">f&#34;some logging:\t{i}!&#34;</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">----&gt; 3</span><span class="ansi-red-fg"> </span><span class="ansi-green-fg">raise</span> ValueError<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#34;but some error, because life!&#34;</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-red-fg">ValueError</span>: but some error, because life!</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
     {% endraw %}
 </div>
  
