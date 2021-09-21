@@ -9,7 +9,7 @@
 
 [![Bugs](https://img.shields.io/github/issues/unpackai/unpackai/bug)](https://github.com/unpackai/unpackai/issues?q=is%3Aissue+is%3Aopen+-label%3A"enhancement")
 [![Enhancements](https://img.shields.io/github/issues/unpackai/unpackai/enhancement)](https://github.com/unpackai/unpackai/issues?q=is%3Aissue+is%3Aopen+label%3A"enhancement")
-[![Coverage Status](https://coveralls.io/repos/github/unpackAI/unpackai/badge.svg?branch=main)](https://coveralls.io/github/unpackAI/unpackai?branch=main)
+[![codecov](https://codecov.io/gh/unpackAI/unpackai/branch/main/graph/badge.svg)](https://codecov.io/gh/unpackAI/unpackai)
 
 
 > AI & Machine Learning Education as accessible as possible.
