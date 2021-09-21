@@ -10,6 +10,8 @@ index = {"check_img": "10_utils.ipynb",
          "ImageLabeler": "20_Image_Labeler.ipynb",
          "SingleClassImageLabeler": "20_Image_Labeler.ipynb",
          "MultiClassImageLabeler": "20_Image_Labeler.ipynb",
+         "no_missing_values": "35_tabular_data.ipynb",
+         "plot_hist": "35_tabular_data.ipynb",
          "Textual": "41_nlp_data.ipynb",
          "InterpEmbeddingsTokenizer": "45_nlp_interp.ipynb"}
 
@@ -17,6 +19,8 @@ modules = ["utils.py",
            "interp/latent.py",
            "interp/__init__.py",
            "turk/image.py",
+           "tabular/data.py",
+           "tabular/__init__.py",
            "nlp/data.py",
            "nlp/interp.py",
            "nlp/__init__.py"]
