@@ -106,12 +106,12 @@ def hush(line, cell):
     display(Javascript(f"""
     console.info("loading toggle event: {uuid}")
     const toggle_hush = (e) =>\u007b
-        var op = $(".hush_output_{uuid}");
-        if($(op).css("display")=="none")\u007b
-             $(op).css("display","block")
+        var op = document.querySelector(".hush_output_{uuid}");
+        if(op.style.display=="none")\u007b
+             op.style.display="block"
 
         \u007d else \u007b
-            $(op).css("display","none")
+            op.style.display="none"
         \u007d
 
     \u007d
