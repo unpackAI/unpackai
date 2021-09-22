@@ -6,4 +6,4 @@ pytest-mock
 ipython
 fastai
 forgebox>=0.4.5
-tqm
+tqdm
