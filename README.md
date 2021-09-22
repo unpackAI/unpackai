@@ -6,16 +6,18 @@
 ![Python version](https://img.shields.io/pypi/pyversions/unpackai)
 ![License](https://img.shields.io/github/license/unpackai/unpackai)
 ![PyPI Downloads](https://img.shields.io/pypi/dm/unpackai)
-
 [![Bugs](https://img.shields.io/github/issues/unpackai/unpackai/bug)](https://github.com/unpackai/unpackai/issues?q=is%3Aissue+is%3Aopen+-label%3A"enhancement")
 [![Enhancements](https://img.shields.io/github/issues/unpackai/unpackai/enhancement)](https://github.com/unpackai/unpackai/issues?q=is%3Aissue+is%3Aopen+label%3A"enhancement")
 [![codecov](https://codecov.io/gh/unpackAI/unpackai/branch/main/graph/badge.svg)](https://codecov.io/gh/unpackAI/unpackai)
 
-
 > AI & Machine Learning Education as accessible as possible.
 > -- <cite>unpackAI</cite>
 
-The [unpackAI](https://unpackai.com/) library ease your learning of state-of-the-art deep learning to empower your business and career.
+The [unpackAI](https://unpackai.com/) library eases your learning of state-of-the-art deep learning to empower your business and career.
+
+## Who is unpackAI?
+
+unpackAI has the mission to help people
 
 ## Installation
 

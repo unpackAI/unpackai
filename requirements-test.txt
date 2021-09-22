@@ -1,0 +1,9 @@
+pytest
+pytest-cov
+pytest-mock
+
+# Required for dev
+ipython
+fastai
+forgebox>=0.4.5
+tqdm
