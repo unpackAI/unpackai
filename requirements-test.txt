@@ -2,8 +2,10 @@ pytest
 pytest-cov
 pytest-mock
 
-# Required for dev
+# Required for usage of module
 ipython
 fastai
 forgebox>=0.4.5
 tqdm
+ipywidgets
+beautifulsoup4
