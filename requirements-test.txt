@@ -3,7 +3,7 @@ pytest-cov
 pytest-mock
 
 # Required for dev
-IPython
+ipython
 fastai
 forgebox>=0.4.5
 tqm
