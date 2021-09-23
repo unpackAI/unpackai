@@ -3,7 +3,6 @@
 __all__ = ['check_img', 'clean_error_img', 'hush']
 
 # Cell
-import os
 import logging
 from typing import Callable, List
 from pathlib import Path
@@ -31,12 +30,15 @@ def check_img(
         return
 
     try:
-        # try to open that image
-        _ = Image.open(img).load()
-    except Exception as e:
+        # try to open that image and then (to check truncated image)
+        # We need to include in a with block to close the image before deleting
+        with Image.open(img) as im:
+            im.load()
+    except Exception:
         if img.exists():
             img.unlink()
-            logging.warning(f"removed error img: {img}")
+            logging.warning(f"Removed erroneous img: {img}")
+            return
 
 
 def clean_error_img(
