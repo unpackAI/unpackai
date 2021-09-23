@@ -9,6 +9,7 @@ import pytest
 from PIL import Image
 from test_common.utils_4_tests import IMG_DIR, check_no_log, check_only_warning
 
+
 # Internal Cell
 
 images_rob = list((IMG_DIR / "robustness").glob("*.*"))
