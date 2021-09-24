@@ -1,8 +1,6 @@
-<p align="center">
-[<img src="https://unpackai.github.io/unpackai_logo.svg" alt="unpackAI Logo" width="500"/>](https://unpackai.com/)
-</p>
+<img src="https://unpackai.github.io/unpackai_logo.svg" alt="unpackAI Logo" width="500"/>](https://unpackai.com/)
 
-<center> ### unpackAI - The library to ease your learning, building and deployment of state-of-the-art deep learning models to empower your business and career. </center>
+### unpackAI - The library to ease your learning, building and deployment of state-of-the-art deep learning models to empower your business and career.
 
 
 [![PyPI version](https://img.shields.io/pypi/v/unpackai)](https://pypi.org/project/unpackai/)
