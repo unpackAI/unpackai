@@ -1,4 +1,4 @@
-<img src="https://unpackai.com/" alt="unpackAI Logo" width="75%"/>
+<img [src="https://unpackai.github.io/unpackai_logo.svg"](https://unpackai.com/) alt="unpackAI Logo" width="75%"/>
 
 # unpackAI
 
