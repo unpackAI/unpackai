@@ -1,4 +1,4 @@
-<img src="https://unpackai.github.io/unpackai_logo.svg" alt="unpackAI Logo" width="75%"/>
+<img src="https://unpackai.com/" alt="unpackAI Logo" width="75%"/>
 
 # unpackAI
 
@@ -17,7 +17,7 @@ The [unpackAI](https://unpackai.com/) library eases your learning of state-of-th
 
 ## Who is unpackAI?
 
-unpackAI has the mission to help people
+unpackAI has the mission to make AI education as accessible as possible. Alongside our AI & Machine Learning Bootcamps for Business Professionals, we build this library to remove technical barriers and provide the right tools for individuals and businesses to allow for effective learning, building and deployment of AI projects. Find more information via our [website](https://unpackai.com/) and get in touch!
 
 ## Installation
 
@@ -38,6 +38,7 @@ pip install git+https://github.com/unpackai/unpackai/
 This package provides utilities for:
 
 * Computer Vision (CV)
+* Tabular Data
 * Natural Language Processing (NLP)
 
 ## Documentation
