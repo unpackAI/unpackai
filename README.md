@@ -1,6 +1,6 @@
 [<img src="https://unpackai.github.io/unpackai_logo.svg" alt="unpackAI Logo" width="75%"/>](https://unpackai.com/)
 
-# unpackAI
+# [unpackAI](https://unpackai.com/)  - The library to ease your learning, building and deployment of state-of-the-art deep learning models to empower your business and career.
 
 [![PyPI version](https://img.shields.io/pypi/v/unpackai)](https://pypi.org/project/unpackai/)
 ![Python version](https://img.shields.io/pypi/pyversions/unpackai)
@@ -9,11 +9,6 @@
 [![Bugs](https://img.shields.io/github/issues/unpackai/unpackai/bug)](https://github.com/unpackai/unpackai/issues?q=is%3Aissue+is%3Aopen+-label%3A"enhancement")
 [![Enhancements](https://img.shields.io/github/issues/unpackai/unpackai/enhancement)](https://github.com/unpackai/unpackai/issues?q=is%3Aissue+is%3Aopen+label%3A"enhancement")
 [![codecov](https://codecov.io/gh/unpackAI/unpackai/branch/main/graph/badge.svg)](https://codecov.io/gh/unpackAI/unpackai)
-
-> AI & Machine Learning Education as accessible as possible.
-> -- <cite>unpackAI</cite>
-
-The [unpackAI](https://unpackai.com/) library eases your learning of state-of-the-art deep learning to empower your business and career.
 
 ## Who is unpackAI?
 
