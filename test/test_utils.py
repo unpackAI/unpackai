@@ -9,7 +9,6 @@ import pytest
 from PIL import Image
 from test_common.utils_4_tests import IMG_DIR, check_no_log, check_only_warning
 
-
 # Internal Cell
 
 images_rob = list((IMG_DIR / "robustness").glob("*.*"))
@@ -100,3 +99,8 @@ def test_clean_error_img(tmpdir, monkeypatch) -> None:
     bad_still_here = [f for f in bad if f.is_file()]
     assert not bad_still_here, f"Bad pictures not deleted: {bad_still_here}"
 
+
+# Internal Cell
+def test_find_static():
+    error_report_html = STATIC/"html"/"bug"/"error_report.html"
+    assert (error_report_html).is_file(), f"'{STATIC}' is not a valid static path"
