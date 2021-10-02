@@ -10,10 +10,11 @@ nbdev_build_docs --mk_readme False
 echo '========== ✅  =========='
 echo "========== 🧪 extract tests under $(dirname $0) =========="
 # Extract Test Cases
-cd $(dirname "$0")
-python3 test/extract_tests.py
+cd $(dirname "$0")=
+python3 test/test_extractor.py
 echo '========== ✅  =========='
 # Reinstall the package
 echo '========== 📦 reinstall unpackai =========='
 pip install -e .
 echo '========== ✅  =========='
+
