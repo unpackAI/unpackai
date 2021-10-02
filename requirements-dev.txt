@@ -1,9 +1,7 @@
-pytest
-pytest-cov
-pytest-mock
+# Required for dev
+black
 
 # Required for usage of module
-black
 ipython
 fastai
 forgebox>=0.4.5
