@@ -4,11 +4,11 @@ __all__ = ['keyerror_in_tabular']
 
 # Cell
 from ..utils import *
-from ..bug import ishell,BUGBOOK, itb
-from ..interp import *
 from .data import *
 
 # Cell
+from ..bug import ishell,BUGBOOK, itb
+
 def keyerror_in_tabular(etype, evalue, tb):
     stb = itb.structured_traceback(etype, evalue, tb)
     sstb = itb.stb2text(stb)
