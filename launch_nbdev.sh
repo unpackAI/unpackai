@@ -5,9 +5,6 @@ echo '========== 🧼 clean notebooks =========='
 nbdev_clean_nbs
 # We want to have a README managed independently
 echo '========== ✅  =========='
-echo '========== 📚 build unpackai documentations =========='
-nbdev_build_docs --mk_readme False
-echo '========== ✅  =========='
 echo "========== 🧪 extract tests under $(dirname $0) =========="
 # Extract Test Cases
 cd $(dirname "$0")=
