@@ -114,9 +114,10 @@ def extract_tests(nb_path: PathLike):
         print(f"{nb_path}: No Test cases => SKIPPED")
         return
 
+    # We need to use "/" in paths to avoid weird excaped characters
     test_code = TEST_TEMPLATE.format(
-        module_path=module_path,
-        nb_path=nb_path,
+        module_path=module_path.as_posix(),
+        nb_path=Path(nb_path).as_posix(),
         module=module,
         test_sources="\n\n".join(test_sources),
     )
@@ -126,7 +127,7 @@ def extract_tests(nb_path: PathLike):
     test_path.write_text(test_code, encoding="utf-8")
     black_format(test_path)
 
-    print(f"{nb_path}: EXTRACTED tests to {test_path.relative_to(root)}")
+    print(f"{nb_path}: tests to {test_path.relative_to(root)} => EXTRACTED")
 
 
 if __name__ == "__main__":
