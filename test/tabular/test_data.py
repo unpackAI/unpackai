@@ -52,7 +52,6 @@ def test_plot_hist_img_exist():
     """
     can plot_hist outpout an image
     """
-    ishell = get_ipython()
     result = if_image_in_output(output)
     assert result, (
         "hist_plot image generation failed"

@@ -3,17 +3,9 @@
 __all__ = ['no_missing_values', 'plot_hist', 'plot_feat_correlations', 'plot_feat_dendrogram']
 
 # Cell
-try:
-    from forgebox.imports import pd, np, plt
-    import scipy
-    from scipy.cluster import hierarchy as hc
-except:
-    import pandas as pd
-    import numpy as np
-    import scipy
-    from matplotlib import pyplot as plt
-    from scipy.cluster import hierarchy as hc
-
+from forgebox.imports import *
+import scipy
+from scipy.cluster import hierarchy as hc
 from typing import List, Union
 
 # Cell

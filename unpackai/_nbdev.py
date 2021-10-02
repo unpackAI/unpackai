@@ -25,7 +25,6 @@ index = {"check_img": "10_utils.ipynb",
          "plot_hist": "35_tabular_data.ipynb",
          "plot_feat_correlations": "35_tabular_data.ipynb",
          "plot_feat_dendrogram": "35_tabular_data.ipynb",
-         "keyerror_in_tabular": "39_tabular.ipynb",
          "Textual": "41_nlp_data.ipynb",
          "InterpEmbeddingsTokenizer": "45_nlp_interp.ipynb"}
 
