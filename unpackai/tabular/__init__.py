@@ -4,5 +4,6 @@ __all__ = []
 
 # Cell
 from ..utils import *
+from ..bug import ishell
 from ..interp import *
 from .data import *

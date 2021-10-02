@@ -2,13 +2,10 @@
 
 title: Image Data Labeler
 
-
 keywords: fastai
 sidebar: home_sidebar
 
 summary: "labeling image data"
-description: "labeling image data"
-nb_path: "nbs/20_Image_Labeler.ipynb"
 ---
 <!--
 
@@ -21,24 +18,17 @@ nb_path: "nbs/20_Image_Labeler.ipynb"
 -->
 
 <div class="container" id="notebook-container">
+    {% raw %}
         
-    {% raw %}
-    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
-    {% endraw %}
-
-    {% raw %}
-    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
-    {% endraw %}
-
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Dataset-for-testing">Dataset for testing<a class="anchor-link" href="#Dataset-for-testing"> </a></h2>
+<h2 id="Dataset-for-testing">Dataset for testing<a class="anchor-link" href="#Dataset-for-testing">&#182;</a></h2>
 </div>
 </div>
 </div>
@@ -49,14 +39,12 @@ nb_path: "nbs/20_Image_Labeler.ipynb"
 </div>
 </div>
 </div>
-    {% raw %}
-    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># !pip install -q jmd_imagescraper</span>
 </pre></div>
 
     </div>
@@ -64,16 +52,12 @@ nb_path: "nbs/20_Image_Labeler.ipynb"
 </div>
 
 </div>
-    {% endraw %}
-
-    {% raw %}
-    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># from jmd_imagescraper.core import duckduckgo_search, ImgSize</span>
 </pre></div>
 
     </div>
@@ -81,16 +65,12 @@ nb_path: "nbs/20_Image_Labeler.ipynb"
 </div>
 
 </div>
-    {% endraw %}
-
-    {% raw %}
-    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># duckduckgo_search(&quot;../test/img&quot;, &quot;Nature&quot;, &quot;nature&quot;, max_results=20)</span>
 </pre></div>
 
     </div>
@@ -98,10 +78,6 @@ nb_path: "nbs/20_Image_Labeler.ipynb"
 </div>
 
 </div>
-    {% endraw %}
-
-    {% raw %}
-    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -129,16 +105,15 @@ nb_path: "nbs/20_Image_Labeler.ipynb"
 </div>
 
 </div>
-    {% endraw %}
-
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Labeler">Labeler<a class="anchor-link" href="#Labeler"> </a></h2>
+<h2 id="Labeler">Labeler<a class="anchor-link" href="#Labeler">&#182;</a></h2>
 </div>
 </div>
 </div>
-    {% raw %}
-    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -159,10 +134,6 @@ nb_path: "nbs/20_Image_Labeler.ipynb"
 </div>
 
 </div>
-    {% endraw %}
-
-    {% raw %}
-    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -172,7 +143,7 @@ nb_path: "nbs/20_Image_Labeler.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="SingleClassImageLabeler" class="doc_header"><code>class</code> <code>SingleClassImageLabeler</code><a href="https://github.com/unpackai/unpackai/tree/master/unpackai/turk/image.py#L268" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>SingleClassImageLabeler</code>(<strong><code>image_folder</code></strong>:<code>Path</code>) :: <a href="/unpackai/Image_Labeler.html#ImageLabeler"><code>ImageLabeler</code></a></p>
+<h2 id="SingleClassImageLabeler" class="doc_header"><code>class</code> <code>SingleClassImageLabeler</code><a href="https://github.com/unpackai/unpackai/tree/master/unpackai/turk/image.py#L268" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>SingleClassImageLabeler</code>(<strong><code>image_folder</code></strong>:<code>Path</code>) :: <code>ImageLabeler</code></p>
 </blockquote>
 
 </div>
@@ -183,10 +154,6 @@ nb_path: "nbs/20_Image_Labeler.ipynb"
 </div>
 
 </div>
-    {% endraw %}
-
-    {% raw %}
-    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -196,7 +163,7 @@ nb_path: "nbs/20_Image_Labeler.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="MultiClassImageLabeler" class="doc_header"><code>class</code> <code>MultiClassImageLabeler</code><a href="https://github.com/unpackai/unpackai/tree/master/unpackai/turk/image.py#L313" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>MultiClassImageLabeler</code>(<strong><code>image_folder</code></strong>:<code>Path</code>) :: <a href="/unpackai/Image_Labeler.html#ImageLabeler"><code>ImageLabeler</code></a></p>
+<h2 id="MultiClassImageLabeler" class="doc_header"><code>class</code> <code>MultiClassImageLabeler</code><a href="https://github.com/unpackai/unpackai/tree/master/unpackai/turk/image.py#L313" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>MultiClassImageLabeler</code>(<strong><code>image_folder</code></strong>:<code>Path</code>) :: <code>ImageLabeler</code></p>
 </blockquote>
 
 </div>
@@ -207,23 +174,12 @@ nb_path: "nbs/20_Image_Labeler.ipynb"
 </div>
 
 </div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Try-labeler">Try labeler<a class="anchor-link" href="#Try-labeler"> </a></h2>
+<h2 id="Try-labeler">Try labeler<a class="anchor-link" href="#Try-labeler">&#182;</a></h2>
 </div>
 </div>
 </div>
-    {% raw %}
-    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -262,10 +218,6 @@ nb_path: "nbs/20_Image_Labeler.ipynb"
 </div>
 
 </div>
-    {% endraw %}
-
-    {% raw %}
-    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -279,10 +231,6 @@ nb_path: "nbs/20_Image_Labeler.ipynb"
 </div>
 
 </div>
-    {% endraw %}
-
-    {% raw %}
-    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -296,10 +244,6 @@ nb_path: "nbs/20_Image_Labeler.ipynb"
 </div>
 
 </div>
-    {% endraw %}
-
-    {% raw %}
-    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -338,10 +282,6 @@ nb_path: "nbs/20_Image_Labeler.ipynb"
 </div>
 
 </div>
-    {% endraw %}
-
-    {% raw %}
-    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -370,10 +310,6 @@ nb_path: "nbs/20_Image_Labeler.ipynb"
 </div>
 
 </div>
-    {% endraw %}
-
-    {% raw %}
-    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -387,10 +323,6 @@ nb_path: "nbs/20_Image_Labeler.ipynb"
 </div>
 
 </div>
-    {% endraw %}
-
-    {% raw %}
-    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -404,22 +336,18 @@ nb_path: "nbs/20_Image_Labeler.ipynb"
 </div>
 
 </div>
-    {% endraw %}
-
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Multicategorical-label">Multicategorical label<a class="anchor-link" href="#Multicategorical-label"> </a></h3>
+<h3 id="Multicategorical-label">Multicategorical label<a class="anchor-link" href="#Multicategorical-label">&#182;</a></h3>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Create-gey_y-from-a-running-MultiClassImageLabeler">Create gey_y from a running MultiClassImageLabeler<a class="anchor-link" href="#Create-gey_y-from-a-running-MultiClassImageLabeler"> </a></h4>
+<h4 id="Create-gey_y-from-a-running-MultiClassImageLabeler">Create gey_y from a running MultiClassImageLabeler<a class="anchor-link" href="#Create-gey_y-from-a-running-MultiClassImageLabeler">&#182;</a></h4>
 </div>
 </div>
 </div>
-    {% raw %}
-    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -457,8 +385,6 @@ nb_path: "nbs/20_Image_Labeler.ipynb"
 </div>
 
 </div>
-    {% endraw %}
-
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Look at the data progress</p>
@@ -466,8 +392,6 @@ nb_path: "nbs/20_Image_Labeler.ipynb"
 </div>
 </div>
 </div>
-    {% raw %}
-    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -481,16 +405,12 @@ nb_path: "nbs/20_Image_Labeler.ipynb"
 </div>
 
 </div>
-    {% endraw %}
-
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Create-a-get_y-function-from-csv-file">Create a get_y function from csv file<a class="anchor-link" href="#Create-a-get_y-function-from-csv-file"> </a></h4>
+<h4 id="Create-a-get_y-function-from-csv-file">Create a get_y function from csv file<a class="anchor-link" href="#Create-a-get_y-function-from-csv-file">&#182;</a></h4>
 </div>
 </div>
 </div>
-    {% raw %}
-    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -518,8 +438,6 @@ nb_path: "nbs/20_Image_Labeler.ipynb"
 </div>
 
 </div>
-    {% endraw %}
-
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Create a get_y function from external csv file, please pass in name of the image path column and label column</p>
@@ -527,8 +445,6 @@ nb_path: "nbs/20_Image_Labeler.ipynb"
 </div>
 </div>
 </div>
-    {% raw %}
-    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -542,10 +458,6 @@ nb_path: "nbs/20_Image_Labeler.ipynb"
 </div>
 
 </div>
-    {% endraw %}
-
-    {% raw %}
-    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -575,8 +487,6 @@ nb_path: "nbs/20_Image_Labeler.ipynb"
 </div>
 
 </div>
-    {% endraw %}
-
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>how we label multi categorical?</p>
@@ -587,8 +497,6 @@ nb_path: "nbs/20_Image_Labeler.ipynb"
 </div>
 </div>
 </div>
-    {% raw %}
-    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -635,7 +543,6 @@ Name: label, dtype: object</pre>
 
 </div>
     {% endraw %}
-
 </div>
  
 

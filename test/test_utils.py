@@ -98,3 +98,8 @@ def test_clean_error_img(tmpdir, monkeypatch) -> None:
 
     bad_still_here = [f for f in bad if f.is_file()]
     assert not bad_still_here, f"Bad pictures not deleted: {bad_still_here}"
+
+# Test Cell
+def test_find_static():
+    error_report_html = STATIC/"html"/"bug"/"error_report.html"
+    assert (error_report_html).is_file(), f"'{STATIC}' is not a valid static path"

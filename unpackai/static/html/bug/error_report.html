@@ -1,0 +1,58 @@
+<html>
+
+<head>
+    <title>UnpackAI Bug Report</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container mt-3">
+        <h2 class='mt-2 mb-2'>🔎 Error Analysis [<span id='title_timestamp'></span>]</h2>
+        <h3>👻 <span id='title_error_type'>Error</span>:
+            <span id='title_error_value'></span></h3>
+        <p class='mt-2 mb-2'>
+            This report was generated automatically by UnpackAI.
+        </p>
+        <hr>
+        <div class='m-2'>
+            <quote>
+                <pre id='traceback_string'></pre>
+            </quote>
+        </div>
+        <hr>
+        <h3>🪐 Input History</h3>
+        <div id='input_history' class='m-2'>
+        </div>
+    </div>
+</body>
+
+<script>
+    
+    let data = JSON.parse({{data}});
+
+    console.log(data)
+
+    let {traceback_string, input_history,
+        error_type_name, error_value, timestamp} = data
+    const show_input_history = () => {
+        let input_history_div = document.getElementById('input_history')
+        for(let ipt of input_history){
+            let pre = document.createElement('pre')
+            pre.className = 'bg-light p-2 rounded'
+            pre.innerHTML = `<code>${ipt}</code>`
+            input_history_div.appendChild(pre)
+        }
+    }
+    
+    const show_data = () => {
+        document.getElementById('title_timestamp').innerHTML = timestamp;
+        document.getElementById('title_error_type').innerHTML = error_type_name;
+        document.getElementById('title_error_value').innerHTML = error_value;
+        document.getElementById('traceback_string').innerHTML = traceback_string;
+        show_input_history();
+    }
+
+    show_data();
+</script>
+</html>
