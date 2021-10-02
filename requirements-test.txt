@@ -2,8 +2,11 @@ pytest
 pytest-cov
 pytest-mock
 
-# Required for usage of module
+# Required for dev
 black
+nbdev
+
+# Required for usage of module
 ipython
 fastai
 forgebox>=0.4.5

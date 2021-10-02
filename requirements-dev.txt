@@ -1,5 +1,6 @@
 # Required for dev
 black
+nbdev
 
 # Required for usage of module
 ipython
