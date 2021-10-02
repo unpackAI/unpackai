@@ -4,4 +4,4 @@ nbdev_clean_nbs
 nbdev_build_docs --mk_readme False
 # Extract Test Cases
 cd $(dirname "$0")
-python3 test/extract_tests.py
+python3 test/test_extractor.py

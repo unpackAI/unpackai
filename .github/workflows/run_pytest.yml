@@ -1,0 +1,29 @@
+name: Run PyTests
+on: [push, pull_request]
+
+jobs:
+  run:
+    runs-on:  ${{ matrix.os }}
+    strategy:
+      matrix:
+        python: [3.7, 3.8, 3.9]
+        os: [ubuntu-latest]
+        include:
+        - python: 3.7
+          os: macos-latest
+          experimental: true
+        - python: 3.7
+          os: windows-latest
+          experimental: true
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python }} on ${{ matrix.os }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-test.txt
+      - name: Test with pytest
+        run: pytest -vv
