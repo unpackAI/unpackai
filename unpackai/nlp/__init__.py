@@ -3,6 +3,7 @@
 __all__ = []
 
 # Cell
+from ..bug import ishell, BUGBOOK
 from .data import Textual
 
 # Cell

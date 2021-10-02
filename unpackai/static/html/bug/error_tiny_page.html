@@ -1,6 +1,19 @@
 <div>
-    {{download_button}}
+    {{download_button}} <span>Download error report and consult a mentor/TA</span>
 </div>
-<h2>🐞 [{{error_type_name}}] Happened, Don't Panic -- unpackAI</h2>
-<h3>With message: <strong>{{error_value}}</strong></h3>
+<h2>🐞 [{{error_type_name}}] Happened, Don't Panic</h2>
+{%if msg%}
+<h3>🎸 UnpackAI Tips:</h3>
+<hr>
+<quote>
+    {{msg}}
+</quote>
+<hr>
+{%endif%}
+<h3>🤔 Default message:</h3>
+<hr>
+<quote>
+    {{error_value}}
+</quote>
+<hr>
 <h3>Traceback Info</h3>

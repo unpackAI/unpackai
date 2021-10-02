@@ -3,4 +3,6 @@
 __all__ = []
 
 # Cell
+from ..utils import hush
+from ..bug import ishell, BUGBOOK
 from .latent import CosineSearch, InterpEmbeddings
