@@ -98,6 +98,3 @@ def test_non_numericals_dropped():
     #   Verify
     assert corr.shape[1] == df_test.shape[1] - 5
     assert "categorical" not in " ".join(corr.columns)
-
-
-test_non_numericals_dropped()
