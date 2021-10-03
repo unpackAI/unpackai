@@ -4,11 +4,23 @@
 from unpackai.tabular.data import *
 
 # Test Cell
-from sklearn.datasets import california_housing
-import pandas as pd
+# To be able to run the tests in the Notebook
+# !pip install -q ipytest pytest
+from pathlib import Path
+import ipytest
+import sys
+from IPython.utils.io import capture_output
 
-dt = california_housing.fetch_california_housing()
-df = pd.DataFrame(dt["data"], columns=dt["feature_names"])
+ipytest.autoconfig()
+
+root_dir = Path("..").resolve()
+sys.path.append(str(root_dir / "test"))
+
+# Test Cell
+import pandas as pd
+from pathlib import Path
+
+df = pd.read_csv(Path(root_dir) / "test" / "tabular" / "california_housing.csv")
 
 # Test Cell
 def test_no_missing_value_basic():
