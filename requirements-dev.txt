@@ -1,6 +1,7 @@
 # Required for dev
 black
 nbdev
+types-setuptools ; python_version < '3.8'
 
 # Required for usage of module
 ipython

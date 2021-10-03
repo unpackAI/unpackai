@@ -3,13 +3,4 @@ pytest-cov
 pytest-mock
 
 # Required for dev
-black
-nbdev
-
-# Required for usage of module
-ipython
-fastai
-forgebox>=0.4.5
-tqdm
-ipywidgets
-beautifulsoup4
+-r requirements-dev.txt
