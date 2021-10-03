@@ -4,6 +4,7 @@ __all__ = ['keyerror_in_tabular']
 
 # Cell
 from ..utils import *
+from ..bug import *
 from .data import *
 
 # Cell
