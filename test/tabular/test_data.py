@@ -4,10 +4,17 @@
 from unpackai.tabular.data import *
 
 # Test Cell
-from sklearn.datasets import california_housing
+import pandas as pd
+from pathlib import Path
+import pytest
+import sys
 
-dt = california_housing.fetch_california_housing()
-df = pd.DataFrame(dt["data"], columns=dt["feature_names"])
+try:
+    root_dir = Path(".")
+    df = pd.read_csv(root_dir / "test" / "tabular" / "california_housing.csv")
+except FileNotFoundError as e:
+    root_dir = Path("../")
+    df = pd.read_csv(root_dir / "test" / "tabular" / "california_housing.csv")
 
 # Test Cell
 def test_no_missing_value_basic():
@@ -27,67 +34,60 @@ def test_no_missing_value_basic():
 
 
 # Test Cell
-from ipywidgets import Output
-import json
-
-
-def if_image_in_output(out: Output) -> bool:
-    """
-    Exam if output contains png image
-    """
-    for o in list(out.outputs):
-        output_data = o.get("data")
-        if output_data is not None:
-            if "image/png" in output_data:
-                return True
-    return False
-
-
-output = Output()
-with output:
-    plot_hist(df.head(100))
-
-# Test Cell
-def test_plot_hist_img_exist():
+@pytest.mark.skipif(sys.platform != "linux", reason="plot test only for linux")
+def test_plot_hist_run_through():
     """
     can plot_hist outpout an image
     """
-    result = if_image_in_output(output)
-    assert result, (
-        "hist_plot image generation failed"
-        + "current output"
-        + json.dumps(output.outputs, indent=2)
-    )
+    plot_hist(df.head(100))
 
 
 # Test Cell
 # hide
+def repeat_cols(df, n=2):
+    df2 = df.copy()
+    for feat in df2.columns:
+        for i in range(1, n):
+            df2[f"{feat}_{i}"] = df2[feat]
+    return df2
+
+
+def add_cat_feat(df, fname):
+    import string
+
+    s = string.ascii_lowercase
+    vals = [s[i % 20] for i in range(len(df))]
+    df[fname] = vals
+
+
+# Test Cell
+# hide
+@pytest.mark.skipif(sys.platform != "linux", reason="plot test only for linux")
 def test_return_df_true():
     #   Setup
     #   Run
-    corr = plot_feat_correlations(df, return_df=True)
+    corr = plot_feat_correlations(df.head(100), return_df=True)
     #   Verify
     assert isinstance(
         corr, pd.DataFrame
     ), f"should return a dataframe and got {type(corr)}"
 
 
+@pytest.mark.skipif(sys.platform != "linux", reason="plot test only for linux")
 def test_return_df_false():
     #   Setup
     #   Run
-    corr = plot_feat_correlations(df, return_df=False)
+    corr = plot_feat_correlations(df.head(100), return_df=False)
     #   Verify
     assert corr is None, f"should return None and got {corr}"
 
 
-test_return_df_true()
-test_return_df_false()
-
 # Test Cell
 # hide
+@pytest.mark.skipif(sys.platform != "linux", reason="plot test only for linux")
 def test_non_numericals_dropped():
     #    Setup
-    df_test = df.copy()
+    df_test = df.head(100).copy()
     cat_fnames = [f"categorical_{i}" for i in range(1, 6)]
     for fname in cat_fnames:
         add_cat_feat(df_test, fname)
@@ -98,6 +98,3 @@ def test_non_numericals_dropped():
     #   Verify
     assert corr.shape[1] == df_test.shape[1] - 5
     assert "categorical" not in " ".join(corr.columns)
-
-
-test_non_numericals_dropped()
