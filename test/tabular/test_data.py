@@ -5,6 +5,7 @@ from unpackai.tabular.data import *
 
 # Test Cell
 from sklearn.datasets import california_housing
+import pandas as pd
 
 dt = california_housing.fetch_california_housing()
 df = pd.DataFrame(dt["data"], columns=dt["feature_names"])
@@ -27,37 +28,29 @@ def test_no_missing_value_basic():
 
 
 # Test Cell
-from ipywidgets import Output
-import json
-
-
-def if_image_in_output(out: Output) -> bool:
-    """
-    Exam if output contains png image
-    """
-    for o in list(out.outputs):
-        output_data = o.get("data")
-        if output_data is not None:
-            if "image/png" in output_data:
-                return True
-    return False
-
-
-output = Output()
-with output:
-    plot_hist(df.head(100))
-
-# Test Cell
-def test_plot_hist_img_exist():
+def test_plot_hist_run_through():
     """
     can plot_hist outpout an image
     """
-    result = if_image_in_output(output)
-    assert result, (
-        "hist_plot image generation failed"
-        + "current output"
-        + json.dumps(output.outputs, indent=2)
-    )
+    plot_hist(df.head(100))
+
+
+# Test Cell
+# hide
+def repeat_cols(df, n=2):
+    df2 = df.copy()
+    for feat in df2.columns:
+        for i in range(1, n):
+            df2[f"{feat}_{i}"] = df2[feat]
+    return df2
+
+
+def add_cat_feat(df, fname):
+    import string
+
+    s = string.ascii_lowercase
+    vals = [s[i % 20] for i in range(len(df))]
+    df[fname] = vals
 
 
 # Test Cell

@@ -18,6 +18,13 @@ from inspect import isfunction
 from typing import Union, Callable, Dict, Any
 
 # Cell
+try:
+    ishell = get_ipython()
+except NameError as e:
+    from IPython.testing.globalipapp import get_ipython
+    ishell = get_ipython()
+
+# Cell
 class BugBook(dict):
     """
     A collection of bugs, and how to handle them
@@ -217,9 +224,6 @@ def custom_exc(shell, etype, evalue, tb, tb_offset=None, ):
     print(sstb)
 
 # Cell
-try:
-    ishell = get_ipython()
-except NameError as e:
-    from IPython.testing.iptest import get_ipython
+
 
 ishell.set_custom_exc((Exception,), custom_exc)

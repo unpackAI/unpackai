@@ -7,12 +7,13 @@ import logging
 from typing import Callable, List
 from pathlib import Path
 
-from IPython.core.magic import register_cell_magic
+from IPython.core import magic
 from IPython.display import Javascript
 from ipywidgets import Output, VBox, Button, HTML
 from PIL import Image
 from tqdm.notebook import tqdm
 from uuid import uuid4
+
 
 # Cell
 def check_img(
@@ -74,7 +75,7 @@ def clean_error_img(
 
 # Cell
 
-@register_cell_magic
+@magic.register_cell_magic
 def hush(line, cell):
     """
     A magic cell function to collapse the print out
@@ -143,3 +144,11 @@ def static_root() -> Path:
     return unpackai_path/"static"
 
 STATIC = static_root()
+
+# Cell
+try:
+    ishell = get_ipython()
+except NameError as e:
+    from IPython.testing.globalipapp import get_ipython, start_ipython
+    ishell = start_ipython()
+    print(get_ipython())
