@@ -4,22 +4,10 @@
 from unpackai.tabular.data import *
 
 # Test Cell
-# To be able to run the tests in the Notebook
-# !pip install -q ipytest pytest
-from pathlib import Path
-import ipytest
-import sys
-from IPython.utils.io import capture_output
-
-ipytest.autoconfig()
-
-root_dir = Path("..").resolve()
-sys.path.append(str(root_dir / "test"))
-
-# Test Cell
 import pandas as pd
 from pathlib import Path
 
+root_dir = Path("..").resolve()
 df = pd.read_csv(Path(root_dir) / "test" / "tabular" / "california_housing.csv")
 
 # Test Cell
