@@ -1,7 +1,6 @@
 pytest
 pytest-cov
 pytest-mock
-sklearn
 
 # Required for dev
 black

@@ -8,9 +8,11 @@ import pandas as pd
 from pathlib import Path
 
 try:
-    df = pd.read_csv("./test/tabular/california_housing.csv")
+    root_dir = Path(".")
+    df = pd.read_csv(root_dir / "test" / "tabular" / "california_housing.csv")
 except FileNotFoundError as e:
-    df = pd.read_csv("../test/tabular/california_housing.csv")
+    root_dir = Path("../")
+    df = pd.read_csv(root_dir / "test" / "tabular" / "california_housing.csv")
 
 # Test Cell
 def test_no_missing_value_basic():
@@ -75,14 +77,11 @@ def test_return_df_false():
     assert corr is None, f"should return None and got {corr}"
 
 
-test_return_df_true()
-test_return_df_false()
-
 # Test Cell
 # hide
 def test_non_numericals_dropped():
     #    Setup
-    df_test = df.copy()
+    df_test = df.head(100).copy()
     cat_fnames = [f"categorical_{i}" for i in range(1, 6)]
     for fname in cat_fnames:
         add_cat_feat(df_test, fname)
