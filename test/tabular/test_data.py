@@ -6,6 +6,8 @@ from unpackai.tabular.data import *
 # Test Cell
 import pandas as pd
 from pathlib import Path
+import pytest
+import sys
 
 try:
     root_dir = Path(".")
@@ -32,6 +34,7 @@ def test_no_missing_value_basic():
 
 
 # Test Cell
+@pytest.mark.skipif(sys.platform != "linux", reason="plot test only for linux")
 def test_plot_hist_run_through():
     """
     can plot_hist outpout an image
@@ -59,26 +62,29 @@ def add_cat_feat(df, fname):
 
 # Test Cell
 # hide
+@pytest.mark.skipif(sys.platform != "linux", reason="plot test only for linux")
 def test_return_df_true():
     #   Setup
     #   Run
-    corr = plot_feat_correlations(df, return_df=True)
+    corr = plot_feat_correlations(df.head(100), return_df=True)
     #   Verify
     assert isinstance(
         corr, pd.DataFrame
     ), f"should return a dataframe and got {type(corr)}"
 
 
+@pytest.mark.skipif(sys.platform != "linux", reason="plot test only for linux")
 def test_return_df_false():
     #   Setup
     #   Run
-    corr = plot_feat_correlations(df, return_df=False)
+    corr = plot_feat_correlations(df.head(100), return_df=False)
     #   Verify
     assert corr is None, f"should return None and got {corr}"
 
 
 # Test Cell
 # hide
+@pytest.mark.skipif(sys.platform != "linux", reason="plot test only for linux")
 def test_non_numericals_dropped():
     #    Setup
     df_test = df.head(100).copy()
