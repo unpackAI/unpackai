@@ -7,8 +7,10 @@ from unpackai.tabular.data import *
 import pandas as pd
 from pathlib import Path
 
-root_dir = Path("..").resolve()
-df = pd.read_csv(Path(root_dir) / "test" / "tabular" / "california_housing.csv")
+try:
+    df = pd.read_csv("./test/tabular/california_housing.csv")
+except FileNotFoundError as e:
+    df = pd.read_csv("../test/tabular/california_housing.csv")
 
 # Test Cell
 def test_no_missing_value_basic():
