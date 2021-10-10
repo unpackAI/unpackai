@@ -2,7 +2,9 @@ from pathlib import Path
 import pytest
 from pytest import LogCaptureFixture
 
-IMG_DIR = Path(__file__).parent.parent / "img"
+TEST_DIR = Path(__file__).parent.parent
+IMG_DIR = TEST_DIR  / "img"
+DATA_DIR = TEST_DIR / "test_data"
 
 
 def check_only_warning(caplog: LogCaptureFixture, sub_str: str):
