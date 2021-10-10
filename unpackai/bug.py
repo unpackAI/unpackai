@@ -17,6 +17,7 @@ import logging
 from inspect import isfunction
 from typing import Union, Callable, Dict, Any
 
+
 # Cell
 try:
     ishell = get_ipython()
@@ -110,11 +111,11 @@ BUGBOOK = BugBook()
 BUGBOOK["ImportError"] = "Make sure all the libraries are installed for the required version🦮🐩"
 
 BUGBOOK["SyntaxError"] ="""
-<h5>There is a <strong>grammatic</strong> error in your python code</h5>
+<h5>There is a <strong>grammatical</strong> error in your python code</h5>
 <p>Please check the following</p>
 <p>Every '(' or '[' or '{' or '"' or ' was closed with properly</p>
-<p>':' should follow by the nextline with 1 more <strong>indent</strong> (4 spaces)</p>
-<p>or other grammatic errors, please check traceback below for clue, usually <strong>near ^ mark</strong></p>
+<p>':' should be followed by a new line with 1 extra <strong>indent</strong> (4 spaces)</p>
+<p>or other grammatical errors, please check traceback below for clue, usually <strong>near ^ mark</strong></p>
 """
 
 BUGBOOK["ModuleNotFoundError"] = module_not_found_message2
