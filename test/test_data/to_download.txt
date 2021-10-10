@@ -1,0 +1,3 @@
+unpackAI has the mission to make AI education as accessible as possible. 
+
+Alongside our AI & Machine Learning Bootcamps for Business Professionals, we build this library to remove technical barriers and provide the right tools for individuals and businesses to allow for effective learning, building and deployment of AI projects. Find more information via our website and get in touch!
