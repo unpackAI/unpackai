@@ -199,7 +199,7 @@ def url_2_text(url: str) -> str:
     if resp.status_code != 200:
         raise ConnectionError(f"Error when retrieving text content from {url}")
 
-    res.encoding = "utf-8"
+    resp.encoding = "utf-8"
     content_type = resp.headers["Content-Type"]
     if "html" in content_type:
         text = BeautifulSoup(resp.text).text
