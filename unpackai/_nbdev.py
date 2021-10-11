@@ -2,11 +2,15 @@
 
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
-index = {"check_img": "10_utils.ipynb",
+index = {"PathStr": "10_utils.ipynb",
+         "check_img": "10_utils.ipynb",
          "clean_error_img": "10_utils.ipynb",
          "hush": "10_utils.ipynb",
          "static_root": "10_utils.ipynb",
          "STATIC": "10_utils.ipynb",
+         "get_url_size": "10_utils.ipynb",
+         "download": "10_utils.ipynb",
+         "url_2_text": "10_utils.ipynb",
          "BugBook": "12_bug.ipynb",
          "module_not_found_message1": "12_bug.ipynb",
          "module_not_found_message2": "12_bug.ipynb",

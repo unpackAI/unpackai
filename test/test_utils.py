@@ -10,7 +10,7 @@ from shutil import copy, rmtree
 
 import pytest
 from PIL import Image
-from test_common.utils_4_tests import IMG_DIR, check_no_log, check_only_warning
+from test_common.utils_4_tests import DATA_DIR, IMG_DIR, check_no_log, check_only_warning
 
 # Test Cell
 images_rob = list((IMG_DIR / "robustness").glob("*.*"))
@@ -104,3 +104,36 @@ def test_clean_error_img(tmpdir, monkeypatch) -> None:
 def test_find_static():
     error_report_html = STATIC / "html" / "bug" / "error_report.html"
     assert (error_report_html).is_file(), f"'{STATIC}' is not a valid static path"
+
+
+# Test Cell
+url_raw_txt = "https://raw.githubusercontent.com/unpackAI/unpackai/main/test/test_data/to_download.txt"
+test_data_txt = (DATA_DIR / "to_download.txt").read_text()
+
+
+def test_get_url_size():
+    assert get_url_size(url_raw_txt) == 264, f"Wrong size for {url_raw_txt}"
+
+
+def test_download_dest(tmpdir):
+    """Test download of file to a destination"""
+    dest = Path(tmpdir / "to_download.txt")
+    download(url_raw_txt, dest)
+    assert dest.is_file()
+    assert dest.read_text() == test_data_txt
+
+
+def test_download_empty(tmpdir):
+    """Test download of file without destination"""
+    dest = Path("to_download.txt")
+    download(url_raw_txt)
+    try:
+        assert dest.is_file()
+        assert dest.read_text() == test_data_txt
+    finally:
+        dest.unlink()
+
+
+def test_url_2_text():
+    """Test extraction of text from URL"""
+    assert url_2_text(url_raw_txt) == test_data_txt
