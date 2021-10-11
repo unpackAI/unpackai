@@ -1,0 +1,6 @@
+[run]
+# Omit files that shall not be covered
+omit =
+    unpackai/_nbdev.py
+    # uncomment the line below to skip coverage of __init__.py
+    # */__init__.py
