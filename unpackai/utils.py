@@ -6,7 +6,9 @@ __all__ = ['PathStr', 'check_img', 'clean_error_img', 'hush', 'static_root', 'ST
 # Cell
 import logging
 import requests
+import tempfile
 from pathlib import Path
+from shutil import unpack_archive
 from typing import Callable, List, Union
 
 from bs4 import BeautifulSoup
@@ -172,7 +174,8 @@ def download(url: str, dest: PathStr = None) -> Path:
     """
     # We can allow empty destination, in which case we use file name in URL
     # We need to ensure that destination is a Path
-    dest = Path(dest or url.rpartition("/")[-1])
+    # Note that a url might contain some tokens with "?..." => need to remove
+    dest = Path(dest or url.split("?")[0].rpartition("/")[-1])
 
     # For big files, we will split into chunks
     # We might also consider adding a progress bar
