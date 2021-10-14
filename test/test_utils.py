@@ -5,8 +5,10 @@ from unpackai.utils import *
 
 # Test Cell
 # For Test Cases (might have duplicate import because it will be in a dedicated file)
+import requests
 from pathlib import Path
 from shutil import copy, rmtree
+from typing import List
 
 import pytest
 from PIL import Image
@@ -111,11 +113,20 @@ url_raw_txt = "https://raw.githubusercontent.com/unpackAI/unpackai/main/test/tes
 test_data_txt = (DATA_DIR / "to_download.txt").read_text()
 
 
-def test_get_url_size():
+@pytest.fixture(scope="session")
+def check_connection_github():
+    try:
+        with requests.request("HEAD", url_raw_txt, timeout=1) as resp:
+            resp.raise_for_status()
+    except (requests.exceptions.ConnectionError, requests.exceptions.ReadTimeout) as e:
+        pytest.xfail(f"Cannot connect to Github: {e}")
+
+
+def test_get_url_size(check_connection_github):
     assert get_url_size(url_raw_txt) == 264, f"Wrong size for {url_raw_txt}"
 
 
-def test_download_dest(tmpdir):
+def test_download_dest(check_connection_github, tmpdir):
     """Test download of file to a destination"""
     dest = Path(tmpdir / "to_download.txt")
     download(url_raw_txt, dest)
@@ -123,7 +134,7 @@ def test_download_dest(tmpdir):
     assert dest.read_text() == test_data_txt
 
 
-def test_download_empty(tmpdir):
+def test_download_empty(check_connection_github, tmpdir):
     """Test download of file without destination"""
     dest = Path("to_download.txt")
     download(url_raw_txt)
@@ -134,6 +145,6 @@ def test_download_empty(tmpdir):
         dest.unlink()
 
 
-def test_url_2_text():
+def test_url_2_text(check_connection_github):
     """Test extraction of text from URL"""
     assert url_2_text(url_raw_txt) == test_data_txt
