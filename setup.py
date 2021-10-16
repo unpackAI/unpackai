@@ -17,7 +17,7 @@ expected = (
 )
 for exp in expected:
     assert exp in cfg, f"missing expected setting: {exp}"
-setup_cfg = {exp: cfg[k] for k in cfg_keys}
+setup_cfg = {k: cfg[k] for k in cfg_keys}
 
 licenses = {
     "apache2": (
