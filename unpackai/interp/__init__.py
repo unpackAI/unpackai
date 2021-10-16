@@ -6,3 +6,9 @@ __all__ = []
 from ..utils import hush
 from ..bug import ishell, BUGBOOK
 from .latent import CosineSearch, InterpEmbeddings
+from .vision import (
+    image_upload,
+    upload_and_visualize_cnn,
+    IMAGENET_CLASSES,
+    IMAGENET_MEAN,
+    IMAGENET_STD)
