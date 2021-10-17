@@ -10,3 +10,4 @@ forgebox>=0.4.5
 tqdm
 ipywidgets
 beautifulsoup4
+pandas

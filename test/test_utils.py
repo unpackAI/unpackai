@@ -178,7 +178,7 @@ def populated_tmp_dir(tmpdir):
         (tmpdir / dir_).mkdir(parents=True)
     for file in ["at_root.txt", "dir1/subdir1/at_subdir.txt", "dir2/at_dir.txt"]:
         (tmpdir / file).write_text("unpackai")
-    (tmpdir / "dir1" / "subdir2" / "some_pic.bmp").write_bytes(b"3141590000")
+    (tmpdir / "dir1" / "subdir2" / "some_pickle.pkl").write_bytes(b"3141590000")
 
     return tmpdir
 
@@ -224,15 +224,16 @@ def test_ls(populated_tmp_dir):
     print(df)
     print("=" * 20)
 
+    exp_root_dir = populated_tmp_dir.name
     df_exp = pd.DataFrame(
         [
-            ("at_root.txt", "test_ls0", 0, "File", ".txt", "text/plain", 8.0),
-            ("dir1", "test_ls0", 0, "Dir", np.NaN, np.NaN, np.NaN),
+            ("at_root.txt", exp_root_dir, 0, "File", ".txt", "text/plain", 8.0),
+            ("dir1", exp_root_dir, 0, "Dir", np.NaN, np.NaN, np.NaN),
             ("subdir1", "dir1", 1, "Dir", np.NaN, np.NaN, np.NaN),
             ("at_subdir.txt", "subdir1", 2, "File", ".txt", "text/plain", 8.0),
             ("subdir2", "dir1", 1, "Dir", np.NaN, np.NaN, np.NaN),
-            ("some_pic.bmp", "subdir2", 2, "File", ".bmp", "image/bmp", 10.0),
-            ("dir2", "test_ls0", 0, "Dir", np.NaN, np.NaN, np.NaN),
+            ("some_pickle.pkl", "subdir2", 2, "File", ".pkl", None, 10.0),
+            ("dir2", exp_root_dir, 0, "Dir", np.NaN, np.NaN, np.NaN),
             ("at_dir.txt", "dir2", 1, "File", ".txt", "text/plain", 8.0),
         ],
         columns=columns,
@@ -251,14 +252,21 @@ exp_files = [
     "subdir1",
     "at_subdir.txt",
     "subdir2",
-    "some_pic.bmp",
+    "some_pickle.pkl",
     "dir2",
     "at_dir.txt",
 ]
 exp_dir1 = ["at_root.txt", "dir2", "at_dir.txt"]
-exp_dir2 = ["at_root.txt", "dir1", "subdir1", "subdir2", "at_subdir.txt", "some_pic.bmp"]
-exp_subdir = ["at_root.txt", "dir1", "dir2", "subdir2", "some_pic.bmp", "at_dir.txt"]
-exp_dir2_subdir = ["at_root.txt", "dir1", "subdir2", "some_pic.bmp"]
+exp_dir2 = [
+    "at_root.txt",
+    "dir1",
+    "subdir1",
+    "subdir2",
+    "at_subdir.txt",
+    "some_pickle.pkl",
+]
+exp_subdir = ["at_root.txt", "dir1", "dir2", "subdir2", "some_pickle.pkl", "at_dir.txt"]
+exp_dir2_subdir = ["at_root.txt", "dir1", "subdir2", "some_pickle.pkl"]
 
 
 @pytest.mark.parametrize(
