@@ -220,31 +220,39 @@ def test_ls(populated_tmp_dir):
     columns.remove("Path")
     columns.remove("Friendly_Size")
 
+    print("===TRUNCATED DF FOR LIST OF FILES/DIR===")
+    print(df)
+    print("=" * 20)
+
     df_exp = pd.DataFrame(
         [
             ("at_root.txt", "test_ls0", 0, "File", ".txt", "text/plain", 8.0),
             ("dir1", "test_ls0", 0, "Dir", np.NaN, np.NaN, np.NaN),
-            ("dir2", "test_ls0", 0, "Dir", np.NaN, np.NaN, np.NaN),
             ("subdir1", "dir1", 1, "Dir", np.NaN, np.NaN, np.NaN),
-            ("subdir2", "dir1", 1, "Dir", np.NaN, np.NaN, np.NaN),
             ("at_subdir.txt", "subdir1", 2, "File", ".txt", "text/plain", 8.0),
+            ("subdir2", "dir1", 1, "Dir", np.NaN, np.NaN, np.NaN),
             ("some_pic.bmp", "subdir2", 2, "File", ".bmp", "image/bmp", 10.0),
+            ("dir2", "test_ls0", 0, "Dir", np.NaN, np.NaN, np.NaN),
             ("at_dir.txt", "dir2", 1, "File", ".txt", "text/plain", 8.0),
         ],
         columns=columns,
     )
-    compare_df = df.compare(df_exp)
+    print("===EXPECTED DF FOR LIST OF FILES/DIR===")
+    print(df_exp)
+    print("=" * 20)
+
+    compare_df = df.reset_index(drop=True).compare(df_exp.reset_index(drop=True))
     assert compare_df.empty, f"Differences found when checking DF:\n{compare_df}"
 
 
 exp_files = [
     "at_root.txt",
     "dir1",
-    "dir2",
     "subdir1",
-    "subdir2",
     "at_subdir.txt",
+    "subdir2",
     "some_pic.bmp",
+    "dir2",
     "at_dir.txt",
 ]
 exp_dir1 = ["at_root.txt", "dir2", "at_dir.txt"]
@@ -267,7 +275,7 @@ exp_dir2_subdir = ["at_root.txt", "dir1", "subdir2", "some_pic.bmp"]
 def test_ls_exclude(exclude, exp, populated_tmp_dir):
     """Test `ls` function with an exclusing of some directories"""
     df = ls(populated_tmp_dir, exclude=exclude)
-    assert list(df["Name"]) == exp
+    assert sorted(df["Name"]) == sorted(exp)
 
 
 def test_ls_no_info(populated_tmp_dir):
