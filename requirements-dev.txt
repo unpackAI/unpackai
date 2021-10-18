@@ -11,3 +11,4 @@ tqdm
 ipywidgets
 beautifulsoup4
 pandas
+graphviz

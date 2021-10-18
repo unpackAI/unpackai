@@ -11,6 +11,7 @@ from pathlib import Path
 from shutil import copy, rmtree
 from typing import List
 
+import graphviz
 import numpy as np
 import pandas as pd
 import pytest
@@ -290,3 +291,24 @@ def test_ls_no_info(populated_tmp_dir):
     """Test `ls` function with `hide_info` set to True"""
     df = ls(populated_tmp_dir, hide_info=True)
     assert set(exp_columns) - set(df.columns) == {"Size", "Friendly_Size"}
+
+
+# Test Cell
+@pytest.mark.parametrize("rankdir", [None, "LR", "TD"])
+def test_gv(rankdir):
+    """Test Graphviz Generation via `gv`"""
+    src = "inputs->program->results"
+    if rankdir is None:
+        graph = gv(src)
+        rankdir = "LR"  # default orientation
+    else:
+        graph = gv(src, rankdir=rankdir)
+
+    assert isinstance(
+        graph, graphviz.Source
+    ), f"Output shall be a GraphViz Source (but is {type(graph)})"
+
+    gv_src = graph.source
+    assert gv_src.startswith("digraph"), f"Source is not a digraph: {gv_src}"
+    assert src in gv_src, f"Source input not in Graph Source: {gv_src}"
+    assert f'rankdir="{rankdir}"' in gv_src, f"Rankdir {rankdir} not found: {gv_src}"
