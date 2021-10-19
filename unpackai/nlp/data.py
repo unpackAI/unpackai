@@ -212,6 +212,7 @@ def HFTextBlock(
     tk_kwargs: keyward arguements for tokenizer's ```__call__```
     """
     from fastai.data.block import TransformBlock
+    import torch
     def text_2_tensor_collate(data):
         """
         During the usual collation
