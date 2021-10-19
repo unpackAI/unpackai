@@ -113,48 +113,6 @@ def test_find_static():
 
 
 # Test Cell
-url_raw_txt = "https://raw.githubusercontent.com/unpackAI/unpackai/main/test/test_data/to_download.txt"
-test_data_txt = (DATA_DIR / "to_download.txt").read_text()
-
-
-@pytest.fixture(scope="session")
-def check_connection_github():
-    try:
-        with requests.request("HEAD", url_raw_txt, timeout=1) as resp:
-            resp.raise_for_status()
-    except (requests.exceptions.ConnectionError, requests.exceptions.ReadTimeout) as e:
-        pytest.xfail(f"Cannot connect to Github: {e}")
-
-
-def test_get_url_size(check_connection_github):
-    assert get_url_size(url_raw_txt) == 264, f"Wrong size for {url_raw_txt}"
-
-
-def test_download_dest(check_connection_github, tmpdir):
-    """Test download of file to a destination"""
-    dest = Path(tmpdir / "to_download.txt")
-    download(url_raw_txt, dest)
-    assert dest.is_file()
-    assert dest.read_text() == test_data_txt
-
-
-def test_download_empty(check_connection_github, tmpdir):
-    """Test download of file without destination"""
-    dest = Path("to_download.txt")
-    download(url_raw_txt)
-    try:
-        assert dest.is_file()
-        assert dest.read_text() == test_data_txt
-    finally:
-        dest.unlink()
-
-
-def test_url_2_text(check_connection_github):
-    """Test extraction of text from URL"""
-    assert url_2_text(url_raw_txt) == test_data_txt
-
-
-# Test Cell
 @pytest.mark.parametrize(
     "size,exp",
     [
@@ -312,3 +270,73 @@ def test_gv(rankdir):
     assert gv_src.startswith("digraph"), f"Source is not a digraph: {gv_src}"
     assert src in gv_src, f"Source input not in Graph Source: {gv_src}"
     assert f'rankdir="{rankdir}"' in gv_src, f"Rankdir {rankdir} not found: {gv_src}"
+
+
+# Test Cell
+url_raw_txt = "https://raw.githubusercontent.com/unpackAI/unpackai/main/test/test_data/to_download.txt"
+test_data_txt = (DATA_DIR / "to_download.txt").read_text()
+
+
+@pytest.fixture(scope="session")
+def check_connection_github():
+    try:
+        with requests.request("HEAD", url_raw_txt, timeout=1) as resp:
+            resp.raise_for_status()
+    except (requests.exceptions.ConnectionError, requests.exceptions.ReadTimeout) as e:
+        pytest.xfail(f"Cannot connect to Github: {e}")
+
+
+def test_get_url_size(check_connection_github):
+    assert get_url_size(url_raw_txt) == 264, f"Wrong size for {url_raw_txt}"
+
+
+def test_download_dest(check_connection_github, tmpdir):
+    """Test download of file to a destination"""
+    dest = Path(tmpdir / "to_download.txt")
+    download(url_raw_txt, dest)
+    assert dest.is_file()
+    assert dest.read_text() == test_data_txt
+
+
+def test_download_empty(check_connection_github, tmpdir):
+    """Test download of file without destination"""
+    dest = Path("to_download.txt")
+    download(url_raw_txt)
+    try:
+        assert dest.is_file()
+        assert dest.read_text() == test_data_txt
+    finally:
+        dest.unlink()
+
+
+def test_url_2_text(check_connection_github):
+    """Test extraction of text from URL"""
+    assert url_2_text(url_raw_txt) == test_data_txt
+
+
+# Test Cell
+url_ar = r"https://alaska.usgs.gov/data/landBirds/sewardPeninsula/2012/avianHabitat_sewardPeninsula_McNew_2012.zip"
+
+exp_df = pd.DataFrame(
+    [
+        ("avianHabitat_sewardPeninsula_McNew_2012.csv", 60617),
+        ("avianHabitat_sewardPeninsula_McNew_2012.html", 22883),
+        ("avianHabitat_sewardPeninsula_McNew_2012.xml", 14408),
+    ],
+    columns=["Name", "Size"],
+)
+
+
+@pytest.mark.parametrize("url", [url_ar, url_ar + "?x=123"], ids=["url", "url?x=y"])
+@pytest.mark.parametrize("dest", [None, "unzip_dir"], ids=["no dest", "dest"])
+def test_download_and_unpack(url, dest, tmpdir):
+    """Test download and unzip with `download_and_unpack`"""
+    if dest is None:
+        dest = Path(url.split("?")[0].rpartition("/")[-1]).stem
+
+    extract_dir = Path(tmpdir / dest)
+    download_and_unpack(url, extract_dir=extract_dir)
+
+    df_files = ls(extract_dir)
+    df_comp = exp_df.compare(df_files[["Name", "Size"]])
+    assert df_comp.empty, f"Differences found in list of files:\n{df_comp}"
