@@ -117,7 +117,7 @@ def extract_tests(nb_path: PathLike):
     # We need to use "/" in paths to avoid weird excaped characters
     test_code = TEST_TEMPLATE.format(
         module_path=module_path.as_posix(),
-        nb_path=Path(nb_path).relative_to(root).as_posix(),
+        nb_path=Path(nb_path).resolve().relative_to(root).as_posix(),
         module=module,
         test_sources="\n\n".join(test_sources),
     )
