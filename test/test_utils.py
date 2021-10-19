@@ -228,6 +228,12 @@ exp_subdir = ["at_root.txt", "dir1", "dir2", "subdir2", "some_pickle.pkl", "at_d
 exp_dir2_subdir = ["at_root.txt", "dir1", "subdir2", "some_pickle.pkl"]
 
 
+def test_ls_patH_as_str(populated_tmp_dir):
+    """Test `ls` function called with a string for path"""
+    df = ls(str(populated_tmp_dir))
+    assert sorted(df["Name"]) == sorted(exp_files)
+
+
 @pytest.mark.parametrize(
     "exclude, exp",
     [
@@ -240,7 +246,7 @@ exp_dir2_subdir = ["at_root.txt", "dir1", "subdir2", "some_pickle.pkl"]
     ],
 )
 def test_ls_exclude(exclude, exp, populated_tmp_dir):
-    """Test `ls` function with an exclusing of some directories"""
+    """Test `ls` function with an exclusion of some directories"""
     df = ls(populated_tmp_dir, exclude=exclude)
     assert sorted(df["Name"]) == sorted(exp)
 
@@ -317,15 +323,6 @@ def test_url_2_text(check_connection_github):
 # Test Cell
 url_ar = r"https://alaska.usgs.gov/data/landBirds/sewardPeninsula/2012/avianHabitat_sewardPeninsula_McNew_2012.zip"
 
-exp_df = pd.DataFrame(
-    [
-        ("avianHabitat_sewardPeninsula_McNew_2012.csv", 60617),
-        ("avianHabitat_sewardPeninsula_McNew_2012.html", 22883),
-        ("avianHabitat_sewardPeninsula_McNew_2012.xml", 14408),
-    ],
-    columns=["Name", "Size"],
-)
-
 
 @pytest.mark.parametrize("url", [url_ar, url_ar + "?x=123"], ids=["url", "url?x=y"])
 @pytest.mark.parametrize("dest", [None, "unzip_dir"], ids=["no dest", "dest"])
@@ -338,5 +335,13 @@ def test_download_and_unpack(url, dest, tmpdir):
     download_and_unpack(url, extract_dir=extract_dir)
 
     df_files = ls(extract_dir)
-    df_comp = exp_df.compare(df_files[["Name", "Size"]])
-    assert df_comp.empty, f"Differences found in list of files:\n{df_comp}"
+    obt_files = {k: v for k, v in zip(df_files.Name, df_files.Size)}
+
+    exp_files = {
+        "avianHabitat_sewardPeninsula_McNew_2012.csv": 60617,
+        "avianHabitat_sewardPeninsula_McNew_2012.html": 22883,
+        "avianHabitat_sewardPeninsula_McNew_2012.xml": 14408,
+    }
+    assert (
+        obt_files == exp_files
+    ), f"Differences found in list of files:\n{obt_files}\nvs\n{exp_files}"

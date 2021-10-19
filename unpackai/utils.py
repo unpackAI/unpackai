@@ -210,7 +210,7 @@ def friendly_size(size: float) -> str:
     return f"{size:0.2f} {unit}"
 
 
-def ls(root: Path, exclude: List[str] = None, hide_info=False) -> pd.DataFrame:
+def ls(root: PathStr, exclude: List[str] = None, hide_info=False) -> pd.DataFrame:
     """Return a DataFrame with list of files & directories in a given path.
 
     Args:
@@ -218,7 +218,7 @@ def ls(root: Path, exclude: List[str] = None, hide_info=False) -> pd.DataFrame:
         exclude: optional list of names to exclude in the search (e.g. `[".git"]`)
     """
     df = pd.DataFrame(
-        _iter_files(root, exclude_dir=exclude or [], hide_info=hide_info)
+        _iter_files(Path(root), exclude_dir=exclude or [], hide_info=hide_info)
     )
     return df.sort_values(by=["Path"])
 
