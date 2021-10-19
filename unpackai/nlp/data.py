@@ -14,8 +14,6 @@ import numpy as np
 import pandas as pd
 from typing import Dict, List, Any
 
-from fastai.data.block import TransformBlock
-
 # Cell
 class Textual:
     """
@@ -213,7 +211,7 @@ def HFTextBlock(
     tokenizer: PreTrainedTokenizer from huggingface
     tk_kwargs: keyward arguements for tokenizer's ```__call__```
     """
-
+    from fastai.data.block import TransformBlock
     def text_2_tensor_collate(data):
         """
         During the usual collation
