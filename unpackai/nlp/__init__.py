@@ -4,7 +4,7 @@ __all__ = []
 
 # Cell
 from ..bug import ishell, BUGBOOK
-from .data import Textual
+from .data import Textual, HFTextBlock
 
 # Cell
 from ..interp import InterpEmbeddings, CosineSearch
