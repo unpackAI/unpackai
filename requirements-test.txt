@@ -1,3 +1,4 @@
+ipytest
 pytest
 pytest-cov
 pytest-mock

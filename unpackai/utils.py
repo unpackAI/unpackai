@@ -26,6 +26,10 @@ from uuid import uuid4
 
 PathStr = Union[Path, str]
 
+
+# Internal Cell
+logger = logging.getLogger("unpackai.utils")
+
 # Cell
 def check_img(
     img: Path,
@@ -266,7 +270,7 @@ def download(url: str, dest: PathStr = None) -> Path:
                 for chunk in resp.iter_content(chunk_size=8192):
                     f.write(chunk)
 
-    print(f"Downloaded {url} to {dest}")
+    logger.info(f"Downloaded {url} to {dest}")
     return dest
 
 
@@ -315,7 +319,7 @@ def download_and_unpack(url: str, extract_dir: PathStr = None, fmt: str = None) 
             extract_dir = Path.cwd() / dest.stem
 
         unpack_archive(str(dest), extract_dir=str(extract_dir), format=fmt)
-        print(f"Extracted {url} to folder {dest}")
+        logger.info(f"Extracted {url} to folder {dest}")
 
     return Path(extract_dir)
 
