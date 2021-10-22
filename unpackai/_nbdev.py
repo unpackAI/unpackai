@@ -3,6 +3,7 @@
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
 index = {"PathStr": "10_utils.ipynb",
+         "PathURL": "10_utils.ipynb",
          "logger": "10_utils.ipynb",
          "check_img": "10_utils.ipynb",
          "clean_error_img": "10_utils.ipynb",
@@ -17,6 +18,7 @@ index = {"PathStr": "10_utils.ipynb",
          "url_2_text": "10_utils.ipynb",
          "download_and_unpack": "10_utils.ipynb",
          "unpack_archive": "10_utils.ipynb",
+         "read_csv_from_zip": "10_utils.ipynb",
          "BugBook": "12_bug.ipynb",
          "module_not_found_message1": "12_bug.ipynb",
          "module_not_found_message2": "12_bug.ipynb",

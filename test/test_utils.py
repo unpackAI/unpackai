@@ -279,7 +279,10 @@ def test_gv(rankdir):
 
 
 # Test Cell
-url_raw_txt = "https://raw.githubusercontent.com/unpackAI/unpackai/main/test/test_data/to_download.txt"
+GITHUB_TEST_DATA_URL = (
+    "https://raw.githubusercontent.com/unpackAI/unpackai/main/test/test_data/"
+)
+url_raw_txt = f"{GITHUB_TEST_DATA_URL}/to_download.txt"
 test_data_txt = (DATA_DIR / "to_download.txt").read_text()
 
 
@@ -292,6 +295,7 @@ def check_connection_github():
         pytest.xfail(f"Cannot connect to Github: {e}")
 
 
+# Test Cell
 def test_get_url_size(check_connection_github):
     assert get_url_size(url_raw_txt) == 264, f"Wrong size for {url_raw_txt}"
 
@@ -345,3 +349,58 @@ def test_download_and_unpack(url, dest, tmpdir):
     assert (
         obt_files == exp_files
     ), f"Differences found in list of files:\n{obt_files}\nvs\n{exp_files}"
+
+
+# Test Cell
+LOCAL_ZIP_FLAT = DATA_DIR / "archive.zip"
+LOCAL_ZIP_FOLDER = DATA_DIR / "archived_folder.zip"
+GITHUB_ZIP_FLAT = f"{GITHUB_TEST_DATA_URL}/archive.zip"
+GITHUB_ZIP_FOLDER = f"{GITHUB_TEST_DATA_URL}/archived_folder.zip"
+
+
+@pytest.mark.parametrize(
+    "archive,csv",
+    [
+        (LOCAL_ZIP_FLAT, "100_rows.csv"),
+        (LOCAL_ZIP_FOLDER, "archived_folder/100_rows (folder).csv"),
+        (LOCAL_ZIP_FOLDER, "archived_folder/sub_folder/100_rows (subfolder).csv"),
+    ],
+    ids=["flat", "folder", "subfolder"],
+)
+def test_read_csv_from_zip_local(archive, csv):
+    """Test reading CSV from a local zip with read_csv_from_zip"""
+    df = read_csv_from_zip(archive, csv)
+    assert isinstance(df, pd.DataFrame), f"Result is not a DataFrame: {df}"
+    assert len(df) == 100
+
+
+@pytest.mark.parametrize(
+    "archive,csv",
+    [
+        (GITHUB_ZIP_FLAT, "100_rows.csv"),
+        (GITHUB_ZIP_FOLDER, "archived_folder/100_rows (folder).csv"),
+        (GITHUB_ZIP_FOLDER, "archived_folder/sub_folder/100_rows (subfolder).csv"),
+    ],
+    ids=["flat", "folder", "subfolder"],
+)
+def test_read_csv_from_zip_local(archive, csv, check_connection_github):
+    """Test reading CSV from a URL zip with read_csv_from_zip"""
+    df = read_csv_from_zip(archive, csv)
+    assert isinstance(df, pd.DataFrame), f"Result is not a DataFrame: {df}"
+    assert len(df) == 100
+
+
+@pytest.mark.parametrize(
+    "archive,csv,error",
+    [
+        ("does_not_exist.zip", "table.csv", FileNotFoundError),
+        (LOCAL_ZIP_FLAT, "does_not_exist.csv", FileNotFoundError),
+        (LOCAL_ZIP_FLAT, "not_a_csv.txt", AttributeError),
+        (LOCAL_ZIP_FLAT, "not_a_csv", AttributeError),
+    ],
+    ids=["zip missing", "csv missing", "not csv (extension)", "not csv (no extension)"],
+)
+def test_read_csv_from_zip_robustness(archive, csv, error):
+    """Test robustness of read_csv_from_zip"""
+    with pytest.raises(error):
+        read_csv_from_zip(archive, csv)
