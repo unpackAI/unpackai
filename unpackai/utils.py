@@ -7,6 +7,7 @@ __all__ = ['PathStr', 'PathURL', 'check_img', 'clean_error_img', 'hush', 'static
 import logging
 import requests
 import shutil
+import tarfile
 import tempfile
 from datetime import datetime
 from mimetypes import types_map
@@ -326,18 +327,43 @@ def download_and_unpack(url: str, extract_dir: PathStr = None, fmt: str = None) 
     return Path(extract_dir)
 
 
+# Internal Cell
+def _zip_csv_2_df(zip_path:Path, csv_path:PathStr) -> pd.DataFrame:
+    """CSV in zip to DataFrame"""
+    with ZipFile(zip_path) as zf:
+        try:
+            with zf.open(csv_path) as f_csv:
+                return pd.read_csv(f_csv)
+        except KeyError:
+            files = "\n".join(f" * {f}" for f in zf.namelist() if f.lower().endswith(".csv"))
+            raise FileNotFoundError(
+                f'CSV file "{csv_path}" not found in "{zip_path}" '
+                f"containing following CSV files:\n{files}"
+            ) from None
+
+
+def _tar_csv_2_df(tar_path:Path, csv_path:PathStr) -> pd.DataFrame:
+    """CSV in tar to DataFrame"""
+    with tarfile.open(tar_path) as tf:
+        try:
+            csv_member = tf.getmember(csv_path)
+            return pd.read_csv(tf.extractfile(member=csv_member))
+        except KeyError:
+            files = "\n".join(f" * {f}" for f in tf.getnames() if f.lower().endswith(".csv"))
+            raise FileNotFoundError(
+                f'CSV file "{csv_path}" not found in "{tar_path}" '
+                f"containing following CSV files:\n{files}"
+            ) from None
+
+
 # Cell
-def read_csv_from_zip(
-    archive: PathURL, csv_path: PathStr, fmt: str = None
-) -> pd.DataFrame:
-    """Download a file and unzip it. Returns the path of unzipped directory
+def read_csv_from_zip(archive: PathURL, csv_path: PathStr) -> pd.DataFrame:
+    """Load a CSV file inside a zip/tar and returns the equivalent pandas `DataFrame`
 
     Args:
-        archive: path or URL of the archive to download
+        archive: path or URL of the zip (or tar/tag.gz) file
         csv_path: path of csv relative to root of archive
             Note: if root is a folder, csv_path shall include this path (e.g. "archive/my_table.csv")
-        fmt: archive format (one of "zip", "tar", "gztar", "bztar",or "xztar").
-                Or any other registered format. If not provided, it is guessed from extension.
     """
     if Path(csv_path).suffix.lower() != ".csv":
         raise AttributeError(
@@ -351,16 +377,15 @@ def read_csv_from_zip(
         else:
             zip_path = Path(archive)
 
-        with ZipFile(zip_path) as zf:
-            try:
-                with zf.open(csv_path) as f_csv:
-                    return pd.read_csv(f_csv)
-            except KeyError:
-                files = "\n".join(f" * {f}" for f in zf.namelist() if f.lower().endswith(".csv"))
-                raise FileNotFoundError(
-                    f'CSV file "{csv_path}" not found in "{archive}" '
-                    f"containing following CSV files:\n{files}"
-                ) from None
+    extensions = "".join(zip_path.suffixes[-2:]).lower()
+    if extensions == ".zip":
+        return _zip_csv_2_df(zip_path, csv_path)
+    elif extensions in (".tar", ".tar.gz"):
+        return _tar_csv_2_df(zip_path, csv_path)
+    else:
+        raise AttributeError(
+            f'Archive shall be either .zip, .tar, or .tar.gz but is "{zip_path}"'
+        )
 
 
 # Cell
