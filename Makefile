@@ -2,24 +2,33 @@
 SHELL := /bin/bash
 SRC = $(wildcard nbs/*.ipynb)
 
-all: unpackai docs
+.PHONY: all all_and_docs sync docs_serve conda_release pypi clean
+
+# For generating content
+all: unpackai test
+all_and_docs: all docs
 
 unpackai: $(SRC)
 	nbdev_build_lib
+	nbdev_clean_nbs.exe
 	touch unpackai
+
+test: $(SRC)
+	python test/test_extractor.py
+	touch test
 
 sync:
 	nbdev_update_lib
 
-docs_serve: docs
-	cd docs && bundle exec jekyll serve
 
 docs: $(SRC)
-	nbdev_build_docs
+	nbdev_build_docs --mk_readme False
 	touch docs
 
-test:
-	nbdev_test_nbs
+
+# For Release
+docs_serve: docs
+	cd docs && bundle exec jekyll serve
 
 release: pypi conda_release
 	nbdev_bump_version
