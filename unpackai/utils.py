@@ -346,8 +346,8 @@ def read_csv_from_zip(
 
     with tempfile.TemporaryDirectory() as tmpdirname:
         if str(archive).startswith("http"):
-            zip_path = Path(tmpdirname) / url.split("?")[0].rpartition("/")[-1]
-            download(url, dest=zip_path)
+            zip_path = Path(tmpdirname) / archive.split("?")[0].rpartition("/")[-1]
+            download(archive, dest=zip_path)
         else:
             zip_path = Path(archive)
 
