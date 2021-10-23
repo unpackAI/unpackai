@@ -325,7 +325,10 @@ def test_url_2_text(check_connection_github):
 
 
 # Test Cell
-url_ar = r"https://alaska.usgs.gov/data/landBirds/sewardPeninsula/2012/avianHabitat_sewardPeninsula_McNew_2012.zip"
+url_ar = (
+    r"https://alaska.usgs.gov/data/landBirds/sewardPeninsula/2012/"
+    "avianHabitat_sewardPeninsula_McNew_2012.zip"
+)
 
 
 @pytest.mark.parametrize("url", [url_ar, url_ar + "?x=123"], ids=["url", "url?x=y"])
@@ -387,11 +390,22 @@ def test_read_csv_from_zip_local(archive, csv):
     ],
     ids=["flat", "folder", "subfolder"],
 )
-def test_read_csv_from_zip_local(archive, csv, check_connection_github):
-    """Test reading CSV from a URL zip with read_csv_from_zip"""
+def test_read_csv_from_zip_github(archive, csv, check_connection_github):
+    """Test reading CSV from a URL zip in GitHub with read_csv_from_zip"""
     df = read_csv_from_zip(archive, csv)
     assert isinstance(df, pd.DataFrame), f"Result is not a DataFrame: {df}"
     assert len(df) == 100
+
+
+def test_read_csv_from_zip_url():
+    """Test reading CSV from a URL zip with read_csv_from_zip"""
+    url_ar = (
+        r"https://alaska.usgs.gov/data/landBirds/sewardPeninsula/2012/"
+        "avianHabitat_sewardPeninsula_McNew_2012.zip"
+    )
+    df = read_csv_from_zip(url_ar, "avianHabitat_sewardPeninsula_McNew_2012.csv")
+    assert isinstance(df, pd.DataFrame), f"Result is not a DataFrame: {df}"
+    assert len(df) == 1070
 
 
 @pytest.mark.parametrize(

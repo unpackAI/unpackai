@@ -332,7 +332,7 @@ def _zip_csv_2_df(zip_path:Path, csv_path:PathStr) -> pd.DataFrame:
     """CSV in zip to DataFrame"""
     with ZipFile(zip_path) as zf:
         try:
-            with zf.open(csv_path) as f_csv:
+            with zf.open(str(csv_path)) as f_csv:
                 return pd.read_csv(f_csv)
         except KeyError:
             files = "\n".join(f" * {f}" for f in zf.namelist() if f.lower().endswith(".csv"))
@@ -346,7 +346,7 @@ def _tar_csv_2_df(tar_path:Path, csv_path:PathStr) -> pd.DataFrame:
     """CSV in tar to DataFrame"""
     with tarfile.open(tar_path) as tf:
         try:
-            csv_member = tf.getmember(csv_path)
+            csv_member = tf.getmember(str(csv_path))
             return pd.read_csv(tf.extractfile(member=csv_member))
         except KeyError:
             files = "\n".join(f" * {f}" for f in tf.getnames() if f.lower().endswith(".csv"))
@@ -371,22 +371,21 @@ def read_csv_from_zip(archive: PathURL, csv_path: PathStr) -> pd.DataFrame:
         )
 
     with tempfile.TemporaryDirectory() as tmpdirname:
-        if str(archive).startswith("http"):
+        if isinstance(archive, str) and archive.startswith("http"):
             zip_path = Path(tmpdirname) / archive.split("?")[0].rpartition("/")[-1]
             download(archive, dest=zip_path)
         else:
             zip_path = Path(archive)
 
-    extensions = "".join(zip_path.suffixes[-2:]).lower()
-    if extensions == ".zip":
-        return _zip_csv_2_df(zip_path, csv_path)
-    elif extensions in (".tar", ".tar.gz"):
-        return _tar_csv_2_df(zip_path, csv_path)
-    else:
-        raise AttributeError(
-            f'Archive shall be either .zip, .tar, or .tar.gz but is "{zip_path}"'
-        )
-
+        extensions = "".join(zip_path.suffixes[-2:]).lower()
+        if extensions == ".zip":
+            return _zip_csv_2_df(zip_path, csv_path)
+        elif extensions in (".tar", ".tar.gz"):
+            return _tar_csv_2_df(zip_path, csv_path)
+        else:
+            raise AttributeError(
+                f'Archive shall be either .zip, .tar, or .tar.gz but is "{zip_path}"'
+            )
 
 # Cell
 try:
