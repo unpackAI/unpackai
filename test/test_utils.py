@@ -325,7 +325,10 @@ def test_url_2_text(check_connection_github):
 
 
 # Test Cell
-url_ar = r"https://alaska.usgs.gov/data/landBirds/sewardPeninsula/2012/avianHabitat_sewardPeninsula_McNew_2012.zip"
+url_ar = (
+    r"https://alaska.usgs.gov/data/landBirds/sewardPeninsula/2012/"
+    "avianHabitat_sewardPeninsula_McNew_2012.zip"
+)
 
 
 @pytest.mark.parametrize("url", [url_ar, url_ar + "?x=123"], ids=["url", "url?x=y"])
@@ -353,6 +356,8 @@ def test_download_and_unpack(url, dest, tmpdir):
 
 # Test Cell
 LOCAL_ZIP_FLAT = DATA_DIR / "archive.zip"
+LOCAL_TAR_FLAT = DATA_DIR / "archive.tar"
+LOCAL_GZ_FLAT = DATA_DIR / "archive.tar.gz"
 LOCAL_ZIP_FOLDER = DATA_DIR / "archived_folder.zip"
 GITHUB_ZIP_FLAT = f"{GITHUB_TEST_DATA_URL}/archive.zip"
 GITHUB_ZIP_FOLDER = f"{GITHUB_TEST_DATA_URL}/archived_folder.zip"
@@ -362,10 +367,12 @@ GITHUB_ZIP_FOLDER = f"{GITHUB_TEST_DATA_URL}/archived_folder.zip"
     "archive,csv",
     [
         (LOCAL_ZIP_FLAT, "100_rows.csv"),
+        (LOCAL_TAR_FLAT, "100_rows.csv"),
+        (LOCAL_GZ_FLAT, "100_rows.csv"),
         (LOCAL_ZIP_FOLDER, "archived_folder/100_rows (folder).csv"),
         (LOCAL_ZIP_FOLDER, "archived_folder/sub_folder/100_rows (subfolder).csv"),
     ],
-    ids=["flat", "folder", "subfolder"],
+    ids=["flat (zip)", "flat (tar)", "flat (tar.gz)", "folder", "subfolder"],
 )
 def test_read_csv_from_zip_local(archive, csv):
     """Test reading CSV from a local zip with read_csv_from_zip"""
@@ -383,11 +390,22 @@ def test_read_csv_from_zip_local(archive, csv):
     ],
     ids=["flat", "folder", "subfolder"],
 )
-def test_read_csv_from_zip_local(archive, csv, check_connection_github):
-    """Test reading CSV from a URL zip with read_csv_from_zip"""
+def test_read_csv_from_zip_github(archive, csv, check_connection_github):
+    """Test reading CSV from a URL zip in GitHub with read_csv_from_zip"""
     df = read_csv_from_zip(archive, csv)
     assert isinstance(df, pd.DataFrame), f"Result is not a DataFrame: {df}"
     assert len(df) == 100
+
+
+def test_read_csv_from_zip_url():
+    """Test reading CSV from a URL zip with read_csv_from_zip"""
+    url_ar = (
+        r"https://alaska.usgs.gov/data/landBirds/sewardPeninsula/2012/"
+        "avianHabitat_sewardPeninsula_McNew_2012.zip"
+    )
+    df = read_csv_from_zip(url_ar, "avianHabitat_sewardPeninsula_McNew_2012.csv")
+    assert isinstance(df, pd.DataFrame), f"Result is not a DataFrame: {df}"
+    assert len(df) == 1070
 
 
 @pytest.mark.parametrize(
@@ -395,10 +413,21 @@ def test_read_csv_from_zip_local(archive, csv, check_connection_github):
     [
         ("does_not_exist.zip", "table.csv", FileNotFoundError),
         (LOCAL_ZIP_FLAT, "does_not_exist.csv", FileNotFoundError),
+        (LOCAL_TAR_FLAT, "does_not_exist.csv", FileNotFoundError),
+        (LOCAL_GZ_FLAT, "does_not_exist.csv", FileNotFoundError),
         (LOCAL_ZIP_FLAT, "not_a_csv.txt", AttributeError),
         (LOCAL_ZIP_FLAT, "not_a_csv", AttributeError),
+        (DATA_DIR / "to_download.txt", "table.csv", AttributeError),
     ],
-    ids=["zip missing", "csv missing", "not csv (extension)", "not csv (no extension)"],
+    ids=[
+        "zip missing",
+        "csv missing (zip)",
+        "csv missing (tar)",
+        "csv missing (tar.gz)",
+        "not csv (extension)",
+        "not csv (no extension)",
+        "not archive",
+    ],
 )
 def test_read_csv_from_zip_robustness(archive, csv, error):
     """Test robustness of read_csv_from_zip"""
