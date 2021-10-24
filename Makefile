@@ -41,6 +41,8 @@ pypi: dist
 
 dist: clean
 	python setup.py sdist bdist_wheel
+	@echo "==Checking the build=="
+	twine check dist/*
 
 clean:
 	rm -rf dist
