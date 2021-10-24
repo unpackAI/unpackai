@@ -1,1 +1,1 @@
-recursive-include unpackai/static/ *
+recursive-include unpackai/static *
