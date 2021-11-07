@@ -3,5 +3,7 @@ pytest
 pytest-cov
 pytest-mock
 
+pdfminer.six
+
 # Required for dev
 -r requirements-dev.txt

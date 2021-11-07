@@ -2,7 +2,7 @@
 
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
-index = {"PathStr": "10_utils.ipynb",
+index = {"PathStr": "51_pdf_utils.ipynb",
          "PathURL": "10_utils.ipynb",
          "logger": "10_utils.ipynb",
          "check_img": "10_utils.ipynb",
@@ -50,7 +50,8 @@ index = {"PathStr": "10_utils.ipynb",
          "keyerror_in_tabular": "39_tabular.ipynb",
          "Textual": "41_nlp_data.ipynb",
          "HFTextBlock": "41_nlp_data.ipynb",
-         "InterpEmbeddingsTokenizer": "45_nlp_interp.ipynb"}
+         "InterpEmbeddingsTokenizer": "45_nlp_interp.ipynb",
+         "TextualPDF": "51_pdf_utils.ipynb"}
 
 modules = ["utils.py",
            "bug.py",
@@ -62,7 +63,8 @@ modules = ["utils.py",
            "tabular/__init__.py",
            "nlp/data.py",
            "nlp/interp.py",
-           "nlp/__init__.py"]
+           "nlp/__init__.py",
+           "pdf.py"]
 
 doc_url = "https://unpackai.github.io/unpackai/"
 

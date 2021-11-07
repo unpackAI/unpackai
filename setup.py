@@ -59,6 +59,9 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     include_package_data=True,
     install_requires=requirements,
+    extras_require={
+        "PDF": ["pdfminer.six"],
+    },
     python_requires=">=" + cfg["min_python"],
     long_description=Path("README.md").read_text(encoding="utf-8"),
     long_description_content_type="text/markdown",
