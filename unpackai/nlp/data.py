@@ -4,6 +4,7 @@ __all__ = ['PathStr', 'Textual', 'HFTextBlock']
 
 # Cell
 import logging
+import re
 import requests
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Union
@@ -24,7 +25,7 @@ class Textual:
     """
 
     def __init__(self, text: str, path: Optional[Path] = None):
-        self.text = text.replace("\n", " ").replace("\r", "")
+        self.text = re.sub(r"[\r]?\n", " ", text)
         self.path = path
 
     def __repr__(self) -> str:
@@ -198,7 +199,7 @@ def HFTextBlock(
     """
     create Huggingface specialized fastai Block
     tokenizer: PreTrainedTokenizer from huggingface
-    tk_kwargs: keyward arguements for tokenizer's ```__call__```
+    tk_kwargs: keyward arguments for tokenizer's ```__call__```
     """
     from fastai.data.block import TransformBlock
     import torch
