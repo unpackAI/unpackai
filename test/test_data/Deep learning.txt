@@ -1,0 +1,139 @@
+Deep learning 
+
+From Wikipedia, the free encyclopedia 
+ 
+
+Page 1… 
+
+ 
+
+ 
+
+Deep learning (also known as deep structured learning) is part of a broader family of machine 
+learning methods based on artificial neural networks with representation learning. Learning can 
+be supervised, semi-supervised or unsupervised.[1][2][3] 
+
+Deep-learning architectures such as deep neural networks, deep belief networks, deep 
+reinforcement learning, recurrent neural networks and convolutional neural networks have been 
+applied to fields including computer vision, speech recognition, natural language 
+processing, machine translation, bioinformatics, drug design, medical image analysis, material 
+inspection and board game programs, where they have produced results comparable to and in some 
+cases surpassing human expert performance.[4][5][6][7] 
+
+Artificial neural networks (ANNs) were inspired by information processing and distributed 
+communication nodes in biological systems. ANNs have various differences from biological brains. 
+Specifically, artificial neural networks tend to be static and symbolic, while the biological brain of 
+most living organisms is dynamic (plastic) and analogue.[8][9][10] 
+
+The adjective "deep" in deep learning refers to the use of multiple layers in the network. Early work 
+showed that a linear perceptron cannot be a universal classifier, but that a network with a 
+nonpolynomial activation function with one hidden layer of unbounded width can. Deep learning is a 
+modern variation which is concerned with an unbounded number of layers of bounded size, which 
+permits practical application and optimized implementation, while retaining theoretical universality 
+under mild conditions. In deep learning the layers are also permitted to be heterogeneous and to 
+deviate widely from biologically informed connectionist models, for the sake of efficiency, trainability 
+and understandability, whence the "structured" part. 
+
+ 
+
+Page 2… 
+
+Definition 
+ 
+
+Deep learning is a class of machine learning algorithms that[12]: 199–200  uses multiple layers to 
+progressively extract higher-level features from the raw input. For example, in image processing, 
+lower layers may identify edges, while higher layers may identify the concepts relevant to a human 
+such as digits or letters or faces. 
+
+Page 3… 
+
+Overview 
+ 
+
+Most modern deep learning models are based on artificial neural networks, specifically convolutional 
+neural networks (CNN)s, although they can also include propositional formulas or latent variables 
+organized layer-wise in deep generative models such as the nodes in deep belief networks and 
+deep Boltzmann machines.[13] 
+
+In deep learning, each level learns to transform its input data into a slightly more abstract and 
+composite representation. In an image recognition application, the raw input may be a matrix of 
+pixels; the first representational layer may abstract the pixels and encode edges; the second layer 
+may compose and encode arrangements of edges; the third layer may encode a nose and eyes; and 
+the fourth layer may recognize that the image contains a face. Importantly, a deep learning process 
+can learn which features to optimally place in which level on its own. This does not completely 
+eliminate the need for hand-tuning; for example, varying numbers of layers and layer sizes can 
+provide different degrees of abstraction.[1][14] 
+
+The word "deep" in "deep learning" refers to the number of layers through which the data is 
+transformed. More precisely, deep learning systems have a substantial credit assignment 
+path (CAP) depth. The CAP is the chain of transformations from input to output. CAPs describe 
+potentially causal connections between input and output. For a feedforward neural network, the 
+depth of the CAPs is that of the network and is the number of hidden layers plus one (as the output 
+layer is also parameterized). For recurrent neural networks, in which a signal may propagate through 
+a layer more than once, the CAP depth is potentially unlimited.[2] No universally agreed-upon 
+threshold of depth divides shallow learning from deep learning, but most researchers agree that 
+deep learning involves CAP depth higher than 2. CAP of depth 2 has been shown to be a universal 
+approximator in the sense that it can emulate any function.[15] Beyond that, more layers do not add to 
+the function approximator ability of the network. Deep models (CAP > 2) are able to extract better 
+features than shallow models and hence, extra layers help in learning the features effectively. 
+
+Deep learning architectures can be constructed with a greedy layer-by-layer method.[16] Deep 
+learning helps to disentangle these abstractions and pick out which features improve performance.[1] 
+
+For supervised learning tasks, deep learning methods eliminate feature engineering, by translating 
+the data into compact intermediate representations akin to principal components, and derive layered 
+structures that remove redundancy in representation. 
+
+Deep learning algorithms can be applied to unsupervised learning tasks. This is an important benefit 
+because unlabeled data are more abundant than the labeled data. Examples of deep structures that 
+can be trained in an unsupervised manner are neural history compressors[17] and deep belief 
+networks.[1][18] 
+
+ 
+
+ 
+
+Page 4… 
+
+Deep-Learning Revolution 
+ 
+
+In 2012, a team led by George E. Dahl won the "Merck Molecular Activity Challenge" using multi-
+task deep neural networks to predict the biomolecular target of one drug.[95][96] In 2014, Hochreiter's 
+group used deep learning to detect off-target and toxic effects of environmental chemicals in 
+nutrients, household products and drugs and won the "Tox21 Data Challenge" 
+of NIH, FDA and NCATS.[97][98][99] 
+
+Significant additional impacts in image or object recognition were felt from 2011 to 2012. Although 
+CNNs trained by backpropagation had been around for decades, and GPU implementations of NNs 
+for years, including CNNs, fast implementations of CNNs on GPUs were needed to progress on 
+computer vision.[89][91][43][100][2] In 2011, this approach achieved for the first time superhuman 
+performance in a visual pattern recognition contest. Also in 2011, it won the ICDAR Chinese 
+handwriting contest, and in May 2012, it won the ISBI image segmentation contest.[101] Until 2011, 
+CNNs did not play a major role at computer vision conferences, but in June 2012, a paper by 
+Ciresan et al. at the leading conference CVPR[5] showed how max-pooling CNNs on GPU can 
+dramatically improve many vision benchmark records. In October 2012, a similar system by 
+Krizhevsky et al.[6] won the large-scale ImageNet competition by a significant margin over shallow 
+machine learning methods. In November 2012, Ciresan et al.'s system also won the ICPR contest on 
+analysis of large medical images for cancer detection, and in the following year also the MICCAI 
+Grand Challenge on the same topic.[102] In 2013 and 2014, the error rate on the ImageNet task using 
+deep learning was further reduced, following a similar trend in large-scale speech recognition. 
+
+Image classification was then extended to the more challenging task of generating 
+descriptions (captions) for images, often as a combination of CNNs and LSTMs.[103][104][105][106] 
+
+Some researchers state that the October 2012 ImageNet victory anchored the start of a "deep 
+learning revolution" that has transformed the AI industry.[107] 
+
+In March 2019, Yoshua Bengio, Geoffrey Hinton and Yann LeCun were awarded the Turing 
+Award for conceptual and engineering breakthroughs that have made deep neural networks a critical 
+component of computing. 
+
+Primary Component Analysis selects the best features that contribute more to diabetic retinopathy 
+classification and deep neural network performs better than random forest and support vector 
+machine algorithms.[108] 
+
+ 
+
+
