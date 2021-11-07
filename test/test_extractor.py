@@ -122,8 +122,10 @@ def extract_tests(nb_path: PathLike):
         test_sources="\n\n".join(test_sources),
     )
 
-    # We need to create the directory if needed
+    # We need to create the directory and a __init__.py if needed
+    # Note: we need __init__.py to allow files with same name in different folders
     test_path.parent.mkdir(parents=True, exist_ok=True)
+    test_path.with_name("__init__.py").write_text("")
     test_path.write_text(test_code, encoding="utf-8")
     black_format(test_path)
 

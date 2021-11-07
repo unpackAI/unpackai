@@ -61,4 +61,5 @@ class Test_Textual:
         """Test extract Textual from URL with non-ascii characters"""
         textual = Textual.from_url(GITHUB_TEST_TXT_UTF8)
         content = LOCAL_TEST_TXT_UTF8.read_text(encoding="utf-8")
+        content = content.replace("\n", " ").replace("\r", "")
         assert textual.text == content, f"URL text: {textual.text}"
