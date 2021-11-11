@@ -52,7 +52,7 @@ def cleanup_spaces(text: str) -> str:
     return re.sub(r"[\r\n\t\s]+", " ", text, flags=re.S)
 
 
-class Test_TextualPDF:
+class TestTextualPDF:
     def test_from_path(self, local_textual):
         """Test extract Textual of PDF from local file"""
         t = local_textual

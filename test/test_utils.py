@@ -228,7 +228,7 @@ exp_subdir = ["at_root.txt", "dir1", "dir2", "subdir2", "some_pickle.pkl", "at_d
 exp_dir2_subdir = ["at_root.txt", "dir1", "subdir2", "some_pickle.pkl"]
 
 
-def test_ls_patH_as_str(populated_tmp_dir):
+def test_ls_path_as_str(populated_tmp_dir):
     """Test `ls` function called with a string for path"""
     df = ls(str(populated_tmp_dir))
     assert sorted(df["Name"]) == sorted(exp_files)
@@ -255,6 +255,20 @@ def test_ls_no_info(populated_tmp_dir):
     """Test `ls` function with `hide_info` set to True"""
     df = ls(populated_tmp_dir, hide_info=True)
     assert set(exp_columns) - set(df.columns) == {"Size", "Friendly_Size"}
+
+
+def test_ls_not_exist():
+    """Test `ls` when path does not exist"""
+    with pytest.raises(FileNotFoundError):
+        ls("this_path_does_not_exist")
+
+
+def test_not_dir(tmpdir):
+    """Test `ls` if root is a file and not a dir"""
+    file_path = Path(tmpdir) / "toto.txt"
+    file_path.touch(exist_ok=True)
+    with pytest.raises(FileNotFoundError):
+        ls(file_path)
 
 
 # Test Cell

@@ -224,8 +224,11 @@ def ls(root: PathStr, exclude: List[str] = None, hide_info=False) -> pd.DataFram
         root: root path to look for files and directories recursively
         exclude: optional list of names to exclude in the search (e.g. `[".git"]`)
     """
+    root = Path(root)
+    if not root.is_dir():
+        raise FileNotFoundError(f"Path {root} does not exist or is not a directory")
     df = pd.DataFrame(
-        _iter_files(Path(root), exclude_dir=exclude or [], hide_info=hide_info)
+        _iter_files(root, exclude_dir=exclude or [], hide_info=hide_info)
     )
     return df.sort_values(by=["Path"])
 
