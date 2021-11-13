@@ -1,0 +1,16 @@
+| Tag Nbr |      Predefined Tag Name      |                              Tag Value                                |
+|================================================================================================================ |
+|   256   | ImageWidth                    | 512                                                                   |
+|   257   | ImageLength                   | 512                                                                   |
+|   259   | Compression                   | 1                                                                     |
+|   262   | PhotometricInterpretation     | 1                                                                     |
+|   270   | ImageDescription              | {"shape": [512, 512]}                                                 |
+|   273   | StripOffsets                  | (320,)                                                                |
+|   277   | SamplesPerPixel               | 1                                                                     |
+|   278   | RowsPerStrip                  | 512                                                                   |
+|   279   | StripByteCounts               | (32768,)                                                              |
+|   282   | XResolution                   | 1.0                                                                   |
+|   283   | YResolution                   | 1.0                                                                   |
+|   296   | ResolutionUnit                | 1                                                                     |
+|   305   | Software                      | tifffile.py                                                           |
+|  65001  |                               | Specular reflection                                                   |
