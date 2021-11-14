@@ -61,6 +61,7 @@ setuptools.setup(
     install_requires=requirements,
     extras_require={
         "PDF": ["pdfminer.six"],
+        "deploy": ["streamlit", "pyngrok"],
     },
     python_requires=">=" + cfg["min_python"],
     long_description=Path("README.md").read_text(encoding="utf-8"),
