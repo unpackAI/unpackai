@@ -1,14 +1,10 @@
 import requests
 import tempfile
 from pathlib import Path
-from typing import Union
 
 import streamlit as st
-from unpackai.deploy import get_learner
+from unpackai.deploy import get_learner, PathStr
 from fastai.vision.core import PILImage
-
-PathStr = Union[Path, str]
-
 
 st.set_page_config(page_title="ML deployment, by unpackAI", page_icon="🚀")
 st.image("https://unpackai.github.io/unpackai_logo.svg")
