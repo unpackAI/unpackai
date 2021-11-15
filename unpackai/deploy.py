@@ -160,11 +160,11 @@ from .deploy import get_image
 def display_prediction(pic):
     img = get_image(pic)
     with learn.no_bar():
-        prediction, _, probabilities = learn.predict(img)
+        prediction, idx, probabilities = learn.predict(img)
     col_img, col_pred = st.columns(2)
     col_img.image(img, caption=getattr(pic, "name", None))
     col_pred.write(f"### {prediction}")
-    col_pred.metric(f"Probability", f"{probabilities[1].item()*100:.2f}%")
+    col_pred.metric(f"Probability", f"{probabilities[idx].item()*100:.2f}%")
 
 
 select = st.radio("How to load pictures?", ["from URL", "from files"])
