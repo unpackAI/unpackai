@@ -2,11 +2,14 @@
 SHELL := /bin/bash
 SRC = $(wildcard nbs/*.ipynb)
 
-.PHONY: all all_and_docs sync docs_serve conda_release pypi clean
+.PHONY: all all_and_docs sync docs_serve conda_release pypi clean install
 
 # For generating content
 all: unpackai test
 all_and_docs: all docs
+
+install: unpackai
+	pip install -e .
 
 unpackai: $(SRC)
 	nbdev_build_lib
