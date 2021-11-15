@@ -1,44 +1,25 @@
-import os
-import pathlib
-import re
 import requests
 import tempfile
-from contextlib import contextmanager
 from pathlib import Path
 from typing import Union
 
 import streamlit as st
-from fastai.learner import load_learner, Learner
+from unpackai.deploy import get_learner
 from fastai.vision.core import PILImage
-
 
 PathStr = Union[Path, str]
 
 
-@contextmanager
-def set_posix():
-    """To be able to load model in Windows"""
-    posix_backup = pathlib.PosixPath
-    try:
-        if os.name == "nt":
-            pathlib.PosixPath = pathlib.WindowsPath
-        yield
-    finally:
-        pathlib.PosixPath = posix_backup
+st.set_page_config(page_title="ML deployment, by unpackAI", page_icon="🚀")
+st.image("https://unpackai.github.io/unpackai_logo.svg")
+st.title("Image Classification for cat")
+st.write("*by Jeff*")
+st.write("---")
 
+is_cat = lambda x: None
 
-def get_learner(model_path: PathStr) -> Learner:
-    try:
-        with set_posix():
-            return load_learner(model_path)
-    except AttributeError as e:
-        m_missing_func = re.match(r"Can't get attribute '(.*?)'", str(e))
-        if m_missing_func:
-            raise AttributeError(
-                f"Add in the app the implementation of {m_missing_func.group(1)}"
-            )
-        else:
-            raise
+learn = get_learner(Path(__file__).with_name("model.pkl"))
+vocab = learn.dls.vocab
 
 
 @st.cache
@@ -56,18 +37,6 @@ def get_image(img: PathStr) -> PILImage:
             return PILImage.create(dest)
     else:
         return PILImage.create(pic)
-
-
-is_cat = lambda x: None
-
-st.set_page_config(page_title="ML deployment, by unpackAI", page_icon="🚀")
-st.image("https://unpackai.github.io/unpackai_logo.svg")
-st.title("Image Classification for cat")
-st.write("*by Jeff*")
-st.write("---")
-
-learn = get_learner(Path(__file__).with_name("model.pkl"))
-vocab = learn.dls.vocab
 
 
 def display_prediction(pic):
