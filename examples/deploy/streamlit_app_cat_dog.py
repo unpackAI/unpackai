@@ -3,7 +3,7 @@ import tempfile
 from pathlib import Path
 
 import streamlit as st
-from unpackai.deploy import get_learner, PathStr
+from unpackai.deploy import get_learner, PathStr, dummy_function
 from fastai.vision.core import PILImage
 
 st.set_page_config(page_title="ML deployment, by unpackAI", page_icon="🚀")
@@ -12,7 +12,11 @@ st.title("Image Classification for cat")
 st.write("*by Jeff*")
 st.write("---")
 
-is_cat = lambda x: None
+# is_cat is the function used in original model for labelling
+# Trying to load the model without it defined would lead to an error.
+# We can just assign to a dummy function (using an implementation provided by unpackai)
+# ... the same might apply to custom functions / classes, or elements defined in fastai
+is_cat = dummy_function
 
 learn = get_learner(Path(__file__).with_name("model.pkl"))
 vocab = learn.dls.vocab
@@ -57,3 +61,4 @@ else:
     pictures = st.file_uploader("Choose pictures", accept_multiple_files=True)
     for pic in pictures:  # type:ignore # this is an iterable
         display_prediction(pic)
+
