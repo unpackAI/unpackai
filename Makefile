@@ -11,7 +11,7 @@ all_and_docs: all docs
 install: unpackai
 	pip install -e .
 
-unpackai: $(SRC)
+unpackai: $(SRC) settings.ini setup.py
 	nbdev_build_lib
 	nbdev_clean_nbs.exe
 	touch unpackai

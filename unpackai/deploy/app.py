@@ -8,14 +8,21 @@ import requests
 from dataclasses import dataclass, field
 from pathlib import Path
 from textwrap import dedent
-from typing import Union, ClassVar
+from typing import Union
 
-from jinja2 import Template
+from jinja2 import Template, DebugUndefined
 
+
+# Internal Cell
+PathStr = Union[Path, str]
 
 # Cell
 def deploy_app(app="app.py", from_jupyter=True):
     """Deploy a streamlit app using ngrok"""
+    if not Path(app).is_file():
+        print(f"ERROR: the app {app} does not exist!")
+        return
+
     if from_jupyter:
         get_ipython().system_raw('ngrok http 8501 &')
         resp = requests.get("http://localhost:4040/api/tunnels")
@@ -26,11 +33,13 @@ def deploy_app(app="app.py", from_jupyter=True):
         raise NotImplementedError(f"Deployment outside jupyter currently not supported")
 
     print(dedent(f"""\
-        1. Create a new cell with: !nohup streamlit run {app}
+        Let's create a tunnel to port {local.split(":")[-1]}!
+        1. Create in a cell : !nohup streamlit run {app}
         2. Run that cell
         3. Click on this link: {public}
 
-        Note: this will link to local address {local}
+        Note: we recommend to put the the code `!nohup streamlit ...`
+        after this line of code (instead of a new dedicated cell).
     """))
 
 # Internal Cell
@@ -38,7 +47,6 @@ TEMPLATE_FLOW = """
 from pathlib import Path
 
 import streamlit as st
-from . import get_learner, PathStr, dummy_function
 
 {{ specific_import }}
 
@@ -52,21 +60,25 @@ st.write("---")
 
 {{ display_prediction }}
 
-select = st.radio("How to load {{ input }}?", ["from URL", "from file{% if multiple %}s{% endif %}"])
-st.write("---")
+{% if (input or "").endswith("s") -%}
+select = st.sidebar.radio("How to load {{ input }}?", ["from file{% if input.endswith("s") %}s{% endif %}", "from URL"])
+{% else -%}
+select = st.sidebar.radio("How to load {{ input }}?", ["from file", "from URL"])
+{% endif %}
+st.sidebar.write("---")
 
 if select == "from URL":
-    url = st.text_input("url")
+    url = st.sidebar.text_input("url")
     if url:
         display_prediction(url)
 
 else:
-    {% if multiple -%}
-    files = st.file_uploader("Choose {{ input }}", accept_multiple_files=True)
+    {% if (input or "").endswith("s")   -%}
+    files = st.sidebar.file_uploader("Choose {{ input }}, accept_multiple_files=True)
     for file in files:  # type:ignore # this is an iterable
         display_prediction(file)
     {% else -%}
-    file = st.file_uploader("Choose {{ input }}", accept_multiple_files=True)
+    file = st.sidebar.file_uploader("Choose {{ input }}")
     if file:
         display_prediction(file)
     {% endif %}
@@ -84,7 +96,10 @@ class TemplateCode:
 # NOTE: We need re-implementation of elements defined during loading
 
 TEMPLATE_CV_FASTAI = TemplateCode(
-    specific_import="from unpackai.deploy import get_image",
+    specific_import="""
+        from {# Go around nbdev #}unpackai.deploy.cv import get_image, get_learner, PathStr, dummy_function
+    """
+        ,
     load_model="""\
         {{ implem_4_model }}
 
@@ -113,7 +128,7 @@ TEMPLATE_TABULAR_PYCARET = TemplateCode(
         import pandas as pd
         from pycaret.{{ module }} import load_model, predict_model
     """,
-    load_model="model = load_model({{ model }})",
+    load_model="""model = load_model("{{ model }}")""",
     display_predict="""
         def display_prediction(csv:PathStr):
             df = pd.read_csv(csv)
@@ -171,7 +186,7 @@ class StreamlitApp:
     @property
     def template(self) -> Template:
         """Get the template"""
-        base_template = Template(TEMPLATE_FLOW)
+        base_template = Template(TEMPLATE_FLOW, undefined=DebugUndefined)
         try:
             template_framework: TemplateCode = LIST_TEMPLATES[self.application][
                 self.framework
@@ -179,11 +194,9 @@ class StreamlitApp:
         except KeyError as missing:
             raise AttributeError(f"Element {missing} not found among list of templates")
 
-        # We need author and title at the end so we render by their "template variable"
+        # Some elements can only be rendered later
         return Template(
             base_template.render(
-                title="{{ title }}",
-                author="{{ author }}",
                 specific_import=dedent(template_framework.specific_import),
                 display_prediction=dedent(template_framework.display_predict),
                 load_model=dedent(template_framework.load_model),
@@ -196,10 +209,16 @@ class StreamlitApp:
         """Generic function for rendering"""
         self.framework = framework
         self._title = title
+        input_types = {
+            "CV": "images",
+            "Tabular": "CSV",
+            "NLP": "Text",
+        }
         self.content = self.template.render(
             title=title,
             author=author,
             model=model,
+            input=input_types.get(self.application, "input"),
             **kwargs,
         )
         return self
@@ -219,6 +238,7 @@ class StreamlitApp:
         return self._render(
             "fastai", title, author, model, implem_4_model=dedent(implem_4_model)
         )
+
     def render_pycaret(
         self, title: str, author: str, model: PathStr, module: str
     ) -> "StreamlitApp":
@@ -231,12 +251,12 @@ class StreamlitApp:
             module: regression, classification, etc.
         """
         return self._render(
-            "pycaret", title, author, model, module=module
+            "pycaret", title, author, model.replace(".pkl", ""), module=module
         )
 
     def append(self, content: str) -> "StreamlitApp":
         """Add additional content to the app"""
-        self.content += content
+        self.content += dedent(content)
         return self
 
     def save(self, dest: PathStr, show=False):
