@@ -130,7 +130,7 @@ TEMPLATE_TABULAR_PYCARET = TemplateCode(
     """,
     load_model="""model = load_model("{{ model }}")""",
     display_predict="""
-        def display_prediction(csv:PathStr):
+        def display_prediction(csv):
             df = pd.read_csv(csv)
             predictions = predict_model(model, data = df)
             st.dataframe(predictions)
