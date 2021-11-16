@@ -133,6 +133,11 @@ test/*.json
 nbs/*.csv
 nbs/*.json
 
+# Exploration and misc
 .DS_Store
 Makefile
 .vscode/settings.json
+exploration/
+nbs/*.py
+nbs/*.txt
+/__*.py

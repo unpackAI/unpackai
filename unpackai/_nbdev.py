@@ -2,7 +2,7 @@
 
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
-index = {"PathStr": "51_pdf_utils.ipynb",
+index = {"PathStr": "52_deploy_cv.ipynb",
          "PathURL": "10_utils.ipynb",
          "logger": "10_utils.ipynb",
          "check_img": "10_utils.ipynb",
@@ -52,7 +52,20 @@ index = {"PathStr": "51_pdf_utils.ipynb",
          "Textual": "41_nlp_data.ipynb",
          "HFTextBlock": "41_nlp_data.ipynb",
          "InterpEmbeddingsTokenizer": "45_nlp_interp.ipynb",
-         "TextualPDF": "51_pdf_utils.ipynb"}
+         "deploy_app": "51_deploy_app.ipynb",
+         "TemplateCode": "51_deploy_app.ipynb",
+         "TEMPLATE_FLOW": "51_deploy_app.ipynb",
+         "select": "51_deploy_app.ipynb",
+         "TEMPLATE_CV_FASTAI": "51_deploy_app.ipynb",
+         "TEMPLATE_TABULAR_PYCARET": "51_deploy_app.ipynb",
+         "TEMPLATE_NLP_HF": "51_deploy_app.ipynb",
+         "LIST_TEMPLATES": "51_deploy_app.ipynb",
+         "StreamlitApp": "51_deploy_app.ipynb",
+         "TextualPDF": "51_pdf_utils.ipynb",
+         "set_posix": "52_deploy_cv.ipynb",
+         "get_learner": "52_deploy_cv.ipynb",
+         "get_image": "52_deploy_cv.ipynb",
+         "dummy_function": "52_deploy_cv.ipynb"}
 
 modules = ["utils.py",
            "bug.py",
@@ -66,7 +79,9 @@ modules = ["utils.py",
            "nlp/data.py",
            "nlp/interp.py",
            "nlp/__init__.py",
-           "pdf.py"]
+           "deploy/app.py",
+           "pdf.py",
+           "deploy/cv.py"]
 
 doc_url = "https://unpackai.github.io/unpackai/"
 
