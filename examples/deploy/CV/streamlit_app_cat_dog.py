@@ -1,10 +1,7 @@
-import tempfile
 from pathlib import Path
 
-import requests
 import streamlit as st
-from fastai.vision.core import PILImage
-from unpackai.deploy import PathStr, dummy_function, get_image, get_learner
+from unpackai.deploy import dummy_function, get_image, get_learner
 
 st.set_page_config(page_title="ML deployment, by unpackAI", page_icon="🚀")
 st.image("https://unpackai.github.io/unpackai_logo.svg")
