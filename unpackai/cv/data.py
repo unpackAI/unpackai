@@ -20,11 +20,11 @@ PathStr = Union[Path, str]
 class TiffImage:
     """Load and handle TIFF images, such as viewing frames, extracting frames and saving them as single image files.
 
-    TiffImage loads a TIFF image from a path (Path or str) and return a tiff object that:
+    TiffImage loads a TIFF image from a path (Path or str) and return a TiffImage object that:
     - gives access to the number of frames 'n_frames', all the tags 'tags' and the image size in pixel 'size'.
-    - allows to return a specific frame
-    - allows to extract and safe all or any frame as a 'tif' or 'jpg image file'
-    - provides a representation including file info and a thumbnail of the first frame
+    - allows to return a specific frame as an object
+    - allows to extract and save all or any frame as 'tif' or 'jpg image file(s)'
+    - provides a __repr__ including information on each the frames in the image
     - allows to show thumbnails of all frames in a grid.
 
     Abreviations in the code are according to https://docs.fast.ai/dev/abbr.html
@@ -41,7 +41,7 @@ class TiffImage:
         self.tiff = TiffImageFile(self.path)
 
     def __repr__(self):
-        """Displays a small image of the first frame and returns the TIFF file description"""
+        """Return a summary of all the frames in the image file"""
         str_lst = [f"<unpackai.cv.data.TiffImage> TIFF image file with {self.n_frames} frames."]
         str_lst.append(f"  Loaded from {self.path}.")
         str_lst.append('  Frame Content Summary:')
@@ -76,7 +76,7 @@ class TiffImage:
             plt.show()
 
     def show_all(self, n_max: Optional[int] = None):
-        """Display all frames (up to n_max) as a grid of thumnails"""
+        """Display all frames (up to n_max) as a grid of thumbnails"""
         if n_max is None:
             n_max = self.n_frames
             print(f"Showing all {self.n_frames} frames:")
@@ -94,11 +94,11 @@ class TiffImage:
             plt.axis('off')
         plt.show()
 
-    def get_frame(self, frame_nbr: int = 0):
-        """return the frame specified by 'frame_nbr'
+    def get_frame(self, frame_nbr: int = 0) -> TiffImageFile:
+        """Return the frame specified by 'frame_nbr' as an object
 
-        The frame object is returned as a 'PIL.TiffImagePlugin.TiffImageFile' object. Which is inherit from
-        'PIL.Image.Image' and can be handled as a normal PIL image
+        The frame object is returned as a 'PIL.TiffImagePlugin.TiffImageFile' object. Which inherits from
+        'PIL.Image.Image' and can be handled as a normal PIL image.
         """
         if self.is_valid_frame_(frame_nbr):
             self.tiff.seek(frame_nbr)
