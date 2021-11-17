@@ -3,6 +3,6 @@
 omit =
     unpackai/_nbdev.py
     # We will skip coverage of deploy for the moment
-    unpackai/deploy/*.py
+    unpackai/deploy/cv.py
     # uncomment the line below to skip coverage of __init__.py
     # */__init__.py
