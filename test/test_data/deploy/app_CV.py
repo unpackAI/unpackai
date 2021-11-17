@@ -1,12 +1,9 @@
-
 from pathlib import Path
 
 import streamlit as st
 
 
-
 from unpackai.deploy.cv import get_image, get_learner, dummy_function
-
 
 
 st.set_page_config(page_title="ML deployment, by unpackAI", page_icon="🚀")
@@ -19,7 +16,6 @@ is_cat = dummy_function
 
 learn = get_learner(Path(__file__).parent / "model.pkl")
 vocab = learn.dls.vocab
-
 
 
 def display_prediction(pic):
@@ -44,6 +40,6 @@ else:
     files = st.sidebar.file_uploader("Choose images", accept_multiple_files=True)
     for file in files:  # type:ignore # this is an iterable
         display_prediction(file)
-    
+
 st.sidebar.write("---")
 st.sidebar.button("Show Balloons", on_click=st.balloons)
