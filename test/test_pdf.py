@@ -6,28 +6,13 @@ from unpackai.pdf import *
 # Test Cell
 # For Test Cases (might have duplicate import because it will be in a dedicated file)
 import re
-from difflib import unified_diff
 from pathlib import Path
 from typing import List
 
 import pytest
-from test_common.utils_4_tests import DATA_DIR, IMG_DIR, check_no_log, check_only_warning
+from test_common.utils_4_tests import DATA_DIR, compare_strings
 from test_utils import GITHUB_TEST_DATA_URL, check_connection_github
 from unpackai import nlp
-
-# Test Cell
-def compare_strings(
-    exp: str,
-    obt: str,
-    name_exp: str = "Expected [string #1]",
-    name_obt: str = "Obtained [string #2]",
-) -> str:
-    """Get unified diff of 2 string"""
-    exp_lines = exp.splitlines(keepends=True)
-    obt_lines = obt.splitlines(keepends=True)
-    differences = unified_diff(exp_lines, obt_lines, fromfile=name_exp, tofile=name_obt)
-    return "".join(differences)
-
 
 # Test Cell
 GITHUB_TEST_PDF = f"{GITHUB_TEST_DATA_URL}/Deep%20learning.pdf"

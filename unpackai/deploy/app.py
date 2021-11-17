@@ -49,6 +49,7 @@ from pathlib import Path
 import streamlit as st
 
 {{ specific_import }}
+{{ custom_import }}
 
 st.set_page_config(page_title="ML deployment, by unpackAI", page_icon="🚀")
 st.image("https://unpackai.github.io/unpackai_logo.svg")
@@ -60,35 +61,35 @@ st.write("---")
 
 {{ display_prediction }}
 
-{% if (input or "").endswith("s") -%}
-select = st.sidebar.radio("How to load {{ input }}?", ["from file{% if input.endswith("s") %}s{% endif %}", "from URL"])
-{% else -%}
-select = st.sidebar.radio("How to load {{ input }}?", ["from file", "from URL"])
-{% endif %}
-st.sidebar.write("---")
-
-if select == "from URL":
-    url = st.sidebar.text_input("url")
-    if url:
-        display_prediction(url)
-
-else:
-    {% if (input or "").endswith("s")   -%}
-    files = st.sidebar.file_uploader("Choose {{ input }}, accept_multiple_files=True)
-    for file in files:  # type:ignore # this is an iterable
-        display_prediction(file)
-    {% else -%}
-    file = st.sidebar.file_uploader("Choose {{ input }}")
-    if file:
-        display_prediction(file)
-    {% endif %}
+{{ input_2_prediction }}
 """
+
 
 @dataclass
 class TemplateCode:
-    specific_import:str = ""
-    load_model:str = ""
-    display_predict:str = ""
+    specific_import: str = ""
+    load_model: str = ""
+    display_prediction: str = ""
+    input_2_prediction: str = """\
+        select = st.sidebar.radio("How to load {{ input }}?", ["from file{% if multiple %}s{% endif %}", "from URL"])
+        st.sidebar.write("---")
+
+        if select == "from URL":
+            url = st.sidebar.text_input("url")
+            if url:
+                display_prediction(url)
+
+        else:
+            {% if multiple -%}
+            files = st.sidebar.file_uploader("Choose {{ input }}", accept_multiple_files=True)
+            for file in files:  # type:ignore # this is an iterable
+                display_prediction(file)
+            {% else -%}
+            file = st.sidebar.file_uploader("Choose {{ input }}")
+            if file:
+                display_prediction(file)
+            {% endif %}
+    """
 
 
 # Internal Cell
@@ -97,7 +98,8 @@ class TemplateCode:
 
 TEMPLATE_CV_FASTAI = TemplateCode(
     specific_import="""
-        from {# Go around nbdev #}unpackai.deploy.cv import get_image, get_learner, PathStr, dummy_function
+        {# The ✨ below is to go around import modification by nbdev #}
+        from {# ✨ #}unpackai.deploy.cv import get_image, get_learner, dummy_function
     """
         ,
     load_model="""\
@@ -106,7 +108,7 @@ TEMPLATE_CV_FASTAI = TemplateCode(
         learn = get_learner(Path(__file__).parent / "{{ model }}")
         vocab = learn.dls.vocab
     """,
-    display_predict="""
+    display_prediction="""
         def display_prediction(pic):
             img = get_image(pic)
             with learn.no_bar():
@@ -129,7 +131,7 @@ TEMPLATE_TABULAR_PYCARET = TemplateCode(
         from pycaret.{{ module }} import load_model, predict_model
     """,
     load_model="""model = load_model("{{ model }}")""",
-    display_predict="""
+    display_prediction="""
         def display_prediction(csv):
             df = pd.read_csv(csv)
             predictions = predict_model(model, data = df)
@@ -146,7 +148,7 @@ TEMPLATE_NLP_HF = TemplateCode(
     load_model="""
         # TODO
     """,
-    display_predict="""
+    display_prediction="""
         def display_prediction(csv:PathStr):
             pass # TODO
     """,
@@ -198,33 +200,47 @@ class StreamlitApp:
         return Template(
             base_template.render(
                 specific_import=dedent(template_framework.specific_import),
-                display_prediction=dedent(template_framework.display_predict),
                 load_model=dedent(template_framework.load_model),
+                display_prediction=dedent(template_framework.display_prediction),
+                input_2_prediction=dedent(template_framework.input_2_prediction),
             )
         )
 
     def _render(
-        self, framework: str, title: str, author: str, model: PathStr, **kwargs
+        self,
+        framework: str,
+        title: str,
+        author: str,
+        model: PathStr,
+        custom_import: str = "",
+        **kwargs,
     ):
         """Generic function for rendering"""
         self.framework = framework
         self._title = title
-        input_types = {
+        input_ = {
             "CV": "images",
             "Tabular": "CSV",
             "NLP": "Text",
-        }
+        }.get(self.application, "input")
         self.content = self.template.render(
             title=title,
             author=author,
             model=model,
-            input=input_types.get(self.application, "input"),
+            input=input_,
+            multiple=(input_.endswith("s")),
+            custom_import=custom_import,
             **kwargs,
         )
         return self
 
     def render_fastai(
-        self, title: str, author: str, model: PathStr, implem_4_model: str
+        self,
+        title: str,
+        author: str,
+        model: PathStr,
+        implem_4_model: str,
+        custom_import: str = "",
     ) -> "StreamlitApp":
         """Render an app based on template
 
@@ -234,13 +250,24 @@ class StreamlitApp:
             model: path of .pkl model to load (exported with `learn.export(...)`)
             implem_4_model: extra implementations needed to load the model
                 (e.g. function used for labelling)
+            custom_import: custom import (optional)
         """
         return self._render(
-            "fastai", title, author, model, implem_4_model=dedent(implem_4_model)
+            "fastai",
+            title,
+            author,
+            model,
+            implem_4_model=dedent(implem_4_model),
+            custom_import=custom_import,
         )
 
     def render_pycaret(
-        self, title: str, author: str, model: PathStr, module: str
+        self,
+        title: str,
+        author: str,
+        model: PathStr,
+        module: str,
+        custom_import: str = "",
     ) -> "StreamlitApp":
         """Render an app based on template
 
@@ -249,9 +276,15 @@ class StreamlitApp:
             author: author of the App
             model: path of .pkl model to load (exported with `learn.export(...)`)
             module: regression, classification, etc.
+            custom_import: custom import (optional)
         """
         return self._render(
-            "pycaret", title, author, model.replace(".pkl", ""), module=module
+            "pycaret",
+            title,
+            author,
+            model.replace(".pkl", ""),
+            module=module,
+            custom_import=custom_import,
         )
 
     def append(self, content: str) -> "StreamlitApp":
