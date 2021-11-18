@@ -13,7 +13,7 @@ st.write("---")
 
 
 make_predictions = import_from_module(
-    r"E:\AnsysDev\_perso_repo\unpackai\test\test_data\deploy\correct_code_for_custom_app.py",
+    r"<absolute_path>/correct_code_for_custom_app.py",
     "make_predictions",
 )
 make_predictions()
