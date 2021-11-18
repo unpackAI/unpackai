@@ -44,3 +44,36 @@ def test_streamlit_tabular_pycaret(tmp_path):
     ).save(dest=dest)
 
     assert diff_files(DEPLOY_DATA_DIR / "app_Tabular.py", dest, show=True) == ""
+
+
+# Test Cell
+def test_custom_app_code(tmp_path):
+    """Test custom app with code provided via string"""
+    dest = tmp_path / "app_custom_code.py"
+    code = """
+        st.write("hello")
+        st.balloons()
+    """
+    StreamlitAppCustom().render("Custom App", "Jeff", code).save(dest=dest)
+
+    assert diff_files(DEPLOY_DATA_DIR / "app_custom.py", dest, show=True) == ""
+
+
+# Test Cell
+def test_custom_app_external(tmp_path):
+    """Test custom app with code provided via string"""
+    dest = tmp_path / "app_custom_external.py"
+
+    StreamlitAppCustom().render(
+        "Custom App", "Jeff", DEPLOY_DATA_DIR / "correct_code_for_custom_app.py"
+    ).save(dest=dest)
+
+    # Because we have a absolute path of "test_data/deploy", we will replace by relative path
+    # otherwise our tests will always be failed
+    content = dest.read_text(encoding="utf-8").replace(
+        str(DEPLOY_DATA_DIR), "<absolute_path>"
+    )
+    content = content.replace("<absolute_path>\\", "<absolute_path>/")
+    dest.write_text(content, encoding="utf-8")
+
+    assert diff_files(DEPLOY_DATA_DIR / "app_custom_external.py", dest, show=True) == ""

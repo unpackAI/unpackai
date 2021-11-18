@@ -1,51 +1,78 @@
 from pathlib import Path
 
 import streamlit as st
-from unpackai.deploy import PathStr, dummy_function
 
 st.set_page_config(page_title="ML deployment, by unpackAI", page_icon="🚀")
 st.image("https://unpackai.github.io/unpackai_logo.svg")
-st.title("Tabular Predictions trained with pycaret")
+st.title("Question Answering for Economics")
 st.write("*by Jeff*")
 st.write("---")
 
 
-"""
-The model shall have been saved with a flow similar to this one:
-```python
-from pycaret.regression import *
+# === Custom implem ===
+from pathlib import Path
+from textwrap import shorten
+from typing import Union
 
-_ = setup(data = date_features=, target = target)
-lr = create_model('lr')
-lr_final = finalize_model(lr)
-save_model(lr_final, 'model')
-```
-"""
+# Ideally: it would be nice to be able to import text from URL by using unpackai
+# from unpackai.utils import url_2_text
+# ... temporarily, we will replace by implementation here
+# ---
+import requests
+def url_2_text(url: str) -> str:
+    """Extract text content from an URL (textual content for an HTML)"""
+    resp = requests.get(url)
+    if resp.status_code != 200:
+        raise ConnectionError(f"Error when retrieving text content from {url}")
 
-import pandas as pd
-from pycaret.regression import load_model, predict_model
+    resp.encoding = "utf-8"
+    content_type = resp.headers["Content-Type"]
+    return resp.text
+# ---
 
-model = load_model(Path(__file__).with_name("model.pkl"))
-
-def get_predictions(csv:PathStr):
-    df = pd.read_csv(csv)
-    predictions = predict_model(model, data = df)
-    st.dataframe(predictions)
+PathOrURL = Union[Path, str]
 
 
-select = st.radio("How to load CSV?", ["from URL", "from files"])
-st.write("---")
+def make_nlp_predictions(input_text: str, context: PathOrURL = None):
+    """Make and display predictions"""
+    # We will use the a default context but it can be customized
+    if context is None:
+        context = Path(__file__).with_name("Economics_Wikipedia.txt")
+    # We will extract the text from path or URL
+    if str(context).lower().startswith("http"):
+        text = url_2_text(context)
+    else:
+        text = (Path(__file__).parent / context).read_text(encoding="utf-8")
+    sentences = text.splitlines()
+
+    found_sentences = [
+        (i, s) for i, s in enumerate(sentences) if input_text.lower() in s.lower()
+    ]
+    for i, sentence in found_sentences:
+        with st.expander(f"Sentence #{i+1}: {shorten(sentence, width=80)}"):
+            st.write("".join(s for s in sentences[max(0, i - 2) : i]))
+            st.write(f"**{sentence}**")
+            st.write("".join(s for s in sentences[i + 1 : i + 3]))
+
+
+# === END CUSTOM IMPLEM ===
+
+st.subheader("Context")
+select = st.radio("How to select context?", ["from file", "from URL", "from text"])
+context = None
 
 if select == "from URL":
-    url = st.text_input("url")
-    if url:
-        get_predictions(url)
-
+    context = st.text_input("url")
+elif select == "from file":
+    file = st.file_uploader("Choose TXT file (with one sentence per line)")
+    if file:
+        context = file.name
 else:
-    csv = st.file_uploader("Choose CSV file")
-    if csv:
-        get_predictions(csv)
+    context = st.text_area("Enter your text, one sentence per line")
 
-"""
-If you make your model a subclass of PreTrainedModel, then you can use our methods save_pretrained and from_pretrained. Otherwise it’s regular PyTorch code to save and load (using torch.save and torch.load).
-"""
+st.write("---")
+
+st.subheader("Input")
+input_text = st.text_input("Enter your question")
+if input_text:
+    make_nlp_predictions(input_text=input_text, context=context)

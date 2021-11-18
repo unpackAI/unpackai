@@ -1,4 +1,3 @@
-
 from pathlib import Path
 
 import streamlit as st
@@ -6,7 +5,6 @@ import streamlit as st
 
 import pandas as pd
 from pycaret.regression import load_model, predict_model
-
 
 
 st.set_page_config(page_title="ML deployment, by unpackAI", page_icon="🚀")
@@ -20,7 +18,7 @@ model = load_model("model")
 
 def display_prediction(csv):
     df = pd.read_csv(csv)
-    predictions = predict_model(model, data = df)
+    predictions = predict_model(model, data=df)
     st.dataframe(predictions)
 
 
@@ -36,4 +34,3 @@ else:
     file = st.sidebar.file_uploader("Choose CSV")
     if file:
         display_prediction(file)
-    
