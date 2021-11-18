@@ -1,0 +1,40 @@
+Economics focuses on the behaviour and interactions of economic agents and how economies work.
+When people refer to "economics" today, what is usually mean is mainstream economics, rather than heterodox economics.
+Within mainstream economics, microeconomics is a field which analyzes what's viewed as basic elements in the economy, including individual agents and markets, their interactions, and the outcomes of interactions.
+Individual agents may include, for example, households, firms, buyers, and sellers.
+Macroeconomics analyzes the economy as a system where production, consumption, saving, and investment interact, and factors affecting it: employment of the resources of labour, capital, and land, currency inflation, economic growth, and public policies that have impact on these elements.
+
+Other broad distinctions within economics include those between positive economics, describing "what is", and normative economics, advocating "what ought to be"; between economic theory and applied economics; between rational and behavioural economics; and between mainstream economics and heterodox economics.
+
+Economic analysis can be applied throughout society, including real estate, business, finance, health care, engineering and government.
+It is also applied to such diverse subjects as crime, education, the family, feminism, law, philosophy, politics, religion, social institutions, war, science, and the environment.
+
+The earlier term for the discipline was 'political economy'.
+The term political economy has however never died, and is frequently used by heterodox economists.
+In the late 19th century, primarily due to Alfred Marshall, it was renamed 'economics', as a shorter term for 'economic science'.citation needed At that time, it was becoming more open to rigorous thinking according to those working within this perspective, who tended to emphasize how increased use of a new mathematics of economics, helped support efforts to have it accepted as a science separate from political science and other social sciences.a
+
+There are a variety of modern definitions of economics; some reflect evolving views of the subject or different views among economists.
+Scottish philosopher Adam Smith (1776) defined what was then called political economy as "an inquiry into the nature and causes of the wealth of nations", in particular as:
+
+a branch of the science of a statesman or legislator with the twofold objectives of providing a plentiful revenue or subsistence for the people ...
+and to supply the state or commonwealth with a revenue for the public services.
+
+Robbins describes the definition as not classificatory in "picking out certain kinds of behaviour" but rather analytical in "focusing attention on a particular aspect of behaviour, the form imposed by the influence of scarcity." He affirmed that previous economists have usually centred their studies on the analysis of wealth: how wealth is created (production), distributed, and consumed; and how wealth can grow.
+But he said that economics can be used to study other things, such as war, that are outside its usual focus.
+This is because war has as the goal winning it (as a sought after end), generates both cost and benefits; and, resources (human life and other costs) are used to attain the goal.
+If the war is not winnable or if the expected costs outweigh the benefits, the deciding actors (assuming they are rational) may never go to war (a decision) but rather explore other alternatives.
+We cannot define economics as the science that studies wealth, war, crime, education, and any other field economic analysis can be applied to; but, as the science that studies a particular common aspect of each of those subjects (they all use scarce resources to attain a sought after end).
+
+Some subsequent comments criticized the definition as overly broad in failing to limit its subject matter to analysis of markets.
+From the 1960s, however, such comments abated as the economic theory of maximizing behaviour and rational-choice modelling expanded the domain of the subject to areas previously treated in other fields.
+There are other criticisms as well, such as in scarcity not accounting for the macroeconomics of high unemployment.
+
+Gary Becker, a contributor to the expansion of economics into new areas, describes the approach he favours as "combining the assumptions of maximizing behaviour, stable preferences, and market equilibrium, used relentlessly and unflinchingly." One commentary characterizes the remark as making economics an approach rather than a subject matter but with great specificity as to the "choice process and the type of social interaction that such analysis involves." The same source reviews a range of definitions included in principles of economics textbooks and concludes that the lack of agreement need not affect the subject-matter that the texts treat.
+Among economists more generally, it argues that a particular definition presented may reflect the direction toward which the author believes economics is evolving, or should evolve.
+
+According to economist Ha-Joon Chang economics should be defined not in terms of its methodology or theoretical approach but in terms of its subject matter.
+Ha-Joon Chang finds a definition like "the science which studies human behavior as a relationship between ends and scarce means which have alternative uses" very peculiar because all other sciences define themselves in terms of the area of inquiry or object of inquiry rather than the methodology.
+In the biology department, they don’t say that all biology should be studied with DNA analysis.
+People study living organisms in many different ways, so some people will do DNA analysis, others might do anatomy, and still others might build game theoretic models of animal behavior.
+But they are all called biology because they all study living organisms.
+According to Ha Joon Chang, this view that you can and should study the economy in only one way (for example by studying only rational choices), and going even one step further and basically redefining economics as a theory of everything, is very peculiar.
