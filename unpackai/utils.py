@@ -34,11 +34,14 @@ PathURL = Union[Path, str]
 # Cell
 def is_jupyter():
     try:
-        shell = get_ipython().__class__.__name__
+        ishell = get_ipython()
+        shell = ishell.__class__.__name__
         if shell == 'ZMQInteractiveShell':
             return True   # Jupyter notebook or qtconsole
         elif shell == 'TerminalInteractiveShell':
             return False  # Terminal running IPython
+        elif "google.colab._shell.Shell" in str(ishell):
+            return True # Colab compatibility
         else:
             return False  # Other type (?)
     except NameError:
