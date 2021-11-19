@@ -1,20 +1,13 @@
 name: Run PyTests
-on: [pull_request]
+on: [push]
 
 jobs:
   run:
     runs-on:  ${{ matrix.os }}
     strategy:
       matrix:
-        python: [3.7, 3.8, 3.9, "3.10"]
+        python: [3.7]
         os: [ubuntu-latest]
-        include:
-        - python: 3.7
-          os: macos-latest
-          experimental: true
-        - python: 3.7
-          os: windows-latest
-          experimental: true
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python ${{ matrix.python }} on ${{ matrix.os }}

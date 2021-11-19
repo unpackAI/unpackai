@@ -15,35 +15,44 @@ from typing import Any, Union
 from black import Mode, format_file_contents
 from jinja2 import Template, DebugUndefined
 
+from ..utils import IS_JUPYTER
 
 # Internal Cell
 PathStr = Union[Path, str]
 
 # Cell
-def deploy_app(app="app.py", from_jupyter=True):
+def deploy_app(app="app.py"):
     """Deploy a streamlit app using ngrok"""
     if not Path(app).is_file():
         print(f"ERROR: the app {app} does not exist!")
         return
 
-    if from_jupyter:
-        get_ipython().system_raw('ngrok http 8501 &')
-        resp = requests.get("http://localhost:4040/api/tunnels")
+    def show_url(public: str, port: str):
+        print(f"Tunnel created for port {port} to: {public}")
+        print("... click on the link to launch the app")
+        if IS_JUPYTER:
+            print("... Note: the output of streamlit is stored in nohup.out")
+
+    if IS_JUPYTER:
+        try:
+            get_ipython().system_raw("ngrok http 8501 &")
+            resp = requests.get("http://localhost:4040/api/tunnels")
+        except Exception as e:
+            print(f"Met error when trying to connect: {e}")
+            print("🧙‍♂️This might happen: run the cell again ▶️ and it should work!")
+            return
+
         tunnel = json.loads(resp.content)["tunnels"][0]
         local = tunnel["config"]["addr"]
+        port = local.split(":")[-1]
         public = tunnel["public_url"]
+
+        show_url(public, port)
+        Path("nohup.out").write_text("")
+        get_ipython().system_raw(f"nohup streamlit run {app}")
     else:
         raise NotImplementedError(f"Deployment outside jupyter currently not supported")
 
-    print(dedent(f"""\
-        Let's create a tunnel to port {local.split(":")[-1]}!
-        1. Create in a cell : !nohup streamlit run {app}
-        2. Run that cell
-        3. Click on this link: {public}
-
-        Note: we recommend to put the the code `!nohup streamlit ...`
-        after this line of code (instead of a new dedicated cell).
-    """))
 
 # Cell
 def load_module(module_path: PathStr, module_name="module") -> Any:
