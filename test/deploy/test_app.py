@@ -71,9 +71,11 @@ def test_custom_app_external(tmp_path):
     # Because we have a absolute path of "test_data/deploy", we will replace by relative path
     # otherwise our tests will always be failed
     content = dest.read_text(encoding="utf-8").replace(
-        str(DEPLOY_DATA_DIR), "<absolute_path>"
+        str(DEPLOY_DATA_DIR), "<deploy_dir>"
     )
-    content = content.replace("<absolute_path>\\", "<absolute_path>/")
+    content = content.replace(">\\", ">/").replace(
+        'r"<deploy_dir>/', 'Path(__file__).parent / "'
+    )
     dest.write_text(content, encoding="utf-8")
 
     assert diff_files(DEPLOY_DATA_DIR / "app_custom_external.py", dest, show=True) == ""
