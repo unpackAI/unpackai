@@ -1,0 +1,13 @@
+<unpackai.cv.data.TiffImage> TIFF image file with 8 frames.
+  Loaded from /home/vtec/unpackai/test/img/tiff/tif-multi-frame-with-tags.tif.
+  Frame Content Summary:
+     Frame |     Size      | Nbr Tags 
+       0   |  (512, 512)   |    14    
+       1   |  (512, 512)   |    14    
+       2   |  (512, 512)   |    14    
+       3   |  (512, 512)   |    14    
+       4   |  (512, 512)   |    14    
+       5   |  (512, 512)   |    14    
+       6   |  (512, 512)   |    14    
+       7   |  (512, 512)   |    14    
+  To show image thumbnails, use method '.show(frame_nbr)' of '.show_all()'
