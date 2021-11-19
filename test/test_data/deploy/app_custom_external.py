@@ -13,7 +13,7 @@ st.write("---")
 
 
 make_predictions = import_from_module(
-    r"<absolute_path>/correct_code_for_custom_app.py",
+    Path(__file__).parent / "correct_code_for_custom_app.py",
     "make_predictions",
 )
 make_predictions()

@@ -4,7 +4,7 @@ import streamlit as st
 
 st.set_page_config(page_title="ML deployment, by unpackAI", page_icon="🚀")
 st.image("https://unpackai.github.io/unpackai_logo.svg")
-st.title("Question Answering for Economics")
+st.title("Question Answering")
 st.write("*by Jeff*")
 st.write("---")
 
@@ -19,6 +19,8 @@ from typing import Union
 # ... temporarily, we will replace by implementation here
 # ---
 import requests
+
+
 def url_2_text(url: str) -> str:
     """Extract text content from an URL (textual content for an HTML)"""
     resp = requests.get(url)
@@ -28,9 +30,25 @@ def url_2_text(url: str) -> str:
     resp.encoding = "utf-8"
     content_type = resp.headers["Content-Type"]
     return resp.text
+
+
 # ---
 
 PathOrURL = Union[Path, str]
+
+
+@st.cache
+def get_text(context: PathOrURL) -> str:
+    """Cached version to get text only once"""
+    # We will extract the text from path or URL
+    if str(context).lower().startswith("http"):
+        return url_2_text(context)
+    elif isinstance(context, Path):
+        return (Path(__file__).parent / context).read_text(encoding="utf-8")
+    elif isinstance(context, str):
+        return context
+    else:
+        raise AttributeError(f"Incorrect context: {context}")
 
 
 def make_nlp_predictions(input_text: str, context: PathOrURL = None):
@@ -38,11 +56,7 @@ def make_nlp_predictions(input_text: str, context: PathOrURL = None):
     # We will use the a default context but it can be customized
     if context is None:
         context = Path(__file__).with_name("Economics_Wikipedia.txt")
-    # We will extract the text from path or URL
-    if str(context).lower().startswith("http"):
-        text = url_2_text(context)
-    else:
-        text = (Path(__file__).parent / context).read_text(encoding="utf-8")
+    text = get_text(context)
     sentences = text.splitlines()
 
     found_sentences = [
@@ -50,29 +64,33 @@ def make_nlp_predictions(input_text: str, context: PathOrURL = None):
     ]
     for i, sentence in found_sentences:
         with st.expander(f"Sentence #{i+1}: {shorten(sentence, width=80)}"):
-            st.write("".join(s for s in sentences[max(0, i - 2) : i]))
+            st.caption("".join(s for s in sentences[max(0, i - 2) : i]))
             st.write(f"**{sentence}**")
-            st.write("".join(s for s in sentences[i + 1 : i + 3]))
+            st.caption("".join(s for s in sentences[i + 1 : i + 3]))
 
 
 # === END CUSTOM IMPLEM ===
 
 st.subheader("Context")
-select = st.radio("How to select context?", ["from file", "from URL", "from text"])
-context = None
+select = st.radio("How to select context?", ["default", "from file", "from URL", "from text"])
 
-if select == "from URL":
+if select == "default":
+    context = None
+elif select == "from URL":
     context = st.text_input("url")
 elif select == "from file":
     file = st.file_uploader("Choose TXT file (with one sentence per line)")
-    if file:
-        context = file.name
+    context = Path(file.name) if file else ""
 else:
     context = st.text_area("Enter your text, one sentence per line")
 
 st.write("---")
 
-st.subheader("Input")
+st.subheader("Search")
 input_text = st.text_input("Enter your question")
+
+st.write("---")
+
+st.subheader("Results")
 if input_text:
     make_nlp_predictions(input_text=input_text, context=context)
