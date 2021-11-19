@@ -4,6 +4,8 @@ __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
 index = {"PathStr": "52_deploy_cv.ipynb",
          "PathURL": "10_utils.ipynb",
+         "is_jupyter": "10_utils.ipynb",
+         "IS_JUPYTER": "10_utils.ipynb",
          "logger": "10_utils.ipynb",
          "check_img": "10_utils.ipynb",
          "clean_error_img": "10_utils.ipynb",
