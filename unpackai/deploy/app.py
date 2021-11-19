@@ -27,26 +27,31 @@ def deploy_app(app="app.py"):
         print(f"ERROR: the app {app} does not exist!")
         return
 
+    def show_url(public: str, port: str):
+        print(f"Tunnel created for port {port} to: {public}")
+        print("... click on the link to launch the app")
+        if IS_JUPYTER:
+            print("... Note: the output of streamlit is stored in nohup.out")
+
     if IS_JUPYTER:
         try:
             get_ipython().system_raw("ngrok http 8501 &")
-        except (ConnectionError, ConnectionRefusedError) as e:
-            print(f"Met following error when trying to connect: {e}")
-            print("This might happen often: run the cell again and it should work!")
+            resp = requests.get("http://localhost:4040/api/tunnels")
+        except Exception as e:
+            print(f"Met error when trying to connect: {e}")
+            print("🧙‍♂️This might happen: run the cell again ▶️ and it should work!")
             return
 
-        resp = requests.get("http://localhost:4040/api/tunnels")
         tunnel = json.loads(resp.content)["tunnels"][0]
         local = tunnel["config"]["addr"]
-        public = tunnel["public_url"]
         port = local.split(":")[-1]
+        public = tunnel["public_url"]
 
-        get_ipython().system_raw(f"nohup streamlit {app}")
+        show_url(public, port)
+        Path("nohup.out").write_text("")
+        get_ipython().system_raw(f"nohup streamlit run {app}")
     else:
         raise NotImplementedError(f"Deployment outside jupyter currently not supported")
-
-    print(f"Tunnel created for port {port} to: {public}")
-    print("... click on the link to launch the app")
 
 
 # Cell
