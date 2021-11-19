@@ -15,35 +15,39 @@ from typing import Any, Union
 from black import Mode, format_file_contents
 from jinja2 import Template, DebugUndefined
 
+from ..utils import IS_JUPYTER
 
 # Internal Cell
 PathStr = Union[Path, str]
 
 # Cell
-def deploy_app(app="app.py", from_jupyter=True):
+def deploy_app(app="app.py"):
     """Deploy a streamlit app using ngrok"""
     if not Path(app).is_file():
         print(f"ERROR: the app {app} does not exist!")
         return
 
-    if from_jupyter:
-        get_ipython().system_raw('ngrok http 8501 &')
+    if IS_JUPYTER:
+        try:
+            get_ipython().system_raw("ngrok http 8501 &")
+        except (ConnectionError, ConnectionRefusedError) as e:
+            print(f"Met following error when trying to connect: {e}")
+            print("This might happen often: run the cell again and it should work!")
+            return
+
         resp = requests.get("http://localhost:4040/api/tunnels")
         tunnel = json.loads(resp.content)["tunnels"][0]
         local = tunnel["config"]["addr"]
         public = tunnel["public_url"]
+        port = local.split(":")[-1]
+
+        get_ipython().system_raw(f"nohup streamlit {app}")
     else:
         raise NotImplementedError(f"Deployment outside jupyter currently not supported")
 
-    print(dedent(f"""\
-        Let's create a tunnel to port {local.split(":")[-1]}!
-        1. Create in a cell : !nohup streamlit run {app}
-        2. Run that cell
-        3. Click on this link: {public}
+    print(f"Tunnel created for port {port} to: {public}")
+    print("... click on the link to launch the app")
 
-        Note: we recommend to put the the code `!nohup streamlit ...`
-        after this line of code (instead of a new dedicated cell).
-    """))
 
 # Cell
 def load_module(module_path: PathStr, module_name="module") -> Any:
