@@ -10,17 +10,50 @@ entries:
       title: Overview
       url: /
     - output: web,pdf
-      title: Utilities
-      url: /utils
+      title: utils
+      url: utils.html
     - output: web,pdf
-      title: Cosine Similarirty
-      url: /consine
+      title: Bug Helper
+      url: bug.html
+    - output: web,pdf
+      title: Interpretation
+      url: interp_latent.html
+    - output: web,pdf
+      title: Interpret CNN model
+      url: interp_cnn.html
+    - output: web,pdf
+      title: Interpretaion
+      url: interp.html
     - output: web,pdf
       title: Image Data Labeler
-      url: /Image_Labeler
+      url: Image_Labeler.html
+    - output: web,pdf
+      title: Computer Vision (CV) Data
+      url: cv_data.html
+    - output: web,pdf
+      title: Tabular data processing
+      url: tabular_data.html
+    - output: web,pdf
+      title: Title
+      url: tabular.html
+    - output: web,pdf
+      title: NLP Data
+      url: nlp_data.html
+    - output: web,pdf
+      title: NLP interpretations
+      url: nlp_interp.html
     - output: web,pdf
       title: NLP
-      url: /nlp
+      url: nlp.html
+    - output: web,pdf
+      title: Deploy
+      url: deploy_app.html
+    - output: web,pdf
+      title: 'PDF Utils: extending current functionalities for PDF'
+      url: pdf_utils.html
+    - output: web,pdf
+      title: Deploy tools for CV applications
+      url: deploy_cv.html
     output: web
     title: unpackai
   output: web
