@@ -11,49 +11,49 @@ entries:
       url: /
     - output: web,pdf
       title: utils
-      url: utils.html
+      url: /utils
     - output: web,pdf
       title: Bug Helper
-      url: bug.html
+      url: /bug
     - output: web,pdf
       title: Interpretation
-      url: interp_latent.html
+      url: /interp_latent
     - output: web,pdf
       title: Interpret CNN model
-      url: interp_cnn.html
+      url: /interp_cnn
     - output: web,pdf
       title: Interpretaion
-      url: interp.html
+      url: /interp
     - output: web,pdf
       title: Image Data Labeler
-      url: Image_Labeler.html
+      url: /Image_Labeler
     - output: web,pdf
       title: Computer Vision (CV) Data
-      url: cv_data.html
+      url: /cv_data
     - output: web,pdf
       title: Tabular data processing
-      url: tabular_data.html
+      url: /tabular_data
     - output: web,pdf
       title: Title
-      url: tabular.html
+      url: /tabular
     - output: web,pdf
       title: NLP Data
-      url: nlp_data.html
+      url: /nlp_data
     - output: web,pdf
       title: NLP interpretations
-      url: nlp_interp.html
+      url: /nlp_interp
     - output: web,pdf
       title: NLP
-      url: nlp.html
+      url: /nlp
     - output: web,pdf
       title: Deploy
-      url: deploy_app.html
+      url: /deploy_app
     - output: web,pdf
       title: 'PDF Utils: extending current functionalities for PDF'
-      url: pdf_utils.html
+      url: /pdf_utils
     - output: web,pdf
       title: Deploy tools for CV applications
-      url: deploy_cv.html
+      url: /deploy_cv
     output: web
     title: unpackai
   output: web
