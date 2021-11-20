@@ -3,19 +3,23 @@
 __all__ = ['get_learner', 'get_image', 'PathStr', 'dummy_function']
 
 # Cell
+import logging
 import os
 import pathlib
 import re
 import requests
+import sys
 import tempfile
 from contextlib import contextmanager
 from pathlib import Path
-from typing import Union
+from typing import List, Union, Tuple
 
 import streamlit as st
 from fastai.learner import load_learner, Learner
 from fastai.vision.core import PILImage
 
+# Internal Cell
+logger = logging.getLogger("unpackai.deploy.cv")
 
 # Internal Cell
 @contextmanager
@@ -33,18 +37,35 @@ def set_posix():
 # Cell
 PathStr = Union[Path, str]
 
+
+@st.cache
 def get_learner(model_path: PathStr) -> Learner:
-    try:
-        with set_posix():
-            return load_learner(model_path)
-    except AttributeError as e:
-        m_missing_func = re.match(r"Can't get attribute '(.*?)'", str(e))
-        if m_missing_func:
-            raise AttributeError(
-                f"Add in the app the implementation of '{m_missing_func.group(1)}'"
-            )
-        else:
+    def try_loading(
+        missing_implem: List[str] = None, nb_iter=5
+    ) -> Tuple[List[str], Learner]:
+        if missing_implem is None:
+            missing_implem = []
+        try:
+            with set_posix():
+                learner = load_learner(model_path)
+        except AttributeError as e:
+            m_missing_func = re.match(r"Can't get attribute '(.*?)'", str(e))
+            if m_missing_func and nb_iter > 0:
+                missing_implementation = m_missing_func.group(1)
+                setattr(sys.modules["__main__"], missing_implementation, None)
+                missing_implem.append(missing_implementation)
+                return try_loading(missing_implem, nb_iter - 1)
             raise
+        else:
+            return missing_implem, learner
+
+    missing_implem, learner = try_loading()
+    if missing_implem:
+        logger.warning(
+            f"Missing function implementation: {missing_implem} => used 'None' instead"
+        )
+
+    return learner
 
 
 @st.cache
@@ -52,7 +73,7 @@ def get_image(img: PathStr) -> PILImage:
     """Get picture from either a path or URL"""
     if str(img).startswith("http"):
         with tempfile.TemporaryDirectory() as tmpdirname:
-            dest = Path(tmpdirname) / img.split("?")[0].rpartition("/")[-1]
+            dest = Path(tmpdirname) / str(img).split("?")[0].rpartition("/")[-1]
 
             # NOTE: to be replaced by download(url, dest=dest) [from unpackai.utils]
             with requests.get(str(img)) as resp:

@@ -19,10 +19,7 @@ def test_streamlit_cv_fastai(tmp_path):
     """Test Streamlit app for CV with fastai"""
     dest = tmp_path / "app_cv_fastai.py"
     StreamlitApp("CV").render_fastai(
-        title="Is it a cat?",
-        author="Jeff",
-        model="model.pkl",
-        implem_4_model="is_cat = dummy_function",
+        title="Is it a cat?", author="Jeff", model="model.pkl"
     ).append(
         """
         st.sidebar.write("---")

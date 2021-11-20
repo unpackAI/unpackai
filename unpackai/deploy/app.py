@@ -21,7 +21,7 @@ from ..utils import IS_JUPYTER
 PathStr = Union[Path, str]
 
 # Cell
-def deploy_app(app="app.py"):
+def deploy_app(app: PathStr = "app.py"):
     """Deploy a streamlit app using ngrok"""
     if not Path(app).is_file():
         print(f"ERROR: the app {app} does not exist!")
@@ -100,6 +100,8 @@ st.write("---")
 
 {{ load_model }}
 
+{{ post_process_code }}
+
 {{ display_prediction }}
 
 {{ input_2_prediction }}
@@ -140,12 +142,10 @@ class TemplateCode:
 TEMPLATE_CV_FASTAI = TemplateCode(
     specific_import="""
         {# The ✨ below is to go around import modification by nbdev #}
-        from {# ✨ #}unpackai.deploy.cv import get_image, get_learner, dummy_function
+        from {# ✨ #}unpackai.deploy.cv import get_image, get_learner
     """
         ,
     load_model="""\
-        {{ implem_4_model }}
-
         learn = get_learner(Path(__file__).parent / "{{ model }}")
         vocab = learn.dls.vocab
     """,
@@ -216,6 +216,7 @@ class StreamlitApp:
     framework: str = field(init=False, default="")
     content: str = field(init=False, default="")
     _title: str = field(init=False, default="Streamlit App")
+    _dest: Path = field(init=False, default_factory=Path)
 
     def __post_init__(self):
         applications = list(LIST_TEMPLATES)
@@ -249,6 +250,7 @@ class StreamlitApp:
         title: str,
         author: str,
         model: PathStr,
+        post_process_code: str = "",
         custom_import: str = "",
         **kwargs,
     ):
@@ -266,7 +268,8 @@ class StreamlitApp:
             model=model,
             input=input_,
             multiple=(input_.endswith("s")),
-            custom_import=custom_import,
+            post_process_code=dedent(post_process_code),
+            custom_import=dedent(custom_import),
             **kwargs,
         )
         self.content = blackify(self.content)
@@ -277,7 +280,7 @@ class StreamlitApp:
         title: str,
         author: str,
         model: PathStr,
-        implem_4_model: str,
+        post_process_code: str = "",
         custom_import: str = "",
     ) -> "StreamlitApp":
         """Render an app based on template
@@ -286,16 +289,15 @@ class StreamlitApp:
             title: title of the App
             author: author of the App
             model: path of .pkl model to load (exported with `learn.export(...)`)
-            implem_4_model: extra implementations needed to load the model
-                (e.g. function used for labelling)
-            custom_import: custom import (optional)
+            post_process_mode: optional code to post-process the model after loading
+            custom_import: optional code for custom import
         """
         return self._render(
             "fastai",
             title,
             author,
             model,
-            implem_4_model=dedent(implem_4_model),
+            post_process_code=post_process_code,
             custom_import=custom_import,
         )
 
@@ -305,6 +307,7 @@ class StreamlitApp:
         author: str,
         model: PathStr,
         module: str,
+        post_process_code: str = "",
         custom_import: str = "",
     ) -> "StreamlitApp":
         """Render an app based on template
@@ -314,14 +317,17 @@ class StreamlitApp:
             author: author of the App
             model: path of .pkl model to load (exported with `learn.export(...)`)
             module: regression, classification, etc.
+            post_process_mode: optional code to post-process the model after loading
             custom_import: custom import (optional)
         """
+        model = Path(model)
         return self._render(
             "pycaret",
             title,
             author,
-            model.replace(".pkl", ""),
+            model.with_name(model.name.replace(".pkl", "")),
             module=module,
+            post_process_code=post_process_code,
             custom_import=custom_import,
         )
 
@@ -330,13 +336,19 @@ class StreamlitApp:
         self.content += dedent(content)
         return self
 
-    def save(self, dest: PathStr, show=False):
+    def save(self, dest: PathStr = "app.py", show=False):
         """Write the app to a file"""
         Path(dest).write_text(self.content, encoding="utf-8")
         print(f"Saved app '{self._title}' to '{dest}'")
         if show:
             print("-" * 20)
             print(self.content)
+
+    def deploy(self, dest: PathStr = "app.py") -> None:
+        """Deploy the app"""
+        if not self._dest:
+            raise FileNotFoundError(f"App shall be saved before deployed")
+        deploy_app(self._dest)
 
 
 # Internal Cell
