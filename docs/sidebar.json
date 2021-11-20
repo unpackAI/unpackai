@@ -1,7 +1,7 @@
 {
   "unpackai": {
     "Overview": "/",
-    "utils": "/utils",
+    "Utilities": "/utils",
     "Bug Helper": "/bug",
     "Interpretation": "/interp_latent",
     "Interpret CNN model": "/interp_cnn",

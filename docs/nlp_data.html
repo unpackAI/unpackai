@@ -73,7 +73,7 @@ nb_path: "nbs\41_nlp_data.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="Textual" class="doc_header"><code>class</code> <code>Textual</code><a href="https://github.com/unpackai/unpackai/tree/master/unpackai/nlp/data.py#L22" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Textual</code>(<strong><code>text</code></strong>:<code>str</code>, <strong><code>path</code></strong>:<code>Optional</code>[<code>Path</code>]=<em><code>None</code></em>)</p>
+<h2 id="Textual" class="doc_header"><code>class</code> <code>Textual</code><a href="https://github.com/unpackai/unpackai/tree/master/unpackai/nlp/data.py#L23" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Textual</code>(<strong><code>text</code></strong>:<code>str</code>, <strong><code>path</code></strong>:<code>Optional</code>[<code>Path</code>]=<em><code>None</code></em>)</p>
 </blockquote>
 <p>Obtain and manage textual data</p>
 
@@ -103,20 +103,11 @@ nb_path: "nbs\41_nlp_data.ipynb"
 
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Showing docs for methods of Textual
- * Textual.create_datasets.create_datasets
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="Textual.create_datasets" class="doc_header"><code>Textual.create_datasets</code><a href="https://github.com/unpackai/unpackai/tree/master/unpackai/nlp/data.py#L113" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>Textual.create_datasets</code>(<strong><code>tokenizer</code></strong>, <strong><code>valid_ratio</code></strong>:<code>float</code>=<em><code>0.2</code></em>, <strong><code>train_path</code></strong>:<code>str</code>=<em><code>'./train_text.txt'</code></em>, <strong><code>val_path</code></strong>:<code>str</code>=<em><code>'./val_text.txt'</code></em>, <strong><code>block_size</code></strong>:<code>int</code>=<em><code>128</code></em>, <strong><code>mlm</code></strong>:<code>bool</code>=<em><code>False</code></em>)</p>
+<h4 id="Textual.create_datasets" class="doc_header"><code>Textual.create_datasets</code><a href="https://github.com/unpackai/unpackai/tree/master/unpackai/nlp/data.py#L114" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>Textual.create_datasets</code>(<strong><code>tokenizer</code></strong>, <strong><code>valid_ratio</code></strong>:<code>float</code>=<em><code>0.2</code></em>, <strong><code>train_path</code></strong>:<code>str</code>=<em><code>'./train_text.txt'</code></em>, <strong><code>val_path</code></strong>:<code>str</code>=<em><code>'./val_text.txt'</code></em>, <strong><code>block_size</code></strong>:<code>int</code>=<em><code>128</code></em>, <strong><code>mlm</code></strong>:<code>bool</code>=<em><code>False</code></em>)</p>
 </blockquote>
-<p>Create pytorch datasets and collating fucntion</p>
+<p>Create pytorch datasets and collating functions</p>
 <ul>
 <li>tokenizer: a huggingface tokenizer</li>
 <li>valid ratio: portion of the valid data,
@@ -134,17 +125,9 @@ nb_path: "nbs\41_nlp_data.ipynb"
 
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre> * Textual.create_train_val.create_train_val
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="Textual.create_train_val" class="doc_header"><code>Textual.create_train_val</code><a href="https://github.com/unpackai/unpackai/tree/master/unpackai/nlp/data.py#L87" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>Textual.create_train_val</code>(<strong><code>valid_ratio</code></strong>=<em><code>0.2</code></em>, <strong><code>train_path</code></strong>=<em><code>'./train_text.txt'</code></em>, <strong><code>val_path</code></strong>=<em><code>'./val_text.txt'</code></em>)</p>
+<h4 id="Textual.create_train_val" class="doc_header"><code>Textual.create_train_val</code><a href="https://github.com/unpackai/unpackai/tree/master/unpackai/nlp/data.py#L88" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>Textual.create_train_val</code>(<strong><code>valid_ratio</code></strong>=<em><code>0.2</code></em>, <strong><code>train_path</code></strong>=<em><code>'./train_text.txt'</code></em>, <strong><code>val_path</code></strong>=<em><code>'./val_text.txt'</code></em>)</p>
 </blockquote>
 <p>create 2 files:</p>
 <ul>
@@ -158,17 +141,9 @@ nb_path: "nbs\41_nlp_data.ipynb"
 
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre> * Textual.from_path.from_path
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="Textual.from_path" class="doc_header"><code>Textual.from_path</code><a href="https://github.com/unpackai/unpackai/tree/master/unpackai/nlp/data.py#L51" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>Textual.from_path</code>(<strong><code>path</code></strong>:<code>Union</code>[<code>Path</code>, <code>str</code>])</p>
+<h4 id="Textual.from_path" class="doc_header"><code>Textual.from_path</code><a href="https://github.com/unpackai/unpackai/tree/master/unpackai/nlp/data.py#L52" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>Textual.from_path</code>(<strong><code>path</code></strong>:<code>Union</code>[<code>Path</code>, <code>str</code>])</p>
 </blockquote>
 <p>Load a textual object from system path</p>
 
@@ -178,17 +153,9 @@ nb_path: "nbs\41_nlp_data.ipynb"
 
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre> * Textual.from_upload.from_upload
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="Textual.from_upload" class="doc_header"><code>Textual.from_upload</code><a href="https://github.com/unpackai/unpackai/tree/master/unpackai/nlp/data.py#L61" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>Textual.from_upload</code>(<strong><code>path</code></strong>:<code>Path</code>=<em><code>Path('uploaded_file.txt')</code></em>)</p>
+<h4 id="Textual.from_upload" class="doc_header"><code>Textual.from_upload</code><a href="https://github.com/unpackai/unpackai/tree/master/unpackai/nlp/data.py#L62" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>Textual.from_upload</code>(<strong><code>path</code></strong>:<code>Path</code>=<em><code>Path('uploaded_file.txt')</code></em>)</p>
 </blockquote>
 <p>Load textual with interactive upload button</p>
 
@@ -198,17 +165,9 @@ nb_path: "nbs\41_nlp_data.ipynb"
 
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre> * Textual.from_url.from_url
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="Textual.from_url" class="doc_header"><code>Textual.from_url</code><a href="https://github.com/unpackai/unpackai/tree/master/unpackai/nlp/data.py#L46" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>Textual.from_url</code>(<strong><code>url</code></strong>:<code>str</code>)</p>
+<h4 id="Textual.from_url" class="doc_header"><code>Textual.from_url</code><a href="https://github.com/unpackai/unpackai/tree/master/unpackai/nlp/data.py#L47" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>Textual.from_url</code>(<strong><code>url</code></strong>:<code>str</code>)</p>
 </blockquote>
 <p>Create a Textual object from a URL</p>
 
@@ -218,17 +177,9 @@ nb_path: "nbs\41_nlp_data.ipynb"
 
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre> * Textual.get_hf_trainer.get_hf_trainer
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="Textual.get_hf_trainer" class="doc_header"><code>Textual.get_hf_trainer</code><a href="https://github.com/unpackai/unpackai/tree/master/unpackai/nlp/data.py#L160" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>Textual.get_hf_trainer</code>(<strong><code>model</code></strong>, <strong><code>tokenizer</code></strong>, <strong><code>arguments</code></strong>=<em><code>None</code></em>, <strong><code>valid_ratio</code></strong>:<code>float</code>=<em><code>0.2</code></em>, <strong><code>train_path</code></strong>:<code>str</code>=<em><code>'./train_text.txt'</code></em>, <strong><code>val_path</code></strong>:<code>str</code>=<em><code>'./val_text.txt'</code></em>, <strong><code>block_size</code></strong>:<code>int</code>=<em><code>128</code></em>, <strong><code>mlm</code></strong>:<code>bool</code>=<em><code>False</code></em>)</p>
+<h4 id="Textual.get_hf_trainer" class="doc_header"><code>Textual.get_hf_trainer</code><a href="https://github.com/unpackai/unpackai/tree/master/unpackai/nlp/data.py#L161" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>Textual.get_hf_trainer</code>(<strong><code>model</code></strong>, <strong><code>tokenizer</code></strong>, <strong><code>arguments</code></strong>=<em><code>None</code></em>, <strong><code>valid_ratio</code></strong>:<code>float</code>=<em><code>0.2</code></em>, <strong><code>train_path</code></strong>:<code>str</code>=<em><code>'./train_text.txt'</code></em>, <strong><code>val_path</code></strong>:<code>str</code>=<em><code>'./val_text.txt'</code></em>, <strong><code>block_size</code></strong>:<code>int</code>=<em><code>128</code></em>, <strong><code>mlm</code></strong>:<code>bool</code>=<em><code>False</code></em>)</p>
 </blockquote>
 <p>Create a hugging face trainer</p>
 
@@ -238,17 +189,9 @@ nb_path: "nbs\41_nlp_data.ipynb"
 
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre> * Textual.show_batch.show_batch
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="Textual.show_batch" class="doc_header"><code>Textual.show_batch</code><a href="https://github.com/unpackai/unpackai/tree/master/unpackai/nlp/data.py#L104" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>Textual.show_batch</code>(<strong><code>tokenizer</code></strong>, <strong><code>bs</code></strong>:<code>int</code>=<em><code>4</code></em>)</p>
+<h4 id="Textual.show_batch" class="doc_header"><code>Textual.show_batch</code><a href="https://github.com/unpackai/unpackai/tree/master/unpackai/nlp/data.py#L105" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>Textual.show_batch</code>(<strong><code>tokenizer</code></strong>, <strong><code>bs</code></strong>:<code>int</code>=<em><code>4</code></em>)</p>
 </blockquote>
 
 </div>
@@ -356,7 +299,7 @@ nb_path: "nbs\41_nlp_data.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="HFTextBlock" class="doc_header"><code>HFTextBlock</code><a href="https://github.com/unpackai/unpackai/tree/master/unpackai/nlp/data.py#L196" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>HFTextBlock</code>(<strong><code>tokenizer</code></strong>, <strong>**<code>tk_kwargs</code></strong>)</p>
+<h4 id="HFTextBlock" class="doc_header"><code>HFTextBlock</code><a href="https://github.com/unpackai/unpackai/tree/master/unpackai/nlp/data.py#L198" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>HFTextBlock</code>(<strong><code>tokenizer</code></strong>, <strong>**<code>tk_kwargs</code></strong>)</p>
 </blockquote>
 <p>create Huggingface specialized fastai Block
 tokenizer: PreTrainedTokenizer from huggingface

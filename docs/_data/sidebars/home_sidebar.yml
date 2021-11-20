@@ -10,7 +10,7 @@ entries:
       title: Overview
       url: /
     - output: web,pdf
-      title: utils
+      title: Utilities
       url: /utils
     - output: web,pdf
       title: Bug Helper

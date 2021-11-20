@@ -18,6 +18,7 @@ from unpackai import utils
 
 PathStr = Union[Path, str]
 
+
 # Cell
 class Textual:
     """
@@ -120,7 +121,7 @@ class Textual:
         mlm: bool = False,
     ) -> Dict[str, Any]:
         """
-        Create pytorch datasets and collating fucntion
+        Create pytorch datasets and collating functions
         - tokenizer: a huggingface tokenizer
         - valid ratio: portion of the valid data,
             compare to the entire dataset
@@ -193,9 +194,8 @@ class Textual:
 
 # Cell
 
-def HFTextBlock(
-    tokenizer,
-    **tk_kwargs):
+
+def HFTextBlock(tokenizer, **tk_kwargs):
     """
     create Huggingface specialized fastai Block
     tokenizer: PreTrainedTokenizer from huggingface
@@ -203,6 +203,7 @@ def HFTextBlock(
     """
     from fastai.data.block import TransformBlock
     import torch
+
     def text_2_tensor_collate(data):
         """
         During the usual collation
@@ -211,16 +212,17 @@ def HFTextBlock(
         cols = list(zip(*data))
         result = []
         for col in cols:
-            if type(col[0])==str:
-                result.append(tokenizer(
-                        list(col),
-                        return_tensors="pt", **tk_kwargs
-                        )['input_ids'])
+            if type(col[0]) == str:
+                result.append(
+                    tokenizer(list(col), return_tensors="pt", **tk_kwargs)["input_ids"]
+                )
             else:
-                result.append(torch.stack(list(col),0))
+                result.append(torch.stack(list(col), 0))
         return tuple(result)
+
     def get_hf_text_block():
-        return TransformBlock(type_tfms=str,
-                              dls_kwargs={
-                                  "create_batch":text_2_tensor_collate})
+        return TransformBlock(
+            type_tfms=str, dls_kwargs={"create_batch": text_2_tensor_collate}
+        )
+
     return get_hf_text_block
