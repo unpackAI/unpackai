@@ -9,6 +9,7 @@ build: unpackai test
 all: build docs
 
 install: unpackai
+	@echo "===== INSTALL ====="
 	pip install -e .
 
 unpackai: $(SRC) settings.ini setup.py
@@ -34,6 +35,7 @@ docs: $(SRC)
 
 # For Release
 docs_serve: docs
+	@echo "===== RUN JEKYLL SERVER ====="
 	cd docs && bundle exec jekyll serve
 
 release: pypi conda_release

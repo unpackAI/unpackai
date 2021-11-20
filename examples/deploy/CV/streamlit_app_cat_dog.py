@@ -1,7 +1,7 @@
 from pathlib import Path
 
 import streamlit as st
-from unpackai.deploy import dummy_function, get_image, get_learner
+from unpackai.deploy.cv import get_image, get_learner
 
 st.set_page_config(page_title="ML deployment, by unpackAI", page_icon="🚀")
 st.image("https://unpackai.github.io/unpackai_logo.svg")
@@ -13,7 +13,7 @@ st.write("---")
 # Trying to load the model without it defined would lead to an error.
 # We can just assign to a dummy function (using an implementation provided by unpackai)
 # ... the same might apply to custom functions / classes, or elements defined in fastai
-is_cat = dummy_function
+# is_cat = dummy_function
 
 learn = get_learner(Path(__file__).with_name("model.pkl"))
 vocab = learn.dls.vocab
