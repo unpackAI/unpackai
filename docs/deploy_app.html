@@ -53,7 +53,7 @@ nb_path: "nbs\51_deploy_app.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="deploy_app" class="doc_header"><code>deploy_app</code><a href="https://github.com/unpackai/unpackai/tree/master/unpackai/deploy/app.py#L24" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>deploy_app</code>(<strong><code>app</code></strong>=<em><code>'app.py'</code></em>)</p>
+<h4 id="deploy_app" class="doc_header"><code>deploy_app</code><a href="https://github.com/unpackai/unpackai/tree/master/unpackai/deploy/app.py#L24" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>deploy_app</code>(<strong><code>app</code></strong>:<code>Union</code>[<code>Path</code>, <code>str</code>]=<em><code>'app.py'</code></em>)</p>
 </blockquote>
 <p>Deploy a streamlit app using ngrok</p>
 
@@ -255,7 +255,7 @@ nb_path: "nbs\51_deploy_app.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="StreamlitAppCustom" class="doc_header"><code>class</code> <code>StreamlitAppCustom</code><a href="https://github.com/unpackai/unpackai/tree/master/unpackai/deploy/app.py#L351" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>StreamlitAppCustom</code>()</p>
+<h2 id="StreamlitAppCustom" class="doc_header"><code>class</code> <code>StreamlitAppCustom</code><a href="https://github.com/unpackai/unpackai/tree/master/unpackai/deploy/app.py#L363" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>StreamlitAppCustom</code>()</p>
 </blockquote>
 <p>Application with custom implementation</p>
 
@@ -321,7 +321,6 @@ nb_path: "nbs\51_deploy_app.ipynb"
         <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Is it a cat?&quot;</span><span class="p">,</span>
         <span class="n">author</span><span class="o">=</span><span class="s2">&quot;Jeff&quot;</span><span class="p">,</span>
         <span class="n">model</span><span class="o">=</span><span class="s2">&quot;model.pkl&quot;</span><span class="p">,</span>
-        <span class="n">implem_4_model</span><span class="o">=</span><span class="s2">&quot;is_cat = dummy_function&quot;</span><span class="p">,</span>
     <span class="p">)</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        st.sidebar.write(&quot;---&quot;)</span>
@@ -451,7 +450,7 @@ nb_path: "nbs\51_deploy_app.ipynb"
 ##vso[task.logissue type=warning;]Coverage XML was not created, skipping upload.
 
 ------------ generated xml file: e:\AnsysDev\_perso_repo\unpackai\nbs\test-output.xml -------------
-<span class="ansi-green-intense-fg ansi-bold">4 passed</span><span class="ansi-green-fg"> in 0.27s</span>
+<span class="ansi-green-intense-fg ansi-bold">4 passed</span><span class="ansi-green-fg"> in 0.18s</span>
 </pre>
 </div>
 </div>
