@@ -75,7 +75,7 @@ def test_clean_error_img(tmpdir, monkeypatch) -> None:
     sub3.mkdir()
 
     (sub1 / "file11.BMP").write_text("fake image")
-    (sub1 / "😱file12 haha.jpg").write_text("fake image")
+    (sub1 / "file12 haha.jpg").write_text("fake image")
     (sub1 / "file13 haha.txt").write_text("not image")
     IMG_RGB.save(sub1 / "img14_good.jpg")
     IMG_RGBA.save(sub1 / "img15_good.png")

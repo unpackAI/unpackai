@@ -2,8 +2,19 @@
   "unpackai": {
     "Overview": "/",
     "Utilities": "/utils",
-    "Cosine Similarirty": "/consine",
+    "Bug Helper": "/bug",
+    "Interpretation": "/interp_latent",
+    "Interpret CNN model": "/interp_cnn",
+    "Interpretaion": "/interp",
     "Image Data Labeler": "/Image_Labeler",
-    "NLP": "/nlp"
+    "Computer Vision (CV) Data": "/cv_data",
+    "Tabular data processing": "/tabular_data",
+    "Title": "/tabular",
+    "NLP Data": "/nlp_data",
+    "NLP interpretations": "/nlp_interp",
+    "NLP": "/nlp",
+    "Deploy": "/deploy_app",
+    "PDF Utils: extending current functionalities for PDF": "/pdf_utils",
+    "Deploy tools for CV applications": "/deploy_cv"
   }
 }
