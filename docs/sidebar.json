@@ -1,9 +1,20 @@
 {
   "unpackai": {
     "Overview": "/",
-    "Utilities": "/utils",
-    "Cosine Similarirty": "/consine",
-    "Image Data Labeler": "/Image_Labeler",
-    "NLP": "/nlp"
+    "utils": "utils.html",
+    "Bug Helper": "bug.html",
+    "Interpretation": "interp_latent.html",
+    "Interpret CNN model": "interp_cnn.html",
+    "Interpretaion": "interp.html",
+    "Image Data Labeler": "Image_Labeler.html",
+    "Computer Vision (CV) Data": "cv_data.html",
+    "Tabular data processing": "tabular_data.html",
+    "Title": "tabular.html",
+    "NLP Data": "nlp_data.html",
+    "NLP interpretations": "nlp_interp.html",
+    "NLP": "nlp.html",
+    "Deploy": "deploy_app.html",
+    "PDF Utils: extending current functionalities for PDF": "pdf_utils.html",
+    "Deploy tools for CV applications": "deploy_cv.html"
   }
 }
