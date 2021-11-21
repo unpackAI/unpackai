@@ -30,7 +30,6 @@ sync:
 
 docs: $(SRC)
 	@echo "===== DOCUMENTATION ====="
-	nbdev_clean_nbs.exe
 	nbdev_build_docs --mk_readme False
 	python tools/clean_docs.py
 	@touch docs
