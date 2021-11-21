@@ -2,11 +2,13 @@
 SHELL := /bin/bash
 SRC = $(wildcard nbs/*.ipynb)
 
-.PHONY: all all_and_docs sync docs_serve conda_release pypi clean install
+.PHONY: all build sync docs_serve version conda_release pypi release clean install
 
 # For generating content
 build: unpackai test
-all: build docs
+
+# We want the default to be just build so all is after it
+all: build docs install
 
 install: unpackai
 	@echo "===== INSTALL ====="
@@ -34,12 +36,23 @@ docs: $(SRC)
 
 
 # For Release
-docs_serve: docs
+docs/Gemfile.lock:
+	@echo "===== INSTALL GEMS & LOCK ====="
+	cd docs && bundle install
+
+docs_serve: docs docs/Gemfile.lock
 	@echo "===== RUN JEKYLL SERVER ====="
 	cd docs && bundle exec jekyll serve
 
-release: pypi conda_release
-	nbdev_bump_version
+VERSION_PART = 3
+
+version:
+	@echo "===== BUMPING VERSION ====="
+	git checkout settings.ini
+	git checkout unpackai/__init__.py
+	nbdev_bump_version --part $(VERSION_PART)
+
+release: version pypi conda_release
 
 conda_release:
 	fastrelease_conda_package
