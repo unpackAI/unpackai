@@ -67,7 +67,7 @@ class Textual:
         """
         Load textual with interactive upload button
         """
-        DOM("🗃 Please upload a text file ended in .txt", "h4")()
+        DOM("🗃Please upload a text file ended in .txt", "h4")()
         my_manual = interact_manual.options(manual_name="Upload")
 
         @my_manual
