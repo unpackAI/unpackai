@@ -336,13 +336,15 @@ class StreamlitApp:
         self.content += dedent(content)
         return self
 
-    def save(self, dest: PathStr = "app.py", show=False):
+    def save(self, dest: PathStr = "app.py", show=False) -> "StreamlitApp":
         """Write the app to a file"""
-        Path(dest).write_text(self.content, encoding="utf-8")
+        self._dest = Path(dest)
+        self._dest.write_text(self.content, encoding="utf-8")
         print(f"Saved app '{self._title}' to '{dest}'")
         if show:
             print("-" * 20)
             print(self.content)
+        return self
 
     def deploy(self, dest: PathStr = "app.py") -> None:
         """Deploy the app"""

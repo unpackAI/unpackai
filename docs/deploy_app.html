@@ -209,6 +209,13 @@ nb_path: "nbs\51_deploy_app.ipynb"
     
 <div class="cell border-box-sizing code_cell rendered">
 
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
 <div class="output_wrapper">
 <div class="output">
 
@@ -216,10 +223,70 @@ nb_path: "nbs\51_deploy_app.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="StreamlitApp" class="doc_header"><code>class</code> <code>StreamlitApp</code><a href="https://github.com/unpackai/unpackai/tree/master/unpackai/deploy/app.py#L208" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>StreamlitApp</code>(<strong><code>application</code></strong>:<code>str</code>)</p>
+<h4 id="StreamlitApp.append" class="doc_header"><code>StreamlitApp.append</code><a href="https://github.com/unpackai/unpackai/tree/master/unpackai/deploy/app.py#L334" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>StreamlitApp.append</code>(<strong><code>content</code></strong>:<code>str</code>)</p>
 </blockquote>
-<p>Class to generate Streamlit App for different applications</p>
-<p>Available applications: "CV", "Tabular", "NLP", and "Custom"</p>
+<p>Add additional content to the app</p>
+
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="StreamlitApp.deploy" class="doc_header"><code>StreamlitApp.deploy</code><a href="https://github.com/unpackai/unpackai/tree/master/unpackai/deploy/app.py#L349" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>StreamlitApp.deploy</code>(<strong><code>dest</code></strong>:<code>Union</code>[<code>Path</code>, <code>str</code>]=<em><code>'app.py'</code></em>)</p>
+</blockquote>
+<p>Deploy the app</p>
+
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="StreamlitApp.render_fastai" class="doc_header"><code>StreamlitApp.render_fastai</code><a href="https://github.com/unpackai/unpackai/tree/master/unpackai/deploy/app.py#L278" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>StreamlitApp.render_fastai</code>(<strong><code>title</code></strong>:<code>str</code>, <strong><code>author</code></strong>:<code>str</code>, <strong><code>model</code></strong>:<code>Union</code>[<code>Path</code>, <code>str</code>], <strong><code>post_process_code</code></strong>:<code>str</code>=<em><code>''</code></em>, <strong><code>custom_import</code></strong>:<code>str</code>=<em><code>''</code></em>)</p>
+</blockquote>
+<p>Render an app based on template</p>
+<p>Args:
+    title: title of the App
+    author: author of the App
+    model: path of .pkl model to load (exported with <code>learn.export(...)</code>)
+    post_process_mode: optional code to post-process the model after loading
+    custom_import: optional code for custom import</p>
+
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="StreamlitApp.render_pycaret" class="doc_header"><code>StreamlitApp.render_pycaret</code><a href="https://github.com/unpackai/unpackai/tree/master/unpackai/deploy/app.py#L304" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>StreamlitApp.render_pycaret</code>(<strong><code>title</code></strong>:<code>str</code>, <strong><code>author</code></strong>:<code>str</code>, <strong><code>model</code></strong>:<code>Union</code>[<code>Path</code>, <code>str</code>], <strong><code>module</code></strong>:<code>str</code>, <strong><code>post_process_code</code></strong>:<code>str</code>=<em><code>''</code></em>, <strong><code>custom_import</code></strong>:<code>str</code>=<em><code>''</code></em>)</p>
+</blockquote>
+<p>Render an app based on template</p>
+<p>Args:
+    title: title of the App
+    author: author of the App
+    model: path of .pkl model to load (exported with <code>learn.export(...)</code>)
+    module: regression, classification, etc.
+    post_process_mode: optional code to post-process the model after loading
+    custom_import: custom import (optional)</p>
+
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="StreamlitApp.save" class="doc_header"><code>StreamlitApp.save</code><a href="https://github.com/unpackai/unpackai/tree/master/unpackai/deploy/app.py#L339" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>StreamlitApp.save</code>(<strong><code>dest</code></strong>:<code>Union</code>[<code>Path</code>, <code>str</code>]=<em><code>'app.py'</code></em>, <strong><code>show</code></strong>=<em><code>False</code></em>)</p>
+</blockquote>
+<p>Write the app to a file</p>
 
 </div>
 
@@ -227,13 +294,6 @@ nb_path: "nbs\51_deploy_app.ipynb"
 
 </div>
 </div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
 
 </div>
     {% endraw %}
@@ -255,7 +315,7 @@ nb_path: "nbs\51_deploy_app.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="StreamlitAppCustom" class="doc_header"><code>class</code> <code>StreamlitAppCustom</code><a href="https://github.com/unpackai/unpackai/tree/master/unpackai/deploy/app.py#L363" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>StreamlitAppCustom</code>()</p>
+<h2 id="StreamlitAppCustom" class="doc_header"><code>class</code> <code>StreamlitAppCustom</code><a href="https://github.com/unpackai/unpackai/tree/master/unpackai/deploy/app.py#L365" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>StreamlitAppCustom</code>()</p>
 </blockquote>
 <p>Application with custom implementation</p>
 
