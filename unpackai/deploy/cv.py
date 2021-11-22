@@ -17,6 +17,7 @@ from typing import List, Union, Tuple
 import streamlit as st
 from fastai.learner import load_learner, Learner
 from fastai.vision.core import PILImage
+from fastai.torch_core import TensorBase
 
 # Internal Cell
 logger = logging.getLogger("unpackai.deploy.cv")
@@ -37,8 +38,8 @@ def set_posix():
 # Cell
 PathStr = Union[Path, str]
 
-
-@st.cache
+# TODO: Try to cache the learner ... better: cache when using it
+# @st.cache(hash_funcs={TensorBase: (lambda learn:hash(learn))})
 def get_learner(model_path: PathStr) -> Learner:
     def try_loading(
         missing_implem: List[str] = None, nb_iter=5
