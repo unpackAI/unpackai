@@ -29,7 +29,7 @@ def display_prediction(pic):
     col_pred.metric(f"Probability", f"{probabilities[idx].item()*100:.2f}%")
 
 
-select = st.radio("How to load pictures?", ["from URL", "from files"])
+select = st.radio("How to load pictures?", ["from files", "from URL"])
 st.write("---")
 
 if select == "from URL":
