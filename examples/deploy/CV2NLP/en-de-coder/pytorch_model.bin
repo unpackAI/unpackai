@@ -1,0 +1,10 @@
+... THIS IS A DUMMY FILE ...
+
+This should be actually a big binary file.
+
+This should be obtained from command:
+```python
+encoder_decoder.save_pretrained("en-de-coder")
+```
+
+Where `encoder_decoder` is of type `transformers.EncoderDecoderModel`.
