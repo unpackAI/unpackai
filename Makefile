@@ -5,7 +5,7 @@ SRC = $(wildcard nbs/*.ipynb)
 .PHONY: all build sync docs_serve version conda_release pypi release clean install help
 
 # For generating content
-build: unpackai test  ## generate code and tests (default)
+build: unpackai test  ## generate code and tests [default command]
 
 # We want the default to be just build so all is after it
 all: build docs install  ## generate code, tests, and docs (NOT default)
@@ -69,7 +69,7 @@ dist: clean  ## build distribution package
 clean:  ## cleanup
 	rm -rf dist
 
-help:  ## list all the commands
+help:  ## list all the commands (this message)
 	@grep -E '^[a-zA-Z0-9_-]+:.*?## .*$$' $(MAKEFILE_LIST) \
-	| sed -n 's/^\(.*\): \(.*\)##\(.*\)/* \1:#\3/p' \
-	| column -t -s '#'
+	| sed -n 's/^\(.*\): \(.*\)##\(.*\)/* \1#\3/p' \
+	| column -t -s '#'  -N "COMMAND, DESCRIPTION"
