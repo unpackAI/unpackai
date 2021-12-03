@@ -11,10 +11,10 @@
     "Tabular data processing": "/tabular_data",
     "Title": "/tabular",
     "NLP Data": "/nlp_data",
+    "PDF Utils: extending current functionalities for PDF": "/nlp_pdf",
     "NLP interpretations": "/nlp_interp",
     "NLP": "/nlp",
     "Deploy": "/deploy_app",
-    "PDF Utils: extending current functionalities for PDF": "/pdf_utils",
     "Deploy tools for CV applications": "/deploy_cv"
   }
 }

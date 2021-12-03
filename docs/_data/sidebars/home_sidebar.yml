@@ -40,6 +40,9 @@ entries:
       title: NLP Data
       url: /nlp_data
     - output: web,pdf
+      title: 'PDF Utils: extending current functionalities for PDF'
+      url: /nlp_pdf
+    - output: web,pdf
       title: NLP interpretations
       url: /nlp_interp
     - output: web,pdf
@@ -48,9 +51,6 @@ entries:
     - output: web,pdf
       title: Deploy
       url: /deploy_app
-    - output: web,pdf
-      title: 'PDF Utils: extending current functionalities for PDF'
-      url: /pdf_utils
     - output: web,pdf
       title: Deploy tools for CV applications
       url: /deploy_cv
