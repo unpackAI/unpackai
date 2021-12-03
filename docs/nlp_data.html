@@ -372,11 +372,13 @@ tk_kwargs: keyward arguments for tokenizer's <code>__call__</code></p>
         <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">FileExistsError</span><span class="p">):</span>
             <span class="n">textual</span> <span class="o">=</span> <span class="n">Textual</span><span class="o">.</span><span class="n">from_path</span><span class="p">(</span><span class="s2">&quot;does_not_exist.txt&quot;</span><span class="p">)</span>
 
+    <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">github</span>
     <span class="k">def</span> <span class="nf">test_from_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">check_connection_github</span><span class="p">,</span> <span class="n">local_textual</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Test extract Textual from URL&quot;&quot;&quot;</span>
         <span class="n">textual</span> <span class="o">=</span> <span class="n">Textual</span><span class="o">.</span><span class="n">from_url</span><span class="p">(</span><span class="n">GITHUB_TEST_TXT</span><span class="p">)</span>
         <span class="k">assert</span> <span class="n">textual</span><span class="o">.</span><span class="n">text</span> <span class="o">==</span> <span class="n">local_textual</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;URL text: </span><span class="si">{</span><span class="n">textual</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s2">&quot;</span>
 
+    <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">github</span>
     <span class="k">def</span> <span class="nf">test_from_url_non_ascii</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">check_connection_github</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Test extract Textual from URL with non-ascii characters&quot;&quot;&quot;</span>
         <span class="n">textual</span> <span class="o">=</span> <span class="n">Textual</span><span class="o">.</span><span class="n">from_url</span><span class="p">(</span><span class="n">GITHUB_TEST_TXT_UTF8</span><span class="p">)</span>

@@ -79,11 +79,13 @@ class TestTextualPDF:
         extra_pages = set(pages_extracted) - set(str(p + 1) for p in pages)
         assert extra_pages == set(), f"Extra pages extracted: {extra_pages}"
 
+    @pytest.mark.github
     def test_from_url(self, check_connection_github, local_textual):
         """Test extract Textual of PDF from URL"""
         textual = TextualPDF.from_url(GITHUB_TEST_PDF)
         assert textual.text == local_textual.text, f"URL text: {textual.text}"
 
+    @pytest.mark.github
     def test_from_url_pdf(self, check_connection_github, local_textual):
         """Test extract Textual of PDF from URL using from_url_pdf"""
         textual = TextualPDF.from_url_pdf(GITHUB_TEST_PDF)

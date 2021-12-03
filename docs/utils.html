@@ -427,10 +427,10 @@ pd.DataFrame({&quot;b&quot;:range(100)})
 
 
 
-<div id="7e553850-fe0b-4d5c-98b5-b458b20ad1c7"></div>
+<div id="1e98ee6d-dc2f-45a9-aa69-34230fcf8995"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#7e553850-fe0b-4d5c-98b5-b458b20ad1c7');
+var element = $('#1e98ee6d-dc2f-45a9-aa69-34230fcf8995');
 
     console.info("loading toggle event: 00d9724d-55e4-4ab8-b426-5e92f71f593c")
     const toggle_hush = (e) =>{
@@ -487,10 +487,10 @@ for i in tqdm(range(10)):
 
 
 
-<div id="b44b26f6-5c06-4474-b0ad-f9e5cb0abf04"></div>
+<div id="afbabf0d-95c5-48e2-989d-a92b90992758"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#b44b26f6-5c06-4474-b0ad-f9e5cb0abf04');
+var element = $('#afbabf0d-95c5-48e2-989d-a92b90992758');
 
     console.info("loading toggle event: a5461483-be0b-4a73-8299-458f05a7c0d5")
     const toggle_hush = (e) =>{
@@ -552,10 +552,10 @@ def _test_hush():
 
 
 
-<div id="a4a265b4-4017-4d33-b104-1398e100f8d2"></div>
+<div id="639ad8dd-86f0-4d95-a004-d7a16eef7928"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#a4a265b4-4017-4d33-b104-1398e100f8d2');
+var element = $('#639ad8dd-86f0-4d95-a004-d7a16eef7928');
 
     console.info("loading toggle event: 33d84ffd-6fef-48a7-8ddc-26ef5ec8513b")
     const toggle_hush = (e) =>{
@@ -1128,10 +1128,12 @@ with the name specified in the URL</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">test_get_url_size</span><span class="p">(</span><span class="n">check_connection_github</span><span class="p">):</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">github</span>
+<span class="k">def</span> <span class="nf">test_get_url_size</span><span class="p">(</span><span class="n">check_connection_github</span><span class="p">):</span>
     <span class="k">assert</span> <span class="n">get_url_size</span><span class="p">(</span><span class="n">url_raw_txt</span><span class="p">)</span> <span class="o">==</span> <span class="mi">264</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Wrong size for </span><span class="si">{</span><span class="n">url_raw_txt</span><span class="si">}</span><span class="s2">&quot;</span>
 
 
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">github</span>
 <span class="k">def</span> <span class="nf">test_download_dest</span><span class="p">(</span><span class="n">check_connection_github</span><span class="p">,</span> <span class="n">tmpdir</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Test download of file to a destination&quot;&quot;&quot;</span>
     <span class="n">dest</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">tmpdir</span> <span class="o">/</span> <span class="s2">&quot;to_download.txt&quot;</span><span class="p">)</span>
@@ -1140,6 +1142,7 @@ with the name specified in the URL</p>
     <span class="k">assert</span> <span class="n">dest</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span> <span class="o">==</span> <span class="n">test_data_txt</span>
 
 
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">github</span>
 <span class="k">def</span> <span class="nf">test_download_empty</span><span class="p">(</span><span class="n">check_connection_github</span><span class="p">,</span> <span class="n">tmpdir</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Test download of file without destination&quot;&quot;&quot;</span>
     <span class="n">dest</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;to_download.txt&quot;</span><span class="p">)</span>
@@ -1151,6 +1154,7 @@ with the name specified in the URL</p>
         <span class="n">dest</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span>
 
 
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">github</span>
 <span class="k">def</span> <span class="nf">test_url_2_text</span><span class="p">(</span><span class="n">check_connection_github</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Test extraction of text from URL&quot;&quot;&quot;</span>
     <span class="k">assert</span> <span class="n">url_2_text</span><span class="p">(</span><span class="n">url_raw_txt</span><span class="p">)</span> <span class="o">==</span> <span class="n">test_data_txt</span>
@@ -1325,6 +1329,7 @@ with the name specified in the URL</p>
     <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="o">==</span> <span class="mi">100</span>
 
 
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">github</span>
 <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span>
     <span class="s2">&quot;archive,csv&quot;</span><span class="p">,</span>
     <span class="p">[</span>

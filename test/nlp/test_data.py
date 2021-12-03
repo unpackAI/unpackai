@@ -52,11 +52,13 @@ class Test_Textual:
         with pytest.raises(FileExistsError):
             textual = Textual.from_path("does_not_exist.txt")
 
+    @pytest.mark.github
     def test_from_url(self, check_connection_github, local_textual):
         """Test extract Textual from URL"""
         textual = Textual.from_url(GITHUB_TEST_TXT)
         assert textual.text == local_textual.text, f"URL text: {textual.text}"
 
+    @pytest.mark.github
     def test_from_url_non_ascii(self, check_connection_github):
         """Test extract Textual from URL with non-ascii characters"""
         textual = Textual.from_url(GITHUB_TEST_TXT_UTF8)

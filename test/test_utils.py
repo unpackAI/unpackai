@@ -310,10 +310,12 @@ def check_connection_github():
 
 
 # Test Cell
+@pytest.mark.github
 def test_get_url_size(check_connection_github):
     assert get_url_size(url_raw_txt) == 264, f"Wrong size for {url_raw_txt}"
 
 
+@pytest.mark.github
 def test_download_dest(check_connection_github, tmpdir):
     """Test download of file to a destination"""
     dest = Path(tmpdir / "to_download.txt")
@@ -322,6 +324,7 @@ def test_download_dest(check_connection_github, tmpdir):
     assert dest.read_text() == test_data_txt
 
 
+@pytest.mark.github
 def test_download_empty(check_connection_github, tmpdir):
     """Test download of file without destination"""
     dest = Path("to_download.txt")
@@ -333,6 +336,7 @@ def test_download_empty(check_connection_github, tmpdir):
         dest.unlink()
 
 
+@pytest.mark.github
 def test_url_2_text(check_connection_github):
     """Test extraction of text from URL"""
     assert url_2_text(url_raw_txt) == test_data_txt
@@ -395,6 +399,7 @@ def test_read_csv_from_zip_local(archive, csv):
     assert len(df) == 100
 
 
+@pytest.mark.github
 @pytest.mark.parametrize(
     "archive,csv",
     [
